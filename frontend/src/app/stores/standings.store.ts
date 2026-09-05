@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { Standing } from '../core/models/standings.model';
+import { MOCK_STANDINGS } from '../core/mocks';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StandingsStore {
   private readonly _standings = signal<Standing[]>([]);
   private readonly _loading = signal(false);
@@ -11,12 +12,11 @@ export class StandingsStore {
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
 
-  // TODO: Inyectar StandingsService y usar HttpClient
   async loadStandings(): Promise<void> {
     this._loading.set(true);
     this._error.set(null);
     try {
-      this._standings.set([]);
+      this._standings.set(MOCK_STANDINGS);
     } catch {
       this._error.set('Error al cargar clasificación');
     } finally {

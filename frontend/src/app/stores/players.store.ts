@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Player } from '../core/models/player.model';
 
-@Injectable()
+@Injectable( { providedIn: 'root' })
 export class PlayersStore {
   private readonly _players = signal<Player[]>([]);
   private readonly _loading = signal(false);

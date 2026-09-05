@@ -1,19 +1,110 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { Match, MatchEvent, MatchStatistics } from '../../../core/models/match.model';
+import { MockDataService } from '../../../core/services/mock-data.service';
+import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
+import { ScoreDisplayComponent } from '../../../shared/components/score-display/score-display.component';
+import { StatBarComponent } from '../../../shared/components/stat-bar/stat-bar.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
+import { TabsComponent, Tab } from '../../../shared/components/tabs/tabs.component';
 
 @Component({
   selector: 'app-match-detail',
-  template: `
-    <div class="match-detail container">
-      <h1>Detalle del Partido</h1>
-      <p class="placeholder-text">Detalles del partido aparecerán aquí</p>
-    </div>
-  `,
-  styles: `
-    .match-detail { padding-top: var(--space-6); }
-    .placeholder-text { color: var(--color-text-muted); text-align: center; padding: var(--space-8); }
-  `,
+  imports: [
+    RouterLink,
+    TeamBadgeComponent,
+    ScoreDisplayComponent,
+    StatBarComponent,
+    LoadingSpinnerComponent,
+    EmptyStateComponent,
+    TabsComponent,
+  ],
+  templateUrl: './match-detail.component.html',
+  styleUrl: './match-detail.component.css',
 })
-export class MatchDetailComponent {
-  constructor(private route: ActivatedRoute) {}
+export class MatchDetailComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly mockData = inject(MockDataService);
+
+  protected readonly match = signal<Match | null>(null);
+  protected readonly loading = signal(true);
+  protected readonly activeTab = signal('info');
+
+  protected readonly tabs: Tab[] = [
+    { key: 'info', label: 'Información' },
+    { key: 'events', label: 'Eventos' },
+    { key: 'stats', label: 'Estadísticas' },
+  ];
+
+  protected readonly isLive = computed(() => {
+    const m = this.match();
+    return m?.status === 'live' || m?.status === 'halftime';
+  });
+
+  protected readonly homeEvents = computed(() => {
+    const m = this.match();
+    if (!m?.events) return [];
+    return m.events.filter(e => e.team.id === m.homeTeam.id);
+  });
+
+  protected readonly awayEvents = computed(() => {
+    const m = this.match();
+    if (!m?.events) return [];
+    return m.events.filter(e => e.team.id === m.awayTeam.id);
+  });
+
+  protected readonly sortedEvents = computed(() => {
+    const m = this.match();
+    if (!m?.events) return [];
+    return [...m.events].sort((a, b) => b.minute - a.minute);
+  });
+
+  async ngOnInit(): Promise<void> {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      const result = await firstValueFrom(this.mockData.getMatchById(id));
+      this.match.set(result ?? null);
+    }
+    this.loading.set(false);
+  }
+
+  onTabChange(key: string): void {
+    this.activeTab.set(key);
+  }
+
+  getEventIcon(type: string): string {
+    switch (type) {
+      case 'goal': return '⚽';
+      case 'yellowcard': return '🟨';
+      case 'redcard': return '🟥';
+      case 'substitution': return '🔄';
+      case 'timeout': return '⏸️';
+      default: return '•';
+    }
+  }
+
+  getEventLabel(type: string): string {
+    switch (type) {
+      case 'goal': return 'Gol';
+      case 'yellowcard': return 'Tarjeta amarilla';
+      case 'redcard': return 'Tarjeta roja';
+      case 'substitution': return 'Cambio';
+      case 'timeout': return 'Tiempo muerto';
+      default: return type;
+    }
+  }
+
+  getStatusLabel(): string {
+    switch (this.match()?.status) {
+      case 'live': return 'EN VIVO';
+      case 'halftime': return 'DESCANSO';
+      case 'finished': return 'FINALIZADO';
+      case 'scheduled': return 'POR JUGAR';
+      case 'postponed': return 'APLAZADO';
+      case 'cancelled': return 'CANCELADO';
+      default: return '';
+    }
+  }
 }

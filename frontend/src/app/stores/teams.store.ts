@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Team } from '../core/models/team.model';
 
-@Injectable()
+@Injectable( { providedIn: 'root' })
 export class TeamsStore {
   private readonly _teams = signal<Team[]>([]);
   private readonly _loading = signal(false);

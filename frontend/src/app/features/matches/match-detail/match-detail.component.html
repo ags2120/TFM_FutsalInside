@@ -1,0 +1,195 @@
+<div class="match-detail-page">
+  @if (loading()) {
+    <app-loading-spinner />
+  } @else if (!match()) {
+    <div class="container">
+      <app-empty-state message="Partido no encontrado" icon="⚽" />
+    </div>
+  } @else {
+    <!-- HEADER DEL PARTIDO -->
+    <div class="match-header" [class.live]="isLive()">
+      <div class="header-bg"></div>
+      <div class="header-content container">
+        <div class="match-meta">
+          <span class="competition">{{ match()!.competition.name }}</span>
+          <span class="separator">•</span>
+          <span class="venue">{{ match()!.venue }}</span>
+          <span class="separator">•</span>
+          <span class="date">{{ match()!.date }}</span>
+        </div>
+
+        <div class="scoreboard">
+          <div class="team-side home">
+            <a [routerLink]="['/teams', match()!.homeTeam.id]" class="team-link">
+              <app-team-badge [team]="match()!.homeTeam" size="lg" />
+              <span class="team-name">{{ match()!.homeTeam.name }}</span>
+              <span class="team-short">{{ match()!.homeTeam.shortName }}</span>
+            </a>
+          </div>
+
+          <div class="score-center">
+            <app-score-display
+              [homeScore]="match()!.homeScore"
+              [awayScore]="match()!.awayScore"
+              [isLive]="isLive()"
+            />
+            @if (match()!.minute) {
+              <span class="minute-badge" [class.pulsing]="isLive()">
+                {{ match()!.minute }}'
+              </span>
+            }
+            <span class="status-badge" [class]="match()!.status">
+              {{ getStatusLabel() }}
+            </span>
+          </div>
+
+          <div class="team-side away">
+            <a [routerLink]="['/teams', match()!.awayTeam.id]" class="team-link">
+              <app-team-badge [team]="match()!.awayTeam" size="lg" />
+              <span class="team-name">{{ match()!.awayTeam.name }}</span>
+              <span class="team-short">{{ match()!.awayTeam.shortName }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-wrapper container">
+      <app-tabs
+        [tabs]="tabs"
+        [activeTab]="activeTab()"
+        (tabChange)="onTabChange($event)"
+      />
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="match-content container">
+      <!-- TAB: INFORMACIÓN -->
+      @if (activeTab() === 'info') {
+        <div class="info-section animate-fade-in">
+          <div class="info-card">
+            <h3 class="section-title">Detalles del partido</h3>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Competición</span>
+                <span class="info-value">{{ match()!.competition.name }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Temporada</span>
+                <span class="info-value">{{ match()!.competition.season }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Sede</span>
+                <span class="info-value">{{ match()!.venue }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Fecha</span>
+                <span class="info-value">{{ match()!.date }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Estado</span>
+                <span class="info-value status" [class]="match()!.status">{{ getStatusLabel() }}</span>
+              </div>
+            </div>
+          </div>
+
+          @if (match()!.events && match()!.events!.length > 0) {
+            <div class="info-card">
+              <h3 class="section-title">Resumen de goles</h3>
+              <div class="goals-summary">
+                <div class="goals-column">
+                  <span class="goals-label">{{ match()!.homeTeam.shortName }}</span>
+                  <div class="goals-list">
+                    @for (event of homeEvents(); track event.minute) {
+                      @if (event.type === 'goal') {
+                        <div class="goal-item">
+                          <span class="goal-icon">⚽</span>
+                          <span class="goal-minute">{{ event.minute }}'</span>
+                          <span class="goal-player">{{ event.player.firstName }}</span>
+                        </div>
+                      }
+                    }
+                  </div>
+                </div>
+                <div class="goals-divider"></div>
+                <div class="goals-column">
+                  <span class="goals-label">{{ match()!.awayTeam.shortName }}</span>
+                  <div class="goals-list">
+                    @for (event of awayEvents(); track event.minute) {
+                      @if (event.type === 'goal') {
+                        <div class="goal-item">
+                          <span class="goal-icon">⚽</span>
+                          <span class="goal-minute">{{ event.minute }}'</span>
+                          <span class="goal-player">{{ event.player.firstName }}</span>
+                        </div>
+                      }
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- TAB: EVENTOS -->
+      @if (activeTab() === 'events') {
+        <div class="events-section animate-fade-in">
+          @if (match()!.events && match()!.events!.length > 0) {
+            <div class="timeline">
+              @for (event of sortedEvents(); track event.minute) {
+                <div class="timeline-item" [class.home]="event.team.id === match()!.homeTeam.id" [class.away]="event.team.id === match()!.awayTeam.id">
+                  <div class="timeline-minute">{{ event.minute }}'</div>
+                  <div class="timeline-icon">{{ getEventIcon(event.type) }}</div>
+                  <div class="timeline-content">
+                    <span class="event-label">{{ getEventLabel(event.type) }}</span>
+                    <a [routerLink]="['/players', event.player.id]" class="event-player">
+                      {{ event.player.firstName }} {{ event.player.lastName }}
+                    </a>
+                    @if (event.assistPlayer) {
+                      <span class="event-assist">
+                        (asistencia de {{ event.assistPlayer.firstName }})
+                      </span>
+                    }
+                    <span class="event-team">
+                      {{ event.team.shortName }}
+                    </span>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <app-empty-state message="No hay eventos registrados para este partido" icon="📋" />
+          }
+        </div>
+      }
+
+      <!-- TAB: ESTADÍSTICAS -->
+      @if (activeTab() === 'stats') {
+        <div class="stats-section animate-fade-in">
+          @if (match()!.statistics && match()!.statistics!.length > 0) {
+            <div class="stats-card">
+              <div class="stats-header">
+                <span class="stats-team home">{{ match()!.homeTeam.shortName }}</span>
+                <span class="stats-title">Estadísticas</span>
+                <span class="stats-team away">{{ match()!.awayTeam.shortName }}</span>
+              </div>
+              <div class="stats-list">
+                @for (stat of match()!.statistics; track stat.type) {
+                  <app-stat-bar
+                    [label]="stat.type"
+                    [homeValue]="stat.homeValue"
+                    [awayValue]="stat.awayValue"
+                  />
+                }
+              </div>
+            </div>
+          } @else {
+            <app-empty-state message="No hay estadísticas disponibles" icon="📊" />
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

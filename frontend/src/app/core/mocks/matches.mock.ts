@@ -1,5 +1,6 @@
 import { Match } from '../models/match.model';
 import { MOCK_TEAMS } from './teams.mock';
+import { MOCK_PLAYERS } from './players.mock';
 
 const COMPETITION = {
   id: 1,
@@ -30,11 +31,20 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     date: toISODate(today),
     competition: COMPETITION,
     venue: 'Palau Blaugrana',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+      { type: 'yellowcard', minute: 12, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0] },
+      { type: 'goal', minute: 27, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1] },
+      { type: 'timeout', minute: 31, player: MOCK_PLAYERS[0], team: MOCK_TEAMS[0] },
+    ],
     statistics: [
+      { type: 'Posesión', homeValue: 58, awayValue: 42 },
       { type: 'Tiros', homeValue: 12, awayValue: 8 },
       { type: 'Tiros a puerta', homeValue: 6, awayValue: 4 },
       { type: 'Córneres', homeValue: 3, awayValue: 2 },
       { type: 'Faltas', homeValue: 5, awayValue: 7 },
+      { type: 'Tarjetas amarillas', homeValue: 0, awayValue: 1 },
     ],
   },
   {
@@ -48,6 +58,18 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     date: toISODate(today),
     competition: COMPETITION,
     venue: 'Palacio de Deportes',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
+      { type: 'yellowcard', minute: 19, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2] },
+    ],
+    statistics: [
+      { type: 'Posesión', homeValue: 45, awayValue: 55 },
+      { type: 'Tiros', homeValue: 6, awayValue: 9 },
+      { type: 'Tiros a puerta', homeValue: 3, awayValue: 5 },
+      { type: 'Córneres', homeValue: 1, awayValue: 4 },
+      { type: 'Faltas', homeValue: 4, awayValue: 3 },
+    ],
   },
   {
     id: 103,
@@ -271,6 +293,26 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -1)),
     competition: COMPETITION,
     venue: 'Palau Blaugrana',
+    events: [
+      { type: 'goal', minute: 3, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0] },
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 14, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+      { type: 'yellowcard', minute: 18, player: MOCK_PLAYERS[22], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS[1], team: MOCK_TEAMS[0] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[23], team: MOCK_TEAMS[4] },
+      { type: 'redcard', minute: 33, player: MOCK_PLAYERS[24], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 36, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0] },
+      { type: 'goal', minute: 39, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0] },
+    ],
+    statistics: [
+      { type: 'Posesión', homeValue: 62, awayValue: 38 },
+      { type: 'Tiros', homeValue: 18, awayValue: 7 },
+      { type: 'Tiros a puerta', homeValue: 10, awayValue: 3 },
+      { type: 'Córneres', homeValue: 5, awayValue: 1 },
+      { type: 'Faltas', homeValue: 3, awayValue: 6 },
+      { type: 'Tarjetas amarillas', homeValue: 0, awayValue: 1 },
+      { type: 'Tarjetas rojas', homeValue: 0, awayValue: 1 },
+    ],
   },
   {
     id: 302,
@@ -282,6 +324,22 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -1)),
     competition: COMPETITION,
     venue: 'Palau Municipal d\'Esports',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1] },
+      { type: 'goal', minute: 16, player: MOCK_PLAYERS[18], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1] },
+      { type: 'yellowcard', minute: 30, player: MOCK_PLAYERS[19], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1] },
+    ],
+    statistics: [
+      { type: 'Posesión', homeValue: 50, awayValue: 50 },
+      { type: 'Tiros', homeValue: 14, awayValue: 13 },
+      { type: 'Tiros a puerta', homeValue: 7, awayValue: 6 },
+      { type: 'Córneres', homeValue: 3, awayValue: 3 },
+      { type: 'Faltas', homeValue: 5, awayValue: 4 },
+    ],
   },
   {
     id: 303,

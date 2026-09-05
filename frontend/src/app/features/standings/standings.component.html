@@ -1,0 +1,164 @@
+<div class="standings-page container">
+  <div class="page-header">
+    <h1>Clasificación</h1>
+    <span class="season-badge">Liga Nacional de Fútbol Sala 2025/2026</span>
+  </div>
+
+  @if (store.loading()) {
+    <app-loading-spinner />
+  } @else if (store.error()) {
+    <app-empty-state [message]="store.error()!" icon="⚠️" />
+  } @else if (store.standings().length === 0) {
+    <app-empty-state message="No hay datos de clasificación disponibles" icon="📊" />
+  } @else {
+    <!-- Leyenda de colores -->
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-dot champions"></span>
+        <span>Champions League</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot playoff"></span>
+        <span>Playoff</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot relegation"></span>
+        <span>Descenso</span>
+      </div>
+    </div>
+
+    <!-- Tabla de clasificación -->
+    <div class="table-wrapper">
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th class="col-position">#</th>
+            <th class="col-team">Equipo</th>
+            <th class="col-stat">PJ</th>
+            <th class="col-stat">Pts</th>
+            <th class="col-stat hide-mobile">G</th>
+            <th class="col-stat hide-mobile">E</th>
+            <th class="col-stat hide-mobile">P</th>
+            <th class="col-stat hide-mobile">GF</th>
+            <th class="col-stat hide-mobile">GC</th>
+            <th class="col-stat">DG</th>
+            <th class="col-form">Forma</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (standing of store.standings(); track standing.team.id; let i = $index) {
+            <tr
+              class="standing-row"
+              [class.champions-zone]="standing.position <= 2"
+              [class.playoff-zone]="standing.position >= 3 && standing.position <= 6"
+              [class.relegation-zone]="standing.position >= 9"
+              [style.animation-delay]="i * 40 + 'ms'"
+            >
+              <td class="col-position">
+                <span class="position-badge" [class]="'pos-' + standing.position">
+                  {{ standing.position }}
+                </span>
+              </td>
+              <td class="col-team">
+                <a [routerLink]="['/teams', standing.team.id]" class="team-link">
+                  <app-team-badge [team]="standing.team" size="sm" />
+                  <div class="team-details">
+                    <span class="team-name">{{ standing.team.name }}</span>
+                    <span class="team-short">{{ standing.team.shortName }}</span>
+                  </div>
+                </a>
+              </td>
+              <td class="col-stat">{{ standing.played }}</td>
+              <td class="col-stat points">{{ standing.points }}</td>
+              <td class="col-stat hide-mobile">{{ standing.won }}</td>
+              <td class="col-stat hide-mobile">{{ standing.drawn }}</td>
+              <td class="col-stat hide-mobile">{{ standing.lost }}</td>
+              <td class="col-stat hide-mobile">{{ standing.goalsFor }}</td>
+              <td class="col-stat hide-mobile">{{ standing.goalsAgainst }}</td>
+              <td class="col-stat">
+                <span [class]="getGoalDifferenceClass(standing.goalDifference)">
+                  {{ standing.goalDifference > 0 ? '+' : '' }}{{ standing.goalDifference }}
+                </span>
+              </td>
+              <td class="col-form">
+                <div class="form-badges">
+                  @for (result of standing.form; track $index) {
+                    <span class="form-badge" [class]="getFormClass(result)">
+                      {{ getFormLabel(result) }}
+                    </span>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tarjetas resumen para móvil -->
+    <div class="mobile-cards">
+      @for (standing of store.standings(); track standing.team.id; let i = $index) {
+        <div
+          class="standing-card"
+          [class.champions-zone]="standing.position <= 2"
+          [class.playoff-zone]="standing.position >= 3 && standing.position <= 6"
+          [class.relegation-zone]="standing.position >= 9"
+          [style.animation-delay]="i * 50 + 'ms'"
+        >
+          <div class="card-header">
+            <span class="position-badge" [class]="'pos-' + standing.position">
+              {{ standing.position }}
+            </span>
+            <a [routerLink]="['/teams', standing.team.id]" class="team-link">
+              <app-team-badge [team]="standing.team" size="sm" />
+              <span class="team-name">{{ standing.team.name }}</span>
+            </a>
+            <span class="points-badge">{{ standing.points }} pts</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{ standing.played }}</span>
+              <span class="stat-label">PJ</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value wins">{{ standing.won }}</span>
+              <span class="stat-label">G</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value draws">{{ standing.drawn }}</span>
+              <span class="stat-label">E</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value losses">{{ standing.lost }}</span>
+              <span class="stat-label">P</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ standing.goalsFor }}</span>
+              <span class="stat-label">GF</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ standing.goalsAgainst }}</span>
+              <span class="stat-label">GC</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" [class]="getGoalDifferenceClass(standing.goalDifference)">
+                {{ standing.goalDifference > 0 ? '+' : '' }}{{ standing.goalDifference }}
+              </span>
+              <span class="stat-label">DG</span>
+            </div>
+          </div>
+          <div class="card-form">
+            <span class="form-label">Últimos 5:</span>
+            <div class="form-badges">
+              @for (result of standing.form; track $index) {
+                <span class="form-badge" [class]="getFormClass(result)">
+                  {{ getFormLabel(result) }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
