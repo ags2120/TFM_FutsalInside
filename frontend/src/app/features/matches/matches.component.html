@@ -1,0 +1,56 @@
+<div class="matches-page">
+  <!-- DATE PICKER -->
+  <div class="date-picker">
+    <div class="date-picker-inner container">
+      <button class="week-nav" (click)="prevWeek()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="days-row">
+        @for (day of weekDays; track day.date) {
+          <button
+            class="day-btn"
+            [class.today]="day.isToday"
+            [class.selected]="day.isSelected"
+            (click)="selectDay(day.date)"
+          >
+            <span class="day-label">{{ day.shortLabel }}</span>
+            <span class="day-number">{{ day.dayNumber }}</span>
+          </button>
+        }
+      </div>
+
+      <button class="week-nav" (click)="nextWeek()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MATCHES LIST -->
+  <div class="matches-content container">
+    @if (store.loading()) {
+      <app-loading-spinner />
+    }
+
+    @if (store.matches().length > 0) {
+      @for (entry of groupedByCompetition(store.matches()); track entry[0]) {
+        <div class="competition-group">
+          <div class="competition-header">
+            <span class="competition-name">{{ entry[0] }}</span>
+          </div>
+          <div class="matches-list">
+            @for (match of entry[1]; track match.id) {
+              <app-match-card [match]="match" />
+            }
+          </div>
+        </div>
+      }
+    } @else {
+      <app-empty-state message="No hay partidos para esta fecha" icon="⚽" />
+    }
+  </div>
+</div>

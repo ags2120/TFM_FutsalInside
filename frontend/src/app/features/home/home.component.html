@@ -1,0 +1,64 @@
+<div class="home container">
+  @if (store.loading()) {
+    <app-loading-spinner />
+  }
+
+  <!-- EN VIVO -->
+  <section class="section">
+    <div class="section-header">
+      <h2>
+        <span class="live-dot"></span>
+        En Vivo
+      </h2>
+      @if (store.liveMatches().length > 0) {
+        <a routerLink="/live" class="see-all">Ver todos →</a>
+      }
+    </div>
+
+    @if (store.liveMatches().length > 0) {
+      <div class="matches-grid">
+        @for (match of store.liveMatches(); track match.id) {
+          <app-match-card [match]="match" />
+        }
+      </div>
+    } @else {
+      <app-empty-state message="No hay partidos en vivo en este momento" icon="⚽" />
+    }
+  </section>
+
+  <!-- PRÓXIMOS PARTIDOS -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Próximos Partidos</h2>
+      <a routerLink="/matches" class="see-all">Ver todos →</a>
+    </div>
+
+    @if (store.upcomingMatches().length > 0) {
+      <div class="matches-grid">
+        @for (match of store.upcomingMatches().slice(0, 6); track match.id) {
+          <app-match-card [match]="match" />
+        }
+      </div>
+    } @else {
+      <app-empty-state message="No hay próximos partidos programados" icon="📅" />
+    }
+  </section>
+
+  <!-- RESULTADOS RECIENTES -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Resultados Recientes</h2>
+      <a routerLink="/matches" class="see-all">Ver todos →</a>
+    </div>
+
+    @if (store.recentMatches().length > 0) {
+      <div class="matches-grid">
+        @for (match of store.recentMatches().slice(0, 6); track match.id) {
+          <app-match-card [match]="match" />
+        }
+      </div>
+    } @else {
+      <app-empty-state message="No hay resultados recientes" icon="📋" />
+    }
+  </section>
+</div>

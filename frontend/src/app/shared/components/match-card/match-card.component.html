@@ -1,0 +1,36 @@
+<a [routerLink]="['/matches', match().id]" class="match-card" [class.live]="match().status === 'live' || match().status === 'halftime'">
+  <div class="match-competition">
+    <span class="competition-name">{{ match().competition.name }}</span>
+    @if (match().status === 'live' || match().status === 'halftime') {
+      <span class="live-badge">
+        <span class="live-dot"></span>
+        EN VIVO
+      </span>
+    } @else {
+      <span class="match-date">{{ match().date }}</span>
+    }
+  </div>
+
+  <div class="match-teams">
+    <div class="team home">
+      <app-team-badge [team]="match().homeTeam" size="sm" />
+      <span class="team-name">{{ match().homeTeam.shortName }}</span>
+    </div>
+
+    <div class="match-score-wrapper">
+      <app-score-display
+        [homeScore]="match().homeScore"
+        [awayScore]="match().awayScore"
+        [isLive]="match().status === 'live' || match().status === 'halftime'"
+      />
+      @if (match().minute) {
+        <span class="minute">{{ match().minute }}'</span>
+      }
+    </div>
+
+    <div class="team away">
+      <app-team-badge [team]="match().awayTeam" size="sm" />
+      <span class="team-name">{{ match().awayTeam.shortName }}</span>
+    </div>
+  </div>
+</a>

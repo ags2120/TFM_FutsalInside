@@ -1,0 +1,14 @@
+.live-page {
+  padding-top: var(--space-6);
+}
+
+.live-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.placeholder-text {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-8);
+}

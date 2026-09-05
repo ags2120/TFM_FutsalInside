@@ -1,0 +1,11 @@
+<div class="stat-bar">
+  <div class="stat-values">
+    <span class="stat-value home">{{ homeValue() }}</span>
+    <span class="stat-label">{{ label() }}</span>
+    <span class="stat-value away">{{ awayValue() }}</span>
+  </div>
+  <div class="stat-track">
+    <div class="stat-fill home" [style.width.%]="getHomeWidth()"></div>
+    <div class="stat-fill away" [style.width.%]="getAwayWidth()"></div>
+  </div>
+</div>

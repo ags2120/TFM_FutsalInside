@@ -1,0 +1,117 @@
+.match-card {
+  display: block;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.match-card:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.match-card.live {
+  border-color: var(--color-live);
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255, 68, 68, 0.05) 100%);
+}
+
+.match-card.live:hover {
+  border-color: var(--color-live);
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+}
+
+.match-competition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.competition-name {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.match-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-live);
+  background-color: var(--color-live-muted);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-live);
+  border-radius: 50%;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.team.away {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.team-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.match-score-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.minute {
+  font-size: var(--font-size-xs);
+  color: var(--color-live);
+  font-weight: var(--font-weight-bold);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
