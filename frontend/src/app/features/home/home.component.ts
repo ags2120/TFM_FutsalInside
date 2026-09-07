@@ -31,6 +31,10 @@ export class HomeComponent implements OnInit {
 
   readonly featuredLive = computed(() => this.matchesStore.liveMatches().slice(0, 4));
 
+  readonly liveCount = computed(() => this.matchesStore.liveMatches().length);
+  readonly upcomingCount = computed(() => this.matchesStore.upcomingMatches().length);
+  readonly recentCount = computed(() => this.matchesStore.recentMatches().length);
+
   readonly upcomingByCompetition = computed(() => {
     const matches = this.matchesStore.upcomingMatches();
     const grouped = new Map<string, typeof matches>();

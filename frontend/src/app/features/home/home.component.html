@@ -5,10 +5,30 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
     <div class="hero-content container">
       <div class="hero-text">
-        <h1 class="hero-title">FutsalInside</h1>
+        <h1 class="hero-title">
+          <span class="hero-title-accent">Futsal</span>Inside
+        </h1>
         <p class="hero-subtitle">Plataforma especializada en futsal. Resultados, clasificaciones y estadísticas en tiempo real.</p>
+      </div>
+      <div class="hero-stats">
+        <a routerLink="/matches" class="stat-card stat-live">
+          <span class="stat-number">{{ liveCount() }}</span>
+          <span class="stat-label">En Vivo</span>
+        </a>
+        <a routerLink="/matches" class="stat-card stat-upcoming">
+          <span class="stat-number">{{ upcomingCount() }}</span>
+          <span class="stat-label">Próximos</span>
+        </a>
+        <a routerLink="/matches" class="stat-card stat-recent">
+          <span class="stat-number">{{ recentCount() }}</span>
+          <span class="stat-label">Recientes</span>
+        </a>
       </div>
     </div>
   </section>
@@ -21,7 +41,10 @@
         <section class="section">
           <div class="section-header">
             <h2>
-              <span class="live-dot"></span>
+              <span class="live-indicator">
+                <span class="live-dot"></span>
+                <span class="live-pulse"></span>
+              </span>
               En Vivo
             </h2>
             <a routerLink="/matches" class="see-all">Ver todos →</a>
