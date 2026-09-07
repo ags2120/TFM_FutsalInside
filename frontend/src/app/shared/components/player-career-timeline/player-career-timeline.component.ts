@@ -4,7 +4,6 @@ import { CareerEntry } from '../../../core/models/player.model';
 
 @Component({
   selector: 'app-player-career-timeline',
-  standalone: true,
   imports: [RouterLink],
   template: `
     <div class="career-card">

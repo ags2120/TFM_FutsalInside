@@ -154,8 +154,6 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
     }
 
     .team-link:hover { transform: scale(1.05); }
-    .team-name { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); text-align: center; }
-    .team-short { font-size: var(--font-size-xs); color: var(--color-text-muted); }
 
     .team-label {
       font-size: var(--font-size-sm);

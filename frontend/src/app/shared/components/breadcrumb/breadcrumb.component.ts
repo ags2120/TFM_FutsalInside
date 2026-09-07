@@ -8,7 +8,6 @@ export interface BreadcrumbItem {
 
 @Component({
   selector: 'app-breadcrumb',
-  standalone: true,
   imports: [RouterLink],
   template: `
     <nav class="breadcrumb" aria-label="Breadcrumb">

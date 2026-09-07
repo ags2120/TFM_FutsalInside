@@ -4,7 +4,6 @@ import { PlayersStore } from '../../../stores/players.store';
 
 @Component({
   selector: 'app-league-comparison',
-  standalone: true,
   template: `
     <div class="comparison-card">
       <h3 class="card-title">Comparativa con la liga</h3>

@@ -4,7 +4,6 @@ import { Standing } from '../../../core/models/standings.model';
 
 @Component({
   selector: 'app-team-stats-card',
-  standalone: true,
   template: `
     <div class="team-stats-card">
       <h3 class="card-title">{{ title() }}</h3>

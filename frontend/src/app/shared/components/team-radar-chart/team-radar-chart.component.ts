@@ -3,7 +3,6 @@ import { TeamStatistics } from '../../../core/models/statistics.model';
 
 @Component({
   selector: 'app-team-radar-chart',
-  standalone: true,
   template: `
     <div class="radar-container">
       <svg viewBox="0 0 300 300" class="radar-svg">

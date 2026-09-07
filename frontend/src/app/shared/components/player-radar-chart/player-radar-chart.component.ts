@@ -3,7 +3,6 @@ import { RadarAttributes } from '../../../core/models/player.model';
 
 @Component({
   selector: 'app-player-radar-chart',
-  standalone: true,
   template: `
     <div class="radar-container">
       <svg viewBox="0 0 300 300" class="radar-svg">

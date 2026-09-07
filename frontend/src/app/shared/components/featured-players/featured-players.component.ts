@@ -6,7 +6,6 @@ import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component'
 
 @Component({
   selector: 'app-featured-players',
-  standalone: true,
   imports: [RouterLink, PlayerAvatarComponent],
   template: `
     <div class="featured-card">

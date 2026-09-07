@@ -3,7 +3,6 @@ import { Team } from '../../../core/models/team.model';
 
 @Component({
   selector: 'app-club-info',
-  standalone: true,
   template: `
     <div class="club-info-card">
       <h3 class="card-title">Información del club</h3>

@@ -3,7 +3,6 @@ import { PlayerStatistics } from '../../../core/models/statistics.model';
 
 @Component({
   selector: 'app-player-stats-card',
-  standalone: true,
   template: `
     <div class="stats-card">
       <h3 class="stats-title">{{ title() }}</h3>

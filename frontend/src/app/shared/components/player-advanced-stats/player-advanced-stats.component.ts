@@ -3,7 +3,6 @@ import { PlayerStatistics } from '../../../core/models/statistics.model';
 
 @Component({
   selector: 'app-player-advanced-stats',
-  standalone: true,
   template: `
     <div class="advanced-card">
       <h3 class="card-title">Estadísticas avanzadas</h3>

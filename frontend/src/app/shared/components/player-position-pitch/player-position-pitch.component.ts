@@ -2,7 +2,6 @@ import { Component, input, computed } from '@angular/core';
 
 @Component({
   selector: 'app-player-position-pitch',
-  standalone: true,
   template: `
     <div class="pitch-wrapper">
       <svg viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg" class="pitch-svg">

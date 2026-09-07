@@ -8,7 +8,6 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
 
 @Component({
   selector: 'app-player-match-row',
-  standalone: true,
   imports: [RouterLink, TeamBadgeComponent],
   template: `
     @if (match()) {

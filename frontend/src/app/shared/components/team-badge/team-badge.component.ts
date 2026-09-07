@@ -63,8 +63,8 @@ import { Team } from '../../../core/models/team.model';
       font-size: var(--font-size-xs);
     }
     .badge.md {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       font-size: var(--font-size-sm);
     }
     .badge.lg {
