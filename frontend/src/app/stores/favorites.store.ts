@@ -1,14 +1,13 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
-import { AuthService } from '../core/auth/auth.service';
+import { Injectable, signal, computed } from '@angular/core';
 import { Favorite, FavoriteType } from '../core/models/favorite.model';
 
-@Injectable()
+const STORAGE_KEY = 'futsalinside_favorites';
+
+@Injectable({ providedIn: 'root' })
 export class FavoritesStore {
   private readonly _favorites = signal<Favorite[]>([]);
   private readonly _loading = signal(false);
   private readonly _error = signal<string | null>(null);
-
-  private readonly authService = inject(AuthService);
 
   readonly favorites = this._favorites.asReadonly();
   readonly loading = this._loading.asReadonly();
@@ -25,14 +24,34 @@ export class FavoritesStore {
     };
   });
 
-  // TODO: Inyectar FavoritesService y usar HttpClient
-  async loadFavorites(): Promise<void> {
-    if (!this.authService.isAuthenticated()) return;
+  constructor() {
+    this.loadFromStorage();
+  }
 
+  private loadFromStorage(): void {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        this._favorites.set(JSON.parse(raw));
+      }
+    } catch {
+      this._favorites.set([]);
+    }
+  }
+
+  private saveToStorage(): void {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this._favorites()));
+    } catch {
+      // silently fail
+    }
+  }
+
+  async loadFavorites(): Promise<void> {
     this._loading.set(true);
     this._error.set(null);
     try {
-      this._favorites.set([]);
+      this.loadFromStorage();
     } catch {
       this._error.set('Error al cargar favoritos');
     } finally {
@@ -40,11 +59,35 @@ export class FavoritesStore {
     }
   }
 
-  async toggleFavorite(_type: FavoriteType, _entityId: number): Promise<void> {
-    // TODO: Implementar con llamada HTTP
+  toggleFavorite(type: FavoriteType, entityId: number, name: string): void {
+    const existing = this._favorites().find(
+      (f) => f.type === type && f.entityId === entityId,
+    );
+
+    if (existing) {
+      this._favorites.set(
+        this._favorites().filter(
+          (f) => !(f.type === type && f.entityId === entityId),
+        ),
+      );
+    } else {
+      this._favorites.set([
+        ...this._favorites(),
+        {
+          id: Date.now(),
+          type,
+          entityId,
+          name,
+          addedAt: new Date().toISOString(),
+        },
+      ]);
+    }
+    this.saveToStorage();
   }
 
   isFavorite(type: FavoriteType, entityId: number): boolean {
-    return this._favorites().some((f) => f.type === type && f.entityId === entityId);
+    return this._favorites().some(
+      (f) => f.type === type && f.entityId === entityId,
+    );
   }
 }

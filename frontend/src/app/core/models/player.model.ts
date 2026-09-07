@@ -1,10 +1,18 @@
 import { Team } from './team.model';
 
 export type PlayerPosition =
-  | 'goalkeeper'
-  | 'fixo'
+  | 'portero'
+  | 'cierre'
   | 'ala'
   | 'pivot';
+
+export interface RadarAttributes {
+  goals: number;
+  assists: number;
+  defense: number;
+  physical: number;
+  technique: number;
+}
 
 export interface Player {
   id: number;
@@ -19,6 +27,10 @@ export interface Player {
   team?: Team;
   height?: number;
   weight?: number;
+  radarAttributes?: RadarAttributes;
+  dominantFoot?: 'left' | 'right' | 'both';
+  averageRating?: number;
+  marketValue?: string;
 }
 
 export interface PlayerDetail extends Player {
@@ -29,6 +41,8 @@ export interface CareerEntry {
   team: Team;
   startDate: string;
   endDate?: string;
+  matchesPlayed?: number;
+  goals?: number;
 }
 
 export interface PlayerListResponse {

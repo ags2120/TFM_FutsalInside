@@ -1,6 +1,80 @@
 <div class="teams-page container">
-  <h1>Equipos</h1>
-  <div class="teams-grid">
-    <p class="placeholder-text">Los equipos se mostrarán aquí</p>
+  <div class="page-header">
+    <h1>Equipos</h1>
+    @if (!store.loading() && !store.error()) {
+      <span class="team-count-badge">{{ store.teamCount() }} equipos</span>
+    }
   </div>
+
+  @if (store.loading()) {
+    <app-loading-spinner />
+  } @else if (store.error()) {
+    <app-empty-state [message]="store.error()!" icon="⚠️" />
+  } @else if (store.teams().length === 0) {
+    <app-empty-state message="No hay equipos disponibles" icon="⚽" />
+  } @else {
+    <!-- Filtros -->
+    <div class="filters-bar">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Buscar equipo..."
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+        />
+      </div>
+
+      <select
+        class="league-select"
+        [value]="selectedLeague()"
+        (change)="onLeagueChange($event)"
+      >
+        <option value="">Todas las ligas</option>
+        @for (league of store.leagues(); track league) {
+          <option [value]="league">{{ league }}</option>
+        }
+      </select>
+
+      @if (hasActiveFilters()) {
+        <button class="clear-btn" (click)="clearFilters()">Limpiar filtros</button>
+      }
+    </div>
+
+    <!-- Conteo de resultados -->
+    @if (hasActiveFilters()) {
+      <p class="results-count">
+        Mostrando {{ teamCount() }} de {{ store.teamCount() }} equipos
+      </p>
+    }
+
+    <!-- Grid de equipos -->
+    @if (filteredTeams().length === 0) {
+      <app-empty-state
+        message="No se encontraron equipos con los filtros seleccionados"
+        icon="🔍"
+      />
+    } @else {
+      <div class="teams-grid">
+        @for (team of filteredTeams(); track team.id; let i = $index) {
+          <a
+            [routerLink]="['/teams', team.id]"
+            class="team-card"
+            [style.animation-delay]="i * 50 + 'ms'"
+          >
+            <div class="card-badge">
+              <app-team-badge [team]="team" size="lg" />
+            </div>
+            <div class="card-info">
+              <h3 class="card-name">{{ team.name }}</h3>
+              @if (team.league) {
+                <span class="card-league">{{ team.league }}</span>
+              }
+            </div>
+          </a>
+        }
+      </div>
+    }
+  }
 </div>

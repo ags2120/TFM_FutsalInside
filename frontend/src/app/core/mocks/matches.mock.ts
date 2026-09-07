@@ -34,8 +34,8 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     events: [
       { type: 'goal', minute: 5, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
       { type: 'yellowcard', minute: 12, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1] },
-      { type: 'goal', minute: 18, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0] },
-      { type: 'goal', minute: 27, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[0] },
+      { type: 'goal', minute: 27, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[6] },
       { type: 'timeout', minute: 31, player: MOCK_PLAYERS[0], team: MOCK_TEAMS[0] },
     ],
     statistics: [
@@ -59,7 +59,7 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     competition: COMPETITION,
     venue: 'Palacio de Deportes',
     events: [
-      { type: 'goal', minute: 8, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2] },
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[12] },
       { type: 'goal', minute: 15, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
       { type: 'yellowcard', minute: 19, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2] },
     ],
@@ -281,7 +281,7 @@ export const MOCK_UPCOMING_MATCHES: Match[] = [
   },
 ];
 
-// === RESULTADOS RECIENTES (10) ===
+// === RESULTADOS RECIENTES (20) ===
 export const MOCK_RECENT_MATCHES: Match[] = [
   {
     id: 301,
@@ -294,15 +294,15 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     competition: COMPETITION,
     venue: 'Palau Blaugrana',
     events: [
-      { type: 'goal', minute: 3, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0] },
-      { type: 'goal', minute: 8, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 3, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[4] },
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[22] },
       { type: 'goal', minute: 14, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
       { type: 'yellowcard', minute: 18, player: MOCK_PLAYERS[22], team: MOCK_TEAMS[4] },
-      { type: 'goal', minute: 22, player: MOCK_PLAYERS[1], team: MOCK_TEAMS[0] },
-      { type: 'goal', minute: 28, player: MOCK_PLAYERS[23], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS[1], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[3] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[23], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[21] },
       { type: 'redcard', minute: 33, player: MOCK_PLAYERS[24], team: MOCK_TEAMS[4] },
-      { type: 'goal', minute: 36, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0] },
-      { type: 'goal', minute: 39, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0] },
+      { type: 'goal', minute: 36, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[2] },
+      { type: 'goal', minute: 39, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
     ],
     statistics: [
       { type: 'Posesión', homeValue: 62, awayValue: 38 },
@@ -325,13 +325,13 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     competition: COMPETITION,
     venue: 'Palau Municipal d\'Esports',
     events: [
-      { type: 'goal', minute: 5, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3] },
-      { type: 'goal', minute: 10, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1] },
-      { type: 'goal', minute: 16, player: MOCK_PLAYERS[18], team: MOCK_TEAMS[3] },
-      { type: 'goal', minute: 25, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1] },
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[18] },
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[8] },
+      { type: 'goal', minute: 16, player: MOCK_PLAYERS[18], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
       { type: 'yellowcard', minute: 30, player: MOCK_PLAYERS[19], team: MOCK_TEAMS[3] },
-      { type: 'goal', minute: 33, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3] },
-      { type: 'goal', minute: 38, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[19] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
     ],
     statistics: [
       { type: 'Posesión', homeValue: 50, awayValue: 50 },
@@ -351,6 +351,14 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -2)),
     competition: COMPETITION,
     venue: 'Pazo dos Deportes',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[37], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[38] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS[13], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[14] },
+      { type: 'yellowcard', minute: 18, player: MOCK_PLAYERS[36], team: MOCK_TEAMS[7] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[13] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[14], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[11] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[13], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[12] },
+    ],
   },
   {
     id: 304,
@@ -362,6 +370,11 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -2)),
     competition: COMPETITION,
     venue: 'Pabellón Ciutat de Castelló',
+    events: [
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[28], team: MOCK_TEAMS[5], assistPlayer: MOCK_PLAYERS[27] },
+      { type: 'yellowcard', minute: 20, player: MOCK_PLAYERS[32], team: MOCK_TEAMS[6] },
+      { type: 'goal', minute: 35, player: MOCK_PLAYERS[29], team: MOCK_TEAMS[5], assistPlayer: MOCK_PLAYERS[26] },
+    ],
   },
   {
     id: 305,
@@ -373,6 +386,13 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -3)),
     competition: COMPETITION,
     venue: 'Pabellón Municipal de Cártama',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[47], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[48] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[43], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[42] },
+      { type: 'yellowcard', minute: 22, player: MOCK_PLAYERS[48], team: MOCK_TEAMS[9] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[48], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[47] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[47], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[49] },
+    ],
   },
   {
     id: 306,
@@ -384,6 +404,14 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -3)),
     competition: COMPETITION,
     venue: 'Palacio de Deportes',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[13] },
+      { type: 'goal', minute: 14, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[2] },
+      { type: 'yellowcard', minute: 20, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[14] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[3] },
+    ],
   },
   {
     id: 307,
@@ -395,6 +423,16 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -4)),
     competition: COMPETITION,
     venue: 'Pabellón Vista Alegre',
+    events: [
+      { type: 'goal', minute: 3, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[27], team: MOCK_TEAMS[5], assistPlayer: MOCK_PLAYERS[28] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[8] },
+      { type: 'yellowcard', minute: 25, player: MOCK_PLAYERS[26], team: MOCK_TEAMS[5] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[6] },
+      { type: 'goal', minute: 35, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
+    ],
   },
   {
     id: 308,
@@ -406,6 +444,15 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -4)),
     competition: COMPETITION,
     venue: 'Olivo Arena',
+    events: [
+      { type: 'goal', minute: 6, player: MOCK_PLAYERS[23], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[22] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS[47], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[48] },
+      { type: 'goal', minute: 20, player: MOCK_PLAYERS[22], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[24] },
+      { type: 'yellowcard', minute: 25, player: MOCK_PLAYERS[46], team: MOCK_TEAMS[9] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[23], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[21] },
+      { type: 'goal', minute: 35, player: MOCK_PLAYERS[48], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[47] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[23] },
+    ],
   },
   {
     id: 309,
@@ -417,6 +464,11 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -5)),
     competition: COMPETITION,
     venue: 'Pabellón Municipal',
+    events: [
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[18] },
+      { type: 'yellowcard', minute: 28, player: MOCK_PLAYERS[33], team: MOCK_TEAMS[6] },
+      { type: 'goal', minute: 36, player: MOCK_PLAYERS[18], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[16] },
+    ],
   },
   {
     id: 310,
@@ -428,6 +480,201 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -5)),
     competition: COMPETITION,
     venue: 'Pabellón Anselmo Vega',
+    events: [
+      { type: 'goal', minute: 4, player: MOCK_PLAYERS[42], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[43] },
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[37], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[38] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[43], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[44] },
+      { type: 'goal', minute: 20, player: MOCK_PLAYERS[38], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[39] },
+      { type: 'yellowcard', minute: 22, player: MOCK_PLAYERS[41], team: MOCK_TEAMS[8] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS[42], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[41] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[39], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[37] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[44], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[42] },
+      { type: 'goal', minute: 37, player: MOCK_PLAYERS[37], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[39] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[43], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[44] },
+    ],
+  },
+  {
+    id: 311,
+    homeTeam: MOCK_TEAMS[0], // Barça
+    awayTeam: MOCK_TEAMS[3], // Palma Futsal
+    homeScore: 4,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -6)),
+    competition: COMPETITION,
+    venue: 'Palau Blaugrana',
+    events: [
+      { type: 'goal', minute: 7, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[3] },
+      { type: 'yellowcard', minute: 15, player: MOCK_PLAYERS[19], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 20, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[4] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[3] },
+    ],
+  },
+  {
+    id: 312,
+    homeTeam: MOCK_TEAMS[1], // Inter Movistar
+    awayTeam: MOCK_TEAMS[6], // Jimbee Cartagena
+    homeScore: 3,
+    awayScore: 0,
+    status: 'finished',
+    date: toISODate(addDays(today, -6)),
+    competition: COMPETITION,
+    venue: 'Pabellón Vista Alegre',
+    events: [
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
+      { type: 'yellowcard', minute: 30, player: MOCK_PLAYERS[31], team: MOCK_TEAMS[6] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[8] },
+    ],
+  },
+  {
+    id: 313,
+    homeTeam: MOCK_TEAMS[2], // ElPozo Murcia
+    awayTeam: MOCK_TEAMS[4], // Jaén
+    homeScore: 2,
+    awayScore: 2,
+    status: 'finished',
+    date: toISODate(addDays(today, -7)),
+    competition: COMPETITION,
+    venue: 'Palacio de Deportes',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[13], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[12] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[22], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[24] },
+      { type: 'yellowcard', minute: 25, player: MOCK_PLAYERS[14], team: MOCK_TEAMS[2] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[24], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[22] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[14] },
+    ],
+  },
+  {
+    id: 314,
+    homeTeam: MOCK_TEAMS[5], // Córdoba
+    awayTeam: MOCK_TEAMS[8], // Ribera Navarra
+    homeScore: 1,
+    awayScore: 3,
+    status: 'finished',
+    date: toISODate(addDays(today, -7)),
+    competition: COMPETITION,
+    venue: 'Pabellón Ciutat de Castelló',
+    events: [
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[42], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[44] },
+      { type: 'goal', minute: 20, player: MOCK_PLAYERS[27], team: MOCK_TEAMS[5], assistPlayer: MOCK_PLAYERS[29] },
+      { type: 'yellowcard', minute: 28, player: MOCK_PLAYERS[28], team: MOCK_TEAMS[5] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[44], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[43] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[43], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[42] },
+    ],
+  },
+  {
+    id: 315,
+    homeTeam: MOCK_TEAMS[7], // Manzanares FS
+    awayTeam: MOCK_TEAMS[9], // Osasuna Magna
+    homeScore: 5,
+    awayScore: 2,
+    status: 'finished',
+    date: toISODate(addDays(today, -8)),
+    competition: COMPETITION,
+    venue: 'Pazo dos Deportes',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[37], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[39] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS[47], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[48] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[38], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[37] },
+      { type: 'yellowcard', minute: 22, player: MOCK_PLAYERS[49], team: MOCK_TEAMS[9] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[39], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[38] },
+      { type: 'goal', minute: 33, player: MOCK_PLAYERS[48], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[47] },
+      { type: 'goal', minute: 36, player: MOCK_PLAYERS[37], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[39] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[38], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[37] },
+    ],
+  },
+  {
+    id: 316,
+    homeTeam: MOCK_TEAMS[3], // Palma Futsal
+    awayTeam: MOCK_TEAMS[2], // ElPozo Murcia
+    homeScore: 2,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -8)),
+    competition: COMPETITION,
+    venue: 'Palau Municipal d\'Esports',
+    events: [
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[19] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[12] },
+      { type: 'yellowcard', minute: 30, player: MOCK_PLAYERS[15], team: MOCK_TEAMS[3] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[18], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
+    ],
+  },
+  {
+    id: 317,
+    homeTeam: MOCK_TEAMS[4], // Jaén
+    awayTeam: MOCK_TEAMS[0], // Barça
+    homeScore: 0,
+    awayScore: 4,
+    status: 'finished',
+    date: toISODate(addDays(today, -9)),
+    competition: COMPETITION,
+    venue: 'Olivo Arena',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[3] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[4], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+      { type: 'yellowcard', minute: 22, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[3], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[4] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
+    ],
+  },
+  {
+    id: 318,
+    homeTeam: MOCK_TEAMS[6], // Jimbee Cartagena
+    awayTeam: MOCK_TEAMS[5], // Córdoba
+    homeScore: 3,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -9)),
+    competition: COMPETITION,
+    venue: 'Pabellón Municipal',
+    events: [
+      { type: 'goal', minute: 10, player: MOCK_PLAYERS[32], team: MOCK_TEAMS[6], assistPlayer: MOCK_PLAYERS[33] },
+      { type: 'goal', minute: 20, player: MOCK_PLAYERS[33], team: MOCK_TEAMS[6], assistPlayer: MOCK_PLAYERS[34] },
+      { type: 'yellowcard', minute: 25, player: MOCK_PLAYERS[29], team: MOCK_TEAMS[5] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS[26], team: MOCK_TEAMS[5], assistPlayer: MOCK_PLAYERS[27] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS[34], team: MOCK_TEAMS[6], assistPlayer: MOCK_PLAYERS[32] },
+    ],
+  },
+  {
+    id: 319,
+    homeTeam: MOCK_TEAMS[8], // Ribera Navarra
+    awayTeam: MOCK_TEAMS[1], // Inter Movistar
+    homeScore: 2,
+    awayScore: 5,
+    status: 'finished',
+    date: toISODate(addDays(today, -10)),
+    competition: COMPETITION,
+    venue: 'Pabellón Anselmo Vega',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[8] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS[42], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[44] },
+      { type: 'goal', minute: 18, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
+      { type: 'yellowcard', minute: 22, player: MOCK_PLAYERS[41], team: MOCK_TEAMS[8] },
+      { type: 'goal', minute: 28, player: MOCK_PLAYERS[44], team: MOCK_TEAMS[8], assistPlayer: MOCK_PLAYERS[43] },
+      { type: 'goal', minute: 32, player: MOCK_PLAYERS[8], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
+      { type: 'goal', minute: 36, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[6] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS[7], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[9] },
+    ],
+  },
+  {
+    id: 320,
+    homeTeam: MOCK_TEAMS[9], // Osasuna Magna
+    awayTeam: MOCK_TEAMS[7], // Manzanares FS
+    homeScore: 1,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -10)),
+    competition: COMPETITION,
+    venue: 'Pabellón Municipal de Cártama',
+    events: [
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS[47], team: MOCK_TEAMS[9], assistPlayer: MOCK_PLAYERS[49] },
+      { type: 'yellowcard', minute: 25, player: MOCK_PLAYERS[36], team: MOCK_TEAMS[7] },
+      { type: 'goal', minute: 35, player: MOCK_PLAYERS[39], team: MOCK_TEAMS[7], assistPlayer: MOCK_PLAYERS[36] },
+    ],
   },
 ];
 

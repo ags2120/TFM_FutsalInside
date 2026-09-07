@@ -74,8 +74,10 @@
 .goals-label { font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
 .goals-list { display: flex; flex-direction: column; gap: var(--space-2); }
 .goal-item { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); }
+.goal-info { display: flex; flex-direction: column; }
 .goal-minute { font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); color: var(--color-accent); min-width: 30px; }
 .goal-player { font-size: var(--font-size-sm); color: var(--color-text-primary); }
+.goal-assist { font-size: var(--font-size-xs); color: var(--color-text-muted); font-style: italic; }
 .goals-divider { width: 1px; background-color: var(--color-border); align-self: stretch; }
 
 .events-section { display: flex; flex-direction: column; gap: var(--space-4); }

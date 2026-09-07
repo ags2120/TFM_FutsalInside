@@ -3,6 +3,7 @@ import { Team } from './team.model';
 export type FormResult = 'W' | 'D' | 'L';
 
 export interface Standing {
+  competitionId: number;
   position: number;
   team: Team;
   played: number;

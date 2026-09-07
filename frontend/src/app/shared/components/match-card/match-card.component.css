@@ -16,13 +16,11 @@
 }
 
 .match-card.live {
-  border-color: var(--color-live);
-  background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(255, 68, 68, 0.05) 100%);
+  border-left: 3px solid var(--color-live);
 }
 
 .match-card.live:hover {
-  border-color: var(--color-live);
-  box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+  border-left-color: var(--color-live);
 }
 
 .match-competition {

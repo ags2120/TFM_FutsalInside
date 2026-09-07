@@ -3,8 +3,10 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Match } from '../models/match.model';
 import { Team } from '../models/team.model';
-import { Player } from '../models/player.model';
+import { Player, PlayerDetail } from '../models/player.model';
+import { PlayerMatchParticipation } from '../models/player-match.model';
 import { Standing } from '../models/standings.model';
+import { PlayerStatistics, TeamStatistics } from '../models/statistics.model';
 import {
   MOCK_ALL_MATCHES,
   MOCK_LIVE_MATCHES,
@@ -14,6 +16,10 @@ import {
 import { MOCK_TEAMS } from '../mocks/teams.mock';
 import { MOCK_PLAYERS } from '../mocks/players.mock';
 import { MOCK_STANDINGS } from '../mocks/standings.mock';
+import { MOCK_PLAYER_STATISTICS } from '../mocks/player-statistics.mock';
+import { MOCK_PLAYER_CAREER } from '../mocks/player-career.mock';
+import { MOCK_PLAYER_MATCH_PARTICIPATION } from '../mocks/player-match-participation.mock';
+import { MOCK_TEAM_STATISTICS } from '../mocks/team-statistics.mock';
 
 const MOCK_DELAY_MS = 300;
 
@@ -69,7 +75,40 @@ export class MockDataService {
     return of(player).pipe(delay(MOCK_DELAY_MS));
   }
 
+  getPlayerDetailById(id: number): Observable<PlayerDetail | undefined> {
+    const player = MOCK_PLAYERS.find((p) => p.id === id);
+    if (!player) return of(undefined).pipe(delay(MOCK_DELAY_MS));
+
+    const detail: PlayerDetail = {
+      ...player,
+      careerHistory: MOCK_PLAYER_CAREER[id] || [],
+    };
+    return of(detail).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  getPlayerStats(playerId: number): Observable<PlayerStatistics | undefined> {
+    const stats = MOCK_PLAYER_STATISTICS.find((s) => s.playerId === playerId);
+    return of(stats).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  getPlayerMatchParticipation(playerId: number): Observable<PlayerMatchParticipation[]> {
+    const participations = MOCK_PLAYER_MATCH_PARTICIPATION.filter((p) => p.playerId === playerId);
+    return of(participations).pipe(delay(MOCK_DELAY_MS));
+  }
+
   getStandings(): Observable<Standing[]> {
     return of(MOCK_STANDINGS).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  getMatchesByTeam(teamId: number): Observable<Match[]> {
+    const matches = MOCK_ALL_MATCHES.filter(
+      (m) => m.homeTeam.id === teamId || m.awayTeam.id === teamId
+    );
+    return of(matches).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  getTeamStatistics(teamId: number): Observable<TeamStatistics | undefined> {
+    const stats = MOCK_TEAM_STATISTICS.find((s) => s.teamId === teamId);
+    return of(stats).pipe(delay(MOCK_DELAY_MS));
   }
 }

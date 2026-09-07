@@ -9,11 +9,13 @@ export interface Team {
   league?: string;
   founded?: number;
   venue?: string;
+  coach?: string;
+  titles?: number;
+  stadiumCapacity?: number;
 }
 
 export interface TeamDetail extends Team {
   players: Player[];
-  coach?: string;
   description?: string;
 }
 

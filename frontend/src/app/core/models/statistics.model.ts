@@ -10,6 +10,17 @@ export interface PlayerStatistics {
   saves?: number;
   blocks?: number;
   steals?: number;
+  careerGoals: number;
+  careerAssists: number;
+  careerYellowCards: number;
+  careerRedCards: number;
+  careerMatchesPlayed: number;
+  expectedGoals: number;
+  expectedAssists: number;
+  goalParticipation: number;
+  passAccuracy: number;
+  shotAccuracy: number;
+  defensiveActions: number;
 }
 
 export interface TeamStatistics {

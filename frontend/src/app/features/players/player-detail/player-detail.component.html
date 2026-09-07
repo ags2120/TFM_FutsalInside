@@ -6,6 +6,11 @@
       <app-empty-state message="Jugador no encontrado" icon="👤" />
     </div>
   } @else {
+    <!-- BREADCRUMBS -->
+    <div class="container">
+      <app-breadcrumb [items]="breadcrumbs()" />
+    </div>
+
     <!-- HEADER DEL JUGADOR -->
     <div class="player-header">
       <div class="header-bg"></div>
@@ -15,102 +20,224 @@
           <span class="shirt-number">{{ player()!.shirtNumber }}</span>
         </div>
         <div class="player-info-header">
-          <h1 class="player-name">{{ player()!.firstName }} {{ player()!.lastName }}</h1>
-          <div class="player-position-badge">
-            <span class="position-icon">
-              @switch (player()!.position) {
-                @case ('goalkeeper') { 🧤 }
-                @case ('fixo') { 🛡️ }
-                @case ('ala') { ⚡ }
-                @case ('pivot') { 🎯 }
-              }
-            </span>
-            {{ getPositionLabel(player()!.position) }}
+          <div class="name-row">
+            <h1 class="player-name">{{ player()!.firstName }} {{ player()!.lastName }}</h1>
+            <button
+              class="favorite-btn"
+              [class.active]="isFavorite()"
+              (click)="toggleFavorite()"
+              [attr.aria-label]="isFavorite() ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" [attr.fill]="isFavorite() ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
           </div>
-          @if (player()!.team) {
-            <a [routerLink]="['/teams', player()!.team!.id]" class="team-link">
-              <app-team-badge [team]="player()!.team!" size="sm" />
-              <span>{{ player()!.team!.name }}</span>
-            </a>
-          }
+          <div class="player-meta-row">
+            <span class="position-badge">
+              <span class="position-icon">{{ getPositionEmoji(player()!.position) }}</span>
+              {{ getPositionLabel(player()!.position) }}
+            </span>
+            <span class="meta-separator">·</span>
+            <span class="meta-item">{{ nationalityFlag() }} {{ player()!.nationality }}</span>
+            <span class="meta-separator">·</span>
+            <span class="meta-item">{{ getAge(player()!.birthDate) }} años</span>
+          </div>
+          <div class="player-badges-row">
+            @if (player()!.team) {
+              <a [routerLink]="['/teams', player()!.team!.id]" class="badge-link team-badge-link">
+                <app-team-badge [team]="player()!.team!" size="sm" />
+                <span>{{ player()!.team!.name }}</span>
+              </a>
+            }
+            @if (player()!.marketValue) {
+              <span class="meta-badge value-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                {{ player()!.marketValue }}
+              </span>
+            }
+            @if (player()!.averageRating) {
+              <span class="meta-badge rating-badge-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                {{ player()!.averageRating!.toFixed(1) }}
+              </span>
+            }
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- INFORMACIÓN PERSONAL -->
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="player-content container">
-      <div class="info-section">
-        <div class="info-card">
-          <h3 class="section-title">Información personal</h3>
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">Nombre completo</span>
-              <span class="info-value">{{ player()!.firstName }} {{ player()!.lastName }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Nacionalidad</span>
-              <span class="info-value">{{ player()!.nationality }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">Fecha de nacimiento</span>
-              <span class="info-value">{{ player()!.birthDate }} ({{ getAge(player()!.birthDate) }} años)</span>
-            </div>
-            @if (player()!.height) {
+      <div class="content-grid">
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="left-column">
+          <!-- INFORMACIÓN PERSONAL -->
+          <div class="info-card">
+            <h3 class="section-title">Información personal</h3>
+            <div class="info-grid">
               <div class="info-item">
-                <span class="info-label">Altura</span>
-                <span class="info-value">{{ player()!.height }} cm</span>
+                <span class="info-label">Nombre completo</span>
+                <span class="info-value">{{ player()!.firstName }} {{ player()!.lastName }}</span>
               </div>
-            }
-            @if (player()!.weight) {
               <div class="info-item">
-                <span class="info-label">Peso</span>
-                <span class="info-value">{{ player()!.weight }} kg</span>
+                <span class="info-label">Nacionalidad</span>
+                <span class="info-value">{{ nationalityFlag() }} {{ player()!.nationality }}</span>
               </div>
-            }
-            <div class="info-item">
-              <span class="info-label">Dorsal</span>
-              <span class="info-value number">{{ player()!.shirtNumber }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- DESCRIPCIÓN DE POSICIÓN -->
-        <div class="info-card position-card">
-          <h3 class="section-title">Posición</h3>
-          <div class="position-detail">
-            <div class="position-badge-large">
-              @switch (player()!.position) {
-                @case ('goalkeeper') { 🧤 }
-                @case ('fixo') { 🛡️ }
-                @case ('ala') { ⚡ }
-                @case ('pivot') { 🎯 }
+              <div class="info-item">
+                <span class="info-label">Edad</span>
+                <span class="info-value">{{ getAge(player()!.birthDate) }} años</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Fecha de nacimiento</span>
+                <span class="info-value">{{ player()!.birthDate }}</span>
+              </div>
+              @if (player()!.height) {
+                <div class="info-item">
+                  <span class="info-label">Altura</span>
+                  <span class="info-value">{{ player()!.height }} cm</span>
+                </div>
+              }
+              @if (player()!.weight) {
+                <div class="info-item">
+                  <span class="info-label">Peso</span>
+                  <span class="info-value">{{ player()!.weight }} kg</span>
+                </div>
+              }
+              <div class="info-item">
+                <span class="info-label">Dorsal</span>
+                <span class="info-value number">{{ player()!.shirtNumber }}</span>
+              </div>
+              @if (player()!.dominantFoot) {
+                <div class="info-item">
+                  <span class="info-label">Pierna hábil</span>
+                  <span class="info-value">{{ getDominantFootLabel(player()!.dominantFoot) }}</span>
+                </div>
+              }
+              @if (player()!.averageRating) {
+                <div class="info-item">
+                  <span class="info-label">Rating medio</span>
+                  <span class="info-value number">{{ player()!.averageRating!.toFixed(1) }}</span>
+                </div>
+              }
+              @if (player()!.marketValue) {
+                <div class="info-item">
+                  <span class="info-label">Valor de mercado</span>
+                  <span class="info-value accent">{{ player()!.marketValue }}</span>
+                </div>
               }
             </div>
-            <div class="position-info">
-              <span class="position-name">{{ getPositionLabel(player()!.position) }}</span>
-              <p class="position-description">{{ getPositionDescription(player()!.position) }}</p>
+          </div>
+
+          <!-- DESCRIPCIÓN DE POSICIÓN -->
+          <div class="info-card position-card">
+            <h3 class="section-title">Posición</h3>
+            <div class="position-detail">
+              <div class="position-badge-large">
+                {{ getPositionEmoji(player()!.position) }}
+              </div>
+              <div class="position-info">
+                <span class="position-name">{{ getPositionLabel(player()!.position) }}</span>
+                <p class="position-description">{{ getPositionDescription(player()!.position) }}</p>
+              </div>
+            </div>
+            <div class="position-pitch-section">
+              <app-player-position-pitch [position]="player()!.position" />
             </div>
           </div>
+
+          <!-- STATS TEMPORADA -->
+          @if (stats()) {
+            <app-player-stats-card
+              title="Estadísticas temporada"
+              [stats]="stats()!"
+              [averageRating]="averageRating()"
+            />
+          }
+
+          <!-- STATS CARRERA -->
+          @if (stats()) {
+            <app-player-stats-card
+              title="Estadísticas carrera"
+              [stats]="stats()!"
+            />
+          }
+
+          <!-- STATS AVANZADAS -->
+          @if (stats()) {
+            <app-player-advanced-stats [stats]="stats()!" />
+          }
+
+          <!-- TRAYECTORIA -->
+          @if (player()!.careerHistory && player()!.careerHistory!.length > 0) {
+            <app-player-career-timeline
+              [career]="player()!.careerHistory!"
+            />
+          }
         </div>
 
-        <!-- EQUIPO -->
-        @if (player()!.team) {
-          <div class="info-card team-card">
-            <h3 class="section-title">Equipo</h3>
-            <a [routerLink]="['/teams', player()!.team!.id]" class="team-link-card">
-              <app-team-badge [team]="player()!.team!" size="lg" />
-              <div class="team-link-info">
-                <span class="team-link-name">{{ player()!.team!.name }}</span>
-                @if (player()!.team!.venue) {
-                  <span class="team-link-venue">{{ player()!.team!.venue }}</span>
+        <!-- COLUMNA DERECHA -->
+        <div class="right-column">
+          <!-- RADAR CHART -->
+          @if (player()!.radarAttributes) {
+            <div class="info-card radar-card">
+              <h3 class="section-title">Perfil del jugador</h3>
+              <app-player-radar-chart [stats]="player()!.radarAttributes!" />
+            </div>
+          }
+
+          <!-- COMPARATIVA LIGA -->
+          @if (stats()) {
+            <app-league-comparison [stats]="stats()!" />
+          }
+
+          <!-- PARTIDOS RECIENTES -->
+          @if (recentMatches().length > 0) {
+            <div class="info-card">
+              <h3 class="section-title">Últimos partidos</h3>
+              <div class="matches-list">
+                @for (part of recentMatches(); track part.matchId) {
+                  <app-player-match-row [participation]="part" />
                 }
               </div>
-              <svg class="team-link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
-            </a>
-          </div>
-        }
+            </div>
+          }
+
+          <!-- EQUIPO -->
+          @if (player()!.team) {
+            <div class="info-card team-card">
+              <h3 class="section-title">Equipo</h3>
+              <a [routerLink]="['/teams', player()!.team!.id]" class="team-link-card">
+                <app-team-badge [team]="player()!.team!" size="lg" />
+                <div class="team-link-info">
+                  <span class="team-link-name">{{ player()!.team!.name }}</span>
+                  @if (teamStanding()) {
+                    <span class="team-link-standing">
+                      {{ teamStanding()!.position }}º · {{ teamStanding()!.points }} pts
+                    </span>
+                    <span class="team-link-form">
+                      {{ teamStanding()!.won }}V {{ teamStanding()!.drawn }}E {{ teamStanding()!.lost }}D
+                    </span>
+                  }
+                </div>
+                <svg class="team-link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </a>
+              @if (teamStanding()) {
+                <div class="form-strip">
+                  @for (result of teamStanding()!.form; track $index) {
+                    <span class="form-dot" [class]="getFormClass(result)">{{ getFormLabel(result) }}</span>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
     </div>
   }

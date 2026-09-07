@@ -106,7 +106,12 @@
                         <div class="goal-item">
                           <span class="goal-icon">⚽</span>
                           <span class="goal-minute">{{ event.minute }}'</span>
-                          <span class="goal-player">{{ event.player.firstName }}</span>
+                          <div class="goal-info">
+                            <span class="goal-player">{{ event.player.firstName }}</span>
+                            @if (event.assistPlayer) {
+                              <span class="goal-assist">{{ event.assistPlayer.firstName }}</span>
+                            }
+                          </div>
                         </div>
                       }
                     }
@@ -121,7 +126,12 @@
                         <div class="goal-item">
                           <span class="goal-icon">⚽</span>
                           <span class="goal-minute">{{ event.minute }}'</span>
-                          <span class="goal-player">{{ event.player.firstName }}</span>
+                          <div class="goal-info">
+                            <span class="goal-player">{{ event.player.firstName }}</span>
+                            @if (event.assistPlayer) {
+                              <span class="goal-assist">{{ event.assistPlayer.firstName }}</span>
+                            }
+                          </div>
                         </div>
                       }
                     }

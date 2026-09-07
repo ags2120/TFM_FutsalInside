@@ -1,64 +1,87 @@
-<div class="home container">
-  @if (store.loading()) {
+<div class="home">
+  @if (matchesStore.loading()) {
     <app-loading-spinner />
   }
 
-  <!-- EN VIVO -->
-  <section class="section">
-    <div class="section-header">
-      <h2>
-        <span class="live-dot"></span>
-        En Vivo
-      </h2>
-      @if (store.liveMatches().length > 0) {
-        <a routerLink="/live" class="see-all">Ver todos →</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content container">
+      <div class="hero-text">
+        <h1 class="hero-title">FutsalInside</h1>
+        <p class="hero-subtitle">Plataforma especializada en futsal. Resultados, clasificaciones y estadísticas en tiempo real.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard container">
+    <!-- COLUMNA PRINCIPAL -->
+    <div class="main-column">
+      <!-- EN VIVO -->
+      @if (featuredLive().length > 0) {
+        <section class="section">
+          <div class="section-header">
+            <h2>
+              <span class="live-dot"></span>
+              En Vivo
+            </h2>
+            <a routerLink="/matches" class="see-all">Ver todos →</a>
+          </div>
+          <div class="live-grid">
+            @for (match of featuredLive(); track match.id) {
+              <app-match-card-compact [match]="match" />
+            }
+          </div>
+        </section>
+      }
+
+      <!-- PRÓXIMOS PARTIDOS -->
+      @if (matchesStore.upcomingMatches().length > 0) {
+        <section class="section">
+          <div class="section-header">
+            <h2>Próximos Partidos</h2>
+            <a routerLink="/matches" class="see-all">Ver todos →</a>
+          </div>
+          @for (entry of upcomingByCompetition() | keyvalue; track entry.key) {
+            <div class="competition-group">
+              <h3 class="competition-title">{{ entry.key }}</h3>
+              <div class="matches-grid">
+                @for (match of entry.value; track match.id) {
+                  <app-match-card [match]="match" />
+                }
+              </div>
+            </div>
+          }
+        </section>
+      }
+
+      <!-- RESULTADOS RECIENTES -->
+      @if (matchesStore.recentMatches().length > 0) {
+        <section class="section">
+          <div class="section-header">
+            <h2>Resultados Recientes</h2>
+            <a routerLink="/matches" class="see-all">Ver todos →</a>
+          </div>
+          <div class="matches-grid">
+            @for (match of matchesStore.recentMatches().slice(0, 6); track match.id) {
+              <app-match-card [match]="match" />
+            }
+          </div>
+        </section>
       }
     </div>
 
-    @if (store.liveMatches().length > 0) {
-      <div class="matches-grid">
-        @for (match of store.liveMatches(); track match.id) {
-          <app-match-card [match]="match" />
-        }
-      </div>
-    } @else {
-      <app-empty-state message="No hay partidos en vivo en este momento" icon="⚽" />
-    }
-  </section>
-
-  <!-- PRÓXIMOS PARTIDOS -->
-  <section class="section">
-    <div class="section-header">
-      <h2>Próximos Partidos</h2>
-      <a routerLink="/matches" class="see-all">Ver todos →</a>
-    </div>
-
-    @if (store.upcomingMatches().length > 0) {
-      <div class="matches-grid">
-        @for (match of store.upcomingMatches().slice(0, 6); track match.id) {
-          <app-match-card [match]="match" />
-        }
-      </div>
-    } @else {
-      <app-empty-state message="No hay próximos partidos programados" icon="📅" />
-    }
-  </section>
-
-  <!-- RESULTADOS RECIENTES -->
-  <section class="section">
-    <div class="section-header">
-      <h2>Resultados Recientes</h2>
-      <a routerLink="/matches" class="see-all">Ver todos →</a>
-    </div>
-
-    @if (store.recentMatches().length > 0) {
-      <div class="matches-grid">
-        @for (match of store.recentMatches().slice(0, 6); track match.id) {
-          <app-match-card [match]="match" />
-        }
-      </div>
-    } @else {
-      <app-empty-state message="No hay resultados recientes" icon="📋" />
-    }
-  </section>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      @if (standingsStore.standings().length > 0) {
+        <app-standings-mini [standings]="standingsStore.standings()" [maxItems]="5" />
+      }
+      @if (playersStore.players().length > 0) {
+        <app-top-scorers
+          [players]="playersStore.players()"
+          [playerStats]="playersStore.playerStats()"
+          [maxItems]="5"
+        />
+      }
+    </aside>
+  </div>
 </div>

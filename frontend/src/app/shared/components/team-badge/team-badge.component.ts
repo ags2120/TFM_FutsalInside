@@ -1,25 +1,52 @@
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Team } from '../../../core/models/team.model';
 
 @Component({
   selector: 'app-team-badge',
+  imports: [RouterLink],
   template: `
-  <div class="badge" [class]="size()">
-    @if (team().badgeUrl && !imageError) {
-      <img
-        [src]="team().badgeUrl"
-        [alt]="team().name"
-        class="badge-image"
-        (error)="imageError = true"
-      />
+    @if (link()) {
+      <a [routerLink]="['/teams', team().id]" class="badge-link" [attr.tabindex]="0">
+        <div class="badge" [class]="size()">
+          @if (team().badgeUrl && !imageError) {
+            <img
+              [src]="team().badgeUrl"
+              [alt]="team().name"
+              class="badge-image"
+              (error)="imageError = true"
+            />
+          } @else {
+            <span class="badge-icon">
+              {{ team().shortName.charAt(0) }}
+            </span>
+          }
+        </div>
+      </a>
     } @else {
-      <span class="badge-icon">
-        {{ team().shortName.charAt(0) }}
-      </span>
+      <div class="badge" [class]="size()">
+        @if (team().badgeUrl && !imageError) {
+          <img
+            [src]="team().badgeUrl"
+            [alt]="team().name"
+            class="badge-image"
+            (error)="imageError = true"
+          />
+        } @else {
+          <span class="badge-icon">
+            {{ team().shortName.charAt(0) }}
+          </span>
+        }
+      </div>
     }
-  </div>
-`,
+  `,
   styles: `
+    .badge-link {
+      display: inline-flex;
+      text-decoration: none;
+      color: inherit;
+      line-height: 0;
+    }
     .badge {
       display: flex;
       align-items: center;
@@ -50,5 +77,6 @@ import { Team } from '../../../core/models/team.model';
 export class TeamBadgeComponent {
   team = input.required<Team>();
   size = input<'sm' | 'md' | 'lg'>('md');
+  link = input(false);
   imageError = false;
 }

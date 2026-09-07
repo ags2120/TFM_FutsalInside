@@ -1,6 +1,7 @@
 export * from './match.model';
 export * from './team.model';
 export * from './player.model';
+export * from './player-match.model';
 export * from './standings.model';
 export * from './competition.model';
 export * from './user.model';

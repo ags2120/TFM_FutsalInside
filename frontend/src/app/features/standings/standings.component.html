@@ -1,14 +1,33 @@
 <div class="standings-page container">
   <div class="page-header">
     <h1>Clasificación</h1>
-    <span class="season-badge">Liga Nacional de Fútbol Sala 2025/2026</span>
+    <div class="filters-row">
+      <select
+        class="competition-select"
+        [value]="selectedLeague()"
+        (change)="onLeagueChange($event)"
+      >
+        @for (name of store.leagueNames(); track name) {
+          <option [value]="name">{{ name }}</option>
+        }
+      </select>
+      <select
+        class="competition-select season-select"
+        [value]="selectedSeason()"
+        (change)="onSeasonChange($event)"
+      >
+        @for (season of availableSeasons(); track season) {
+          <option [value]="season">{{ season }}</option>
+        }
+      </select>
+    </div>
   </div>
 
   @if (store.loading()) {
     <app-loading-spinner />
   } @else if (store.error()) {
     <app-empty-state [message]="store.error()!" icon="⚠️" />
-  } @else if (store.standings().length === 0) {
+  } @else if (filteredStandings().length === 0) {
     <app-empty-state message="No hay datos de clasificación disponibles" icon="📊" />
   } @else {
     <!-- Leyenda de colores -->
@@ -46,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (standing of store.standings(); track standing.team.id; let i = $index) {
+          @for (standing of filteredStandings(); track standing.team.id; let i = $index) {
             <tr
               class="standing-row"
               [class.champions-zone]="standing.position <= 2"
@@ -64,7 +83,7 @@
                   <app-team-badge [team]="standing.team" size="sm" />
                   <div class="team-details">
                     <span class="team-name">{{ standing.team.name }}</span>
-                    <span class="team-short">{{ standing.team.shortName }}</span>
+                    <span class="team-short">{{"(" + standing.team.shortName + ")" }}</span>
                   </div>
                 </a>
               </td>
@@ -97,7 +116,7 @@
 
     <!-- Tarjetas resumen para móvil -->
     <div class="mobile-cards">
-      @for (standing of store.standings(); track standing.team.id; let i = $index) {
+      @for (standing of filteredStandings(); track standing.team.id; let i = $index) {
         <div
           class="standing-card"
           [class.champions-zone]="standing.position <= 2"

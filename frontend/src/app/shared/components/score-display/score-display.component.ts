@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'app-score-display',
   template: `
-    <div class="score-display" [class.live]="isLive()">
+    <div class="score-display">
       <div class="score-box home">
         <span class="score-number">{{ homeScore() }}</span>
       </div>
@@ -52,11 +52,6 @@ import { Component, input } from '@angular/core';
       font-size: var(--font-size-2xl);
       font-weight: var(--font-weight-bold);
       color: var(--color-text-primary);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .live .score-number {
-      color: #fff;
     }
 
     .score-center {
@@ -74,10 +69,6 @@ import { Component, input } from '@angular/core';
       color: var(--color-text-muted);
     }
 
-    .live .separator {
-      color: var(--color-live);
-    }
-
     .live-dot {
       width: 8px;
       height: 8px;
@@ -89,11 +80,6 @@ import { Component, input } from '@angular/core';
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
-    }
-
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(255, 68, 68, 0.3), var(--shadow-md); }
-      50% { box-shadow: 0 0 30px rgba(255, 68, 68, 0.5), var(--shadow-lg); }
     }
   `,
 })
