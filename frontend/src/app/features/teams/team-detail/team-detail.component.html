@@ -137,7 +137,7 @@
           @if (teamStats()) {
             <div class="card radar-card">
               <h3 class="section-title">Perfil del equipo</h3>
-              <app-team-radar-chart [stats]="teamStats()!" />
+              <app-radar-chart [values]="radarValues()" [labels]="radarLabels" />
             </div>
           }
 

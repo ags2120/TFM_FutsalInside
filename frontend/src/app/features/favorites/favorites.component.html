@@ -1,0 +1,89 @@
+<div class="favorites-page container">
+  <div class="page-header">
+    <h1>Mis Favoritos</h1>
+    @if (hasFavorites()) {
+      <span class="fav-count-badge">{{ favoritesStore.count() }} favoritos</span>
+    }
+  </div>
+
+  @if (!hasFavorites()) {
+    <div class="empty-favorites">
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <h2>No tienes favoritos</h2>
+      <p>Añade equipos y jugadores a tus favoritos para acceder rápidamente.</p>
+      <div class="empty-actions">
+        <a routerLink="/teams" class="btn-secondary">Explorar equipos</a>
+        <a routerLink="/players" class="btn-secondary">Explorar jugadores</a>
+      </div>
+    </div>
+  } @else {
+    <!-- Equipos favoritos -->
+    @if (favoriteTeams().length > 0) {
+      <section class="fav-section">
+        <h2 class="section-title">Equipos</h2>
+        <div class="fav-grid">
+          @for (item of favoriteTeams(); track item.team.id) {
+            <div class="fav-card">
+              <a [routerLink]="['/teams', item.team.id]" class="fav-card-link">
+                <app-team-badge [team]="item.team" size="lg" />
+                <div class="fav-card-info">
+                  <h3 class="fav-card-name">{{ item.team.name }}</h3>
+                  @if (item.team.league) {
+                    <span class="fav-card-meta">{{ item.team.league }}</span>
+                  }
+                </div>
+              </a>
+              <button
+                class="remove-btn"
+                (click)="removeFavorite('team', item.entityId, item.name)"
+                [attr.aria-label]="'Eliminar ' + item.name + ' de favoritos'"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Jugadores favoritos -->
+    @if (favoritePlayers().length > 0) {
+      <section class="fav-section">
+        <h2 class="section-title">Jugadores</h2>
+        <div class="fav-grid">
+          @for (item of favoritePlayers(); track item.player.id) {
+            <div class="fav-card">
+              <a [routerLink]="['/players', item.player.id]" class="fav-card-link">
+                <app-player-avatar [player]="item.player" size="lg" />
+                <div class="fav-card-info">
+                  <h3 class="fav-card-name">{{ item.player.firstName }} {{ item.player.lastName }}</h3>
+                  <span class="fav-card-meta">{{ item.player.position }}</span>
+                  @if (item.player.team) {
+                    <span class="fav-card-meta">{{ item.player.team.shortName }}</span>
+                  }
+                </div>
+              </a>
+              <button
+                class="remove-btn"
+                (click)="removeFavorite('player', item.entityId, item.name)"
+                [attr.aria-label]="'Eliminar ' + item.name + ' de favoritos'"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

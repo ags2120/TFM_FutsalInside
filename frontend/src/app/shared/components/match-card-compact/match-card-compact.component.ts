@@ -9,10 +9,10 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
   template: `
     <a [routerLink]="['/matches', match().id]" class="match-compact">
       <div class="compact-left">
-        <a [routerLink]="['/teams', match().homeTeam.id]" class="team-link">
+        <span class="team-info">
           <app-team-badge [team]="match().homeTeam" size="sm" />
           <span class="team-name">{{ match().homeTeam.shortName }}</span>
-        </a>
+        </span>
       </div>
       <div class="compact-score">
         <span class="score">{{ match().homeScore }} - {{ match().awayScore }}</span>
@@ -21,10 +21,10 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
         }
       </div>
       <div class="compact-right">
-        <a [routerLink]="['/teams', match().awayTeam.id]" class="team-link">
+        <span class="team-info">
           <span class="team-name">{{ match().awayTeam.shortName }}</span>
           <app-team-badge [team]="match().awayTeam" size="sm" />
-        </a>
+        </span>
       </div>
     </a>
   `,
@@ -64,20 +64,13 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
       justify-content: flex-end;
     }
 
-    .team-link {
+    .team-info {
       display: flex;
       align-items: center;
       gap: var(--space-2);
-      text-decoration: none;
-      color: inherit;
       padding: 2px 4px;
       border-radius: var(--radius-sm);
-      transition: background-color var(--transition-fast);
-      cursor: pointer;
-    }
-
-    .team-link:hover {
-      background-color: var(--color-bg-tertiary);
+      min-width: 0;
     }
 
     .team-name {

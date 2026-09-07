@@ -11,7 +11,17 @@
         placeholder="tu_usuario"
         autocomplete="username"
         aria-required="true"
+        [class.input-error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
       />
+      @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+        <div class="error-messages" role="alert">
+          @if (registerForm.get('username')?.errors?.['required']) {
+            <span class="error-text">El nombre de usuario es requerido</span>
+          } @else if (registerForm.get('username')?.errors?.['minlength']) {
+            <span class="error-text">Mínimo 3 caracteres</span>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-group">
@@ -23,7 +33,17 @@
         placeholder="tu@email.com"
         autocomplete="email"
         aria-required="true"
+        [class.input-error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
       />
+      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+        <div class="error-messages" role="alert">
+          @if (registerForm.get('email')?.errors?.['required']) {
+            <span class="error-text">El email es requerido</span>
+          } @else if (registerForm.get('email')?.errors?.['email']) {
+            <span class="error-text">Ingresa un email válido</span>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-group">
@@ -35,7 +55,17 @@
         placeholder="••••••••"
         autocomplete="new-password"
         aria-required="true"
+        [class.input-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
       />
+      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        <div class="error-messages" role="alert">
+          @if (registerForm.get('password')?.errors?.['required']) {
+            <span class="error-text">La contraseña es requerida</span>
+          } @else if (registerForm.get('password')?.errors?.['minlength']) {
+            <span class="error-text">Mínimo 6 caracteres</span>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-group">
@@ -47,7 +77,17 @@
         placeholder="••••••••"
         autocomplete="new-password"
         aria-required="true"
+        [class.input-error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
       />
+      @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+        <div class="error-messages" role="alert">
+          @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+            <span class="error-text">Confirma tu contraseña</span>
+          } @else if (registerForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
+            <span class="error-text">Las contraseñas no coinciden</span>
+          }
+        </div>
+      }
     </div>
 
     <button type="submit" class="btn-primary">Crear Cuenta</button>

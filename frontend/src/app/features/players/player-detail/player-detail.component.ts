@@ -13,7 +13,7 @@ import { PlayersStore } from '../../../stores/players.store';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
 import { PlayerAvatarComponent } from '../../../shared/components/player-avatar/player-avatar.component';
-import { PlayerRadarChartComponent } from '../../../shared/components/player-radar-chart/player-radar-chart.component';
+import { RadarChartComponent } from '../../../shared/components/radar-chart/radar-chart.component';
 import { PlayerStatsCardComponent } from '../../../shared/components/player-stats-card/player-stats-card.component';
 import { PlayerAdvancedStatsComponent } from '../../../shared/components/player-advanced-stats/player-advanced-stats.component';
 import { LeagueComparisonComponent } from '../../../shared/components/league-comparison/league-comparison.component';
@@ -33,7 +33,7 @@ import { AgePipe } from '../../../shared/pipes/age.pipe';
     BreadcrumbComponent,
     TeamBadgeComponent,
     PlayerAvatarComponent,
-    PlayerRadarChartComponent,
+    RadarChartComponent,
     PlayerStatsCardComponent,
     PlayerAdvancedStatsComponent,
     LeagueComparisonComponent,
@@ -106,6 +106,15 @@ export class PlayerDetailComponent implements OnInit {
       'Colombia': '🇨🇴', 'Italia': '🇮🇹', 'Rusia': '🇷🇺',
     };
     return flags[p.nationality] || '🏳️';
+  });
+
+  protected readonly radarLabels = ['Gol', 'Asist.', 'Defensa', 'Físico', 'Técnica'];
+
+  protected readonly radarValues = computed(() => {
+    const p = this.player();
+    if (!p?.radarAttributes) return [0, 0, 0, 0, 0];
+    const r = p.radarAttributes;
+    return [r.goals, r.assists, r.defense, r.physical, r.technique];
   });
 
   async ngOnInit(): Promise<void> {

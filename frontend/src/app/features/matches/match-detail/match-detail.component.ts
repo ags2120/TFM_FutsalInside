@@ -62,7 +62,7 @@ export class MatchDetailComponent implements OnInit {
   protected readonly sortedEvents = computed(() => {
     const m = this.match();
     if (!m?.events) return [];
-    return [...m.events].sort((a, b) => b.minute - a.minute);
+    return [...m.events].sort((a, b) => a.minute - b.minute);
   });
 
   async ngOnInit(): Promise<void> {

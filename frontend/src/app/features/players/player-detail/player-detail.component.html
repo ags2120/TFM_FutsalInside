@@ -186,7 +186,7 @@
           @if (player()!.radarAttributes) {
             <div class="card radar-card">
               <h3 class="section-title">Perfil del jugador</h3>
-              <app-player-radar-chart [stats]="player()!.radarAttributes!" />
+              <app-radar-chart [values]="radarValues()" [labels]="radarLabels" />
             </div>
           }
 
@@ -201,7 +201,7 @@
               <h3 class="section-title">Últimos partidos</h3>
               <div class="matches-list">
                 @for (part of recentMatches(); track part.matchId) {
-                  <app-player-match-row [participation]="part" [match]="matchForParticipation()(part)" />
+                  <app-player-match-row [participation]="part" [match]="matchForParticipation()(part)" [playerTeamId]="player()!.team?.id ?? null" />
                 }
               </div>
             </div>

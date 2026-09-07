@@ -1,6 +1,36 @@
 <div class="live-page container">
-  <h1>Partidos en Vivo</h1>
-  <div class="live-list">
-    <p class="placeholder-text">Los partidos en vivo se mostrarán aquí</p>
+  <div class="page-header">
+    <h1>
+      <span class="live-indicator">
+        <span class="live-dot"></span>
+        <span class="live-pulse"></span>
+      </span>
+      Partidos en Vivo
+    </h1>
+    @if (hasLiveMatches()) {
+      <span class="live-count-badge">{{ liveMatches().length }} en curso</span>
+    }
   </div>
+
+  @if (store.loading()) {
+    <app-loading-spinner />
+  } @else if (!hasLiveMatches()) {
+    <div class="empty-live">
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <h2>No hay partidos en vivo</h2>
+      <p>Cuando comience un partido, aparecerá aquí automáticamente.</p>
+      <a routerLink="/matches" class="btn-secondary">Ver próximos partidos</a>
+    </div>
+  } @else {
+    <div class="live-grid">
+      @for (match of liveMatches(); track match.id) {
+        <app-match-card [match]="match" />
+      }
+    </div>
+  }
 </div>

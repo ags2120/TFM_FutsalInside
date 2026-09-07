@@ -102,27 +102,6 @@
   flex-shrink: 0;
 }
 
-.icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-lg);
-  color: var(--color-text-secondary);
-  transition: all var(--transition-fast);
-  text-decoration: none;
-}
-
-.icon-btn:hover {
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-hover);
-}
-
-.icon-btn.active {
-  color: var(--color-live);
-}
-
 .btn-login {
   display: flex;
   align-items: center;
@@ -143,6 +122,50 @@
   background-color: var(--color-bg-hover);
 }
 
+/* Hamburger button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: calc(var(--z-sticky) + 1);
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-primary);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+  transform-origin: center;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile overlay */
+.mobile-overlay {
+  display: none;
+}
+
+/* Tablet */
 @media (max-width: 1024px) {
   .nav-link span {
     display: none;
@@ -165,9 +188,50 @@
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
   .nav {
-    display: none;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+    z-index: var(--z-sticky);
+    overflow-y: auto;
+  }
+
+  .nav.mobile-open {
+    transform: translateX(0);
+  }
+
+  .nav-link {
+    display: flex;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-lg);
+  }
+
+  .nav-link span {
+    display: inline;
+  }
+
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-sticky) - 1);
   }
 
   .header-inner {
@@ -180,6 +244,10 @@
   }
 
   .logo-text {
+    display: none;
+  }
+
+  .btn-login {
     display: none;
   }
 }

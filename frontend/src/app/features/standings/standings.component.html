@@ -102,7 +102,7 @@
               <td class="col-form">
                 <div class="form-badges">
                   @for (result of standing.form; track $index) {
-                    <span class="form-badge" [class]="result | formClass">
+                    <span class="form-badge" [ngClass]="result | formClass">
                       {{ result | formLabel }}
                     </span>
                   }
@@ -170,7 +170,7 @@
             <span class="form-label">Últimos 5:</span>
             <div class="form-badges">
               @for (result of standing.form; track $index) {
-                <span class="form-badge" [class]="result | formClass">
+                <span class="form-badge" [ngClass]="result | formClass">
                   {{ result | formLabel }}
                 </span>
               }

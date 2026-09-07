@@ -46,7 +46,7 @@
   left: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
-  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
   pointer-events: none;
 }
 

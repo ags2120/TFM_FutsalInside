@@ -12,7 +12,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/
 import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
 import { PlayerAvatarComponent } from '../../../shared/components/player-avatar/player-avatar.component';
 import { TeamStatsCardComponent } from '../../../shared/components/team-stats-card/team-stats-card.component';
-import { TeamRadarChartComponent } from '../../../shared/components/team-radar-chart/team-radar-chart.component';
+import { RadarChartComponent } from '../../../shared/components/radar-chart/radar-chart.component';
 import { FeaturedPlayersComponent } from '../../../shared/components/featured-players/featured-players.component';
 import { ClubInfoComponent } from '../../../shared/components/club-info/club-info.component';
 import { StandingsMiniComponent } from '../../../shared/components/standings-mini/standings-mini.component';
@@ -31,7 +31,7 @@ import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
     TeamBadgeComponent,
     PlayerAvatarComponent,
     TeamStatsCardComponent,
-    TeamRadarChartComponent,
+    RadarChartComponent,
     FeaturedPlayersComponent,
     ClubInfoComponent,
     StandingsMiniComponent,
@@ -76,6 +76,21 @@ export class TeamDetailComponent implements OnInit {
   protected readonly topStandings = computed(() =>
     this.allStandings().slice(0, 5)
   );
+
+  protected readonly radarLabels = ['Ataque', 'Defensa', 'Posesión', 'Presión', 'Eficiencia'];
+
+  protected readonly radarValues = computed(() => {
+    const s = this.teamStats();
+    if (!s) return [0, 0, 0, 0, 0];
+    const maxGoals = 68;
+    const attack = Math.min(100, (s.goalsScored / maxGoals) * 100);
+    const defense = Math.min(100, ((maxGoals - s.goalsConceded) / maxGoals) * 100);
+    const possession = s.avgBallPossession || 50;
+    const pressing = Math.min(100, ((s.cleanSheets / 8) * 100));
+    const winRate = s.matchesPlayed > 0 ? (s.wins / s.matchesPlayed) * 100 : 0;
+    const efficiency = (winRate + possession) / 2;
+    return [attack, defense, possession, pressing, efficiency];
+  });
 
   ngOnInit(): void {
     const sub = this.route.paramMap.subscribe(params => {

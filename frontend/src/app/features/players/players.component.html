@@ -1,6 +1,92 @@
 <div class="players-page container">
-  <h1>Jugadores</h1>
-  <div class="players-grid">
-    <p class="placeholder-text">Los jugadores se mostrarán aquí</p>
+  <div class="page-header">
+    <h1>Jugadores</h1>
+    @if (!store.loading() && !store.error()) {
+      <span class="player-count-badge">{{ store.players().length }} jugadores</span>
+    }
   </div>
+
+  @if (store.loading()) {
+    <app-loading-spinner />
+  } @else if (store.error()) {
+    <app-empty-state [message]="store.error()!" icon="⚠️" />
+  } @else if (store.players().length === 0) {
+    <app-empty-state message="No hay jugadores disponibles" icon="⚽" />
+  } @else {
+    <!-- Filtros -->
+    <div class="filters-bar">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Buscar jugador..."
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+          aria-label="Buscar jugador"
+        />
+      </div>
+
+      <select
+        class="position-select"
+        [value]="selectedPosition()"
+        (change)="onPositionChange($event)"
+        aria-label="Filtrar por posición"
+      >
+        <option value="">Todas las posiciones</option>
+        @for (pos of positions; track pos) {
+          <option [value]="pos">{{ pos | playerPosition }}</option>
+        }
+      </select>
+
+      @if (hasActiveFilters()) {
+        <button class="clear-btn" (click)="clearFilters()">Limpiar filtros</button>
+      }
+    </div>
+
+    <!-- Conteo de resultados -->
+    @if (hasActiveFilters()) {
+      <p class="results-count">
+        Mostrando {{ playerCount() }} de {{ store.players().length }} jugadores
+      </p>
+    }
+
+    <!-- Grid de jugadores -->
+    @if (filteredPlayers().length === 0) {
+      <app-empty-state
+        message="No se encontraron jugadores con los filtros seleccionados"
+        icon="🔍"
+      />
+    } @else {
+      <div class="players-grid">
+        @for (player of filteredPlayers(); track player.id; let i = $index) {
+          <a
+            [routerLink]="['/players', player.id]"
+            class="player-card"
+            [style.animation-delay]="i * 50 + 'ms'"
+          >
+            <div class="card-avatar">
+              <app-player-avatar [player]="player" size="lg" />
+            </div>
+            <div class="card-info">
+              <h3 class="card-name">{{ player.firstName }} {{ player.lastName }}</h3>
+              <span class="card-position">{{ player.position | playerPosition }}</span>
+              @if (player.team) {
+                <span class="card-team">{{ player.team.shortName }}</span>
+              }
+            </div>
+            <div class="card-meta">
+              <span class="card-number">#{{ player.shirtNumber }}</span>
+              @if (player.averageRating) {
+                <span class="card-rating">{{ player.averageRating.toFixed(1) }}</span>
+              }
+            </div>
+          </a>
+        }
+      </div>
+    }
+  }
 </div>

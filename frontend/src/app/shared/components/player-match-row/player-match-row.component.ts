@@ -142,12 +142,20 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
 export class PlayerMatchRowComponent {
   readonly participation = input.required<PlayerMatchParticipation>();
   readonly match = input<Match | null>(null);
+  readonly playerTeamId = input<number | null>(null);
 
   readonly resultClass = computed(() => {
     const m = this.match();
-    if (!m) return '';
-    if (m.homeScore > m.awayScore) return 'win';
-    if (m.homeScore < m.awayScore) return 'loss';
+    const teamId = this.playerTeamId();
+    if (!m || !teamId) return '';
+    const isHome = m.homeTeam.id === teamId;
+    if (isHome) {
+      if (m.homeScore > m.awayScore) return 'win';
+      if (m.homeScore < m.awayScore) return 'loss';
+    } else {
+      if (m.awayScore > m.homeScore) return 'win';
+      if (m.awayScore < m.homeScore) return 'loss';
+    }
     return 'draw';
   });
 

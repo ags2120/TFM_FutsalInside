@@ -1,4 +1,5 @@
 import { Component, inject, computed, signal, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { StandingsStore } from '../../stores/standings.store';
 import { TeamBadgeComponent } from '../../shared/components/team-badge/team-badge.component';
@@ -9,7 +10,7 @@ import { FormLabelPipe, FormClassPipe } from '../../shared/pipes/form-result.pip
 
 @Component({
   selector: 'app-standings',
-  imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, EmptyStateComponent, FormLabelPipe, FormClassPipe],
+  imports: [NgClass, RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, EmptyStateComponent, FormLabelPipe, FormClassPipe],
   templateUrl: './standings.component.html',
   styleUrl: './standings.component.css',
 })

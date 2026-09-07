@@ -30,8 +30,21 @@
   border-color: var(--color-accent);
 }
 
+.form-group input.input-error {
+  border-color: var(--color-live);
+}
+
 .form-group input::placeholder {
   color: var(--color-text-muted);
+}
+
+.error-messages {
+  margin-top: var(--space-2);
+}
+
+.error-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-live);
 }
 
 .btn-primary {

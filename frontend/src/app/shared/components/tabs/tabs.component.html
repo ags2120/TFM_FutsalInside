@@ -1,9 +1,14 @@
-<div class="tabs">
+<div class="tabs" role="tablist" aria-label="Navegación de pestañas">
   @for (tab of tabs(); track tab.key) {
     <button
+      role="tab"
       class="tab"
       [class.active]="activeTab() === tab.key"
+      [attr.aria-selected]="activeTab() === tab.key"
+      [attr.aria-controls]="'panel-' + tab.key"
+      [id]="'tab-' + tab.key"
       (click)="tabChange.emit(tab.key)"
+      (keydown)="onKeydown($event, tab.key)"
     >
       {{ tab.label }}
     </button>
