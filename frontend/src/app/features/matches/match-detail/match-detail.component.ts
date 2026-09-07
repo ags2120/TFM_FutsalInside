@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { Match, MatchEvent, MatchStatistics } from '../../../core/models/match.model';
 import { MockDataService } from '../../../core/services/mock-data.service';
@@ -9,6 +10,7 @@ import { StatBarComponent } from '../../../shared/components/stat-bar/stat-bar.c
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 import { TabsComponent, Tab } from '../../../shared/components/tabs/tabs.component';
+import { MatchStatusPipe } from '../../../shared/pipes/match-status.pipe';
 
 @Component({
   selector: 'app-match-detail',
@@ -20,6 +22,8 @@ import { TabsComponent, Tab } from '../../../shared/components/tabs/tabs.compone
     LoadingSpinnerComponent,
     EmptyStateComponent,
     TabsComponent,
+    MatchStatusPipe,
+    UpperCasePipe,
   ],
   templateUrl: './match-detail.component.html',
   styleUrl: './match-detail.component.css',
@@ -93,18 +97,6 @@ export class MatchDetailComponent implements OnInit {
       case 'substitution': return 'Cambio';
       case 'timeout': return 'Tiempo muerto';
       default: return type;
-    }
-  }
-
-  getStatusLabel(): string {
-    switch (this.match()?.status) {
-      case 'live': return 'EN VIVO';
-      case 'halftime': return 'DESCANSO';
-      case 'finished': return 'FINALIZADO';
-      case 'scheduled': return 'POR JUGAR';
-      case 'postponed': return 'APLAZADO';
-      case 'cancelled': return 'CANCELADO';
-      default: return '';
     }
   }
 }

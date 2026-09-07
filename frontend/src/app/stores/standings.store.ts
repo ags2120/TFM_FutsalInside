@@ -1,12 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { Standing } from '../core/models/standings.model';
+import { Standing, Competition } from '../core/models';
 import { MOCK_STANDINGS, COMPETITIONS } from '../core/mocks';
-
-export interface Competition {
-  id: number;
-  name: string;
-  season: string;
-}
 
 @Injectable({ providedIn: 'root' })
 export class StandingsStore {
@@ -17,7 +11,7 @@ export class StandingsStore {
   readonly standings = this._standings.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
-  readonly competitions = COMPETITIONS;
+  readonly competitions: Competition[] = COMPETITIONS;
 
   readonly leagueNames = computed(() =>
     [...new Set(this.competitions.map((c) => c.name))].sort()

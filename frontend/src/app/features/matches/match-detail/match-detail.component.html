@@ -39,7 +39,7 @@
               </span>
             }
             <span class="status-badge" [class]="match()!.status">
-              {{ getStatusLabel() }}
+              {{ match()!.status | matchStatus | uppercase }}
             </span>
           </div>
 
@@ -68,7 +68,7 @@
       <!-- TAB: INFORMACIÓN -->
       @if (activeTab() === 'info') {
         <div class="info-section animate-fade-in">
-          <div class="info-card">
+            <div class="card">
             <h3 class="section-title">Detalles del partido</h3>
             <div class="info-grid">
               <div class="info-item">
@@ -89,13 +89,13 @@
               </div>
               <div class="info-item">
                 <span class="info-label">Estado</span>
-                <span class="info-value status" [class]="match()!.status">{{ getStatusLabel() }}</span>
+                <span class="info-value status" [class]="match()!.status">{{ match()!.status | matchStatus | uppercase }}</span>
               </div>
             </div>
           </div>
 
           @if (match()!.events && match()!.events!.length > 0) {
-            <div class="info-card">
+          <div class="card">
               <h3 class="section-title">Resumen de goles</h3>
               <div class="goals-summary">
                 <div class="goals-column">
@@ -179,7 +179,7 @@
       @if (activeTab() === 'stats') {
         <div class="stats-section animate-fade-in">
           @if (match()!.statistics && match()!.statistics!.length > 0) {
-            <div class="stats-card">
+            <div class="card">
               <div class="stats-header">
                 <span class="stats-team home">{{ match()!.homeTeam.shortName }}</span>
                 <span class="stats-title">Estadísticas</span>

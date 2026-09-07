@@ -5,10 +5,11 @@ import { TeamBadgeComponent } from '../../shared/components/team-badge/team-badg
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { FormResult } from '../../core/models/standings.model';
+import { FormLabelPipe, FormClassPipe } from '../../shared/pipes/form-result.pipe';
 
 @Component({
   selector: 'app-standings',
-  imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, EmptyStateComponent],
+  imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, EmptyStateComponent, FormLabelPipe, FormClassPipe],
   templateUrl: './standings.component.html',
   styleUrl: './standings.component.css',
 })
@@ -45,24 +46,6 @@ export class StandingsComponent implements OnInit {
 
   onSeasonChange(event: Event): void {
     this.selectedSeason.set((event.target as HTMLSelectElement).value);
-  }
-
-  getFormClass(result: FormResult): string {
-    switch (result) {
-      case 'W': return 'win';
-      case 'D': return 'draw';
-      case 'L': return 'loss';
-      default: return '';
-    }
-  }
-
-  getFormLabel(result: FormResult): string {
-    switch (result) {
-      case 'W': return 'V';
-      case 'D': return 'E';
-      case 'L': return 'D';
-      default: return '';
-    }
   }
 
   getGoalDifferenceClass(diff: number): string {

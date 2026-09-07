@@ -21,6 +21,8 @@ import { MatchCardCompactComponent } from '../../../shared/components/match-card
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 import { NextMatchPredictionComponent } from '../../../shared/components/next-match-prediction/next-match-prediction.component';
+import { FormLabelPipe, FormClassPipe } from '../../../shared/pipes/form-result.pipe';
+import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
 
 @Component({
   selector: 'app-team-detail',
@@ -38,6 +40,9 @@ import { NextMatchPredictionComponent } from '../../../shared/components/next-ma
     LoadingSpinnerComponent,
     EmptyStateComponent,
     NextMatchPredictionComponent,
+    FormLabelPipe,
+    FormClassPipe,
+    PlayerPositionPipe,
   ],
   templateUrl: './team-detail.component.html',
   styleUrl: './team-detail.component.css',
@@ -119,33 +124,5 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     const t = this.team();
     if (!t) return;
     this.favoritesStore.toggleFavorite('team', t.id, t.name);
-  }
-
-  getPositionLabel(position: string): string {
-    switch (position) {
-      case 'portero': return 'Portero';
-      case 'cierre': return 'Cierre';
-      case 'ala': return 'Ala';
-      case 'pivot': return 'Pívot';
-      default: return position;
-    }
-  }
-
-  getFormLabel(result: string): string {
-    switch (result) {
-      case 'W': return 'V';
-      case 'D': return 'E';
-      case 'L': return 'D';
-      default: return result;
-    }
-  }
-
-  getFormClass(result: string): string {
-    switch (result) {
-      case 'W': return 'form-win';
-      case 'D': return 'form-draw';
-      case 'L': return 'form-loss';
-      default: return '';
-    }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { TeamStatistics } from '../../../core/models/statistics.model';
+import { pentagonPoints, pentagonPointsArray, pointAtAngle, pointsToPolygon } from '../../utils/radar-chart';
 
 @Component({
   selector: 'app-team-radar-chart',
@@ -57,30 +58,14 @@ export class TeamRadarChartComponent {
     this.rawValues().map(v => Math.round(v))
   );
 
-  protected readonly axisLines = computed(() => this.pentagonPointsArray(this.center, this.radius));
-  protected readonly labelPositions = computed(() => this.pentagonPointsArray(this.center, this.radius * 1.22));
+  protected readonly axisLines = computed(() => pentagonPointsArray(this.center, this.radius));
+  protected readonly labelPositions = computed(() => pentagonPointsArray(this.center, this.radius * 1.22));
 
   protected readonly dataDots = computed(() =>
-    this.rawValues().map((v, i) => this.pointAtAngle(i, (v / 100) * this.radius))
+    this.rawValues().map((v, i) => pointAtAngle(this.center, i, (v / 100) * this.radius))
   );
 
-  protected readonly dataPolygon = computed(() =>
-    this.dataDots().map(p => `${p.x},${p.y}`).join(' ')
-  );
+  protected readonly dataPolygon = computed(() => pointsToPolygon(this.dataDots()));
 
-  protected pentagonPoints(cx: number, r: number): string {
-    return this.pentagonPointsArray(cx, r).map(p => `${p.x},${p.y}`).join(' ');
-  }
-
-  private pentagonPointsArray(cx: number, r: number): { x: number; y: number }[] {
-    return Array.from({ length: 5 }, (_, i) => this.pointAtAngle(i, r));
-  }
-
-  private pointAtAngle(index: number, r: number): { x: number; y: number } {
-    const angle = (Math.PI * 2 * index) / 5 - Math.PI / 2;
-    return {
-      x: this.center + r * Math.cos(angle),
-      y: this.center + r * Math.sin(angle),
-    };
-  }
+  protected readonly pentagonPoints = pentagonPoints;
 }

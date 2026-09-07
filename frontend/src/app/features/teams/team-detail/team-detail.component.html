@@ -52,7 +52,7 @@
           @if (standing()) {
             <div class="form-strip">
               @for (result of standing()!.form; track $index) {
-                <span class="form-dot" [class]="getFormClass(result)">{{ getFormLabel(result) }}</span>
+                <span class="form-dot" [class]="result | formClass">{{ result | formLabel }}</span>
               }
             </div>
           }
@@ -86,7 +86,7 @@
 
           <!-- PARTIDOS RECIENTES -->
           @if (recentMatches().length > 0) {
-            <div class="info-card">
+            <div class="card">
               <h3 class="section-title">Últimos partidos</h3>
               <div class="matches-list">
                 @for (match of recentMatches(); track match.id) {
@@ -105,7 +105,7 @@
           }
 
           <!-- PLANTILLA -->
-          <div class="info-card">
+          <div class="card">
             <div class="section-header">
               <h3 class="section-title">Plantilla</h3>
               <span class="player-count">{{ players().length }} jugadores</span>
@@ -117,7 +117,7 @@
                   <app-player-avatar [player]="player" size="sm" />
                   <div class="player-info">
                     <span class="player-name">{{ player.firstName }} {{ player.lastName }}</span>
-                    <span class="player-position">{{ getPositionLabel(player.position) }}</span>
+                    <span class="player-position">{{ player.position | playerPosition }}</span>
                   </div>
                   <div class="player-meta">
                     <span class="player-nationality">🌍 {{ player.nationality }}</span>
@@ -135,7 +135,7 @@
         <div class="right-column">
           <!-- RADAR DEL EQUIPO -->
           @if (teamStats()) {
-            <div class="info-card radar-card">
+            <div class="card radar-card">
               <h3 class="section-title">Perfil del equipo</h3>
               <app-team-radar-chart [stats]="teamStats()!" />
             </div>

@@ -61,7 +61,6 @@
 .match-content { padding-top: var(--space-4); }
 
 .info-section { display: flex; flex-direction: column; gap: var(--space-4); }
-.info-card { background-color: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); }
 .section-title { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-3); }
 
 .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-3); }
@@ -108,7 +107,6 @@
 .event-team { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-muted); }
 
 .stats-section { display: flex; flex-direction: column; gap: var(--space-4); }
-.stats-card { background-color: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); }
 .stats-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); }
 .stats-team { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-text-secondary); }
 .stats-team.home { text-align: left; }

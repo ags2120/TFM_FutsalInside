@@ -81,15 +81,15 @@
 }
 
 .favorite-btn:hover {
-  border-color: #ef4444;
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--color-live);
+  color: var(--color-live);
+  background-color: var(--color-live-muted);
 }
 
 .favorite-btn.active {
-  border-color: #ef4444;
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-live);
+  color: var(--color-live);
+  background-color: var(--color-live-muted);
 }
 
 /* === PLAYER META ROW === */
@@ -160,13 +160,13 @@
 }
 
 .value-badge {
-  background-color: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
+  background-color: var(--color-purple-muted);
+  color: var(--color-purple);
 }
 
 .rating-badge-header {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
+  background-color: var(--color-gold-muted);
+  color: var(--color-gold);
 }
 
 /* === CONTENT GRID === */
@@ -196,13 +196,6 @@
 }
 
 /* === INFO CARDS === */
-.info-card {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-}
-
 .section-title {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
@@ -242,7 +235,7 @@
 }
 
 .info-value.accent {
-  color: #a78bfa;
+  color: var(--color-purple);
   font-weight: var(--font-weight-semibold);
 }
 

@@ -36,12 +36,12 @@
           <div class="player-meta-row">
             <span class="position-badge">
               <span class="position-icon">{{ getPositionEmoji(player()!.position) }}</span>
-              {{ getPositionLabel(player()!.position) }}
+              {{ player()!.position | playerPosition }}
             </span>
             <span class="meta-separator">·</span>
             <span class="meta-item">{{ nationalityFlag() }} {{ player()!.nationality }}</span>
             <span class="meta-separator">·</span>
-            <span class="meta-item">{{ getAge(player()!.birthDate) }} años</span>
+            <span class="meta-item">{{ player()!.birthDate | age }} años</span>
           </div>
           <div class="player-badges-row">
             @if (player()!.team) {
@@ -77,7 +77,7 @@
         <!-- COLUMNA IZQUIERDA -->
         <div class="left-column">
           <!-- INFORMACIÓN PERSONAL -->
-          <div class="info-card">
+          <div class="card">
             <h3 class="section-title">Información personal</h3>
             <div class="info-grid">
               <div class="info-item">
@@ -90,7 +90,7 @@
               </div>
               <div class="info-item">
                 <span class="info-label">Edad</span>
-                <span class="info-value">{{ getAge(player()!.birthDate) }} años</span>
+                <span class="info-value">{{ player()!.birthDate | age }} años</span>
               </div>
               <div class="info-item">
                 <span class="info-label">Fecha de nacimiento</span>
@@ -134,14 +134,14 @@
           </div>
 
           <!-- DESCRIPCIÓN DE POSICIÓN -->
-          <div class="info-card position-card">
+          <div class="card position-card">
             <h3 class="section-title">Posición</h3>
             <div class="position-detail">
               <div class="position-badge-large">
                 {{ getPositionEmoji(player()!.position) }}
               </div>
               <div class="position-info">
-                <span class="position-name">{{ getPositionLabel(player()!.position) }}</span>
+                <span class="position-name">{{ player()!.position | playerPosition }}</span>
                 <p class="position-description">{{ getPositionDescription(player()!.position) }}</p>
               </div>
             </div>
@@ -184,7 +184,7 @@
         <div class="right-column">
           <!-- RADAR CHART -->
           @if (player()!.radarAttributes) {
-            <div class="info-card radar-card">
+            <div class="card radar-card">
               <h3 class="section-title">Perfil del jugador</h3>
               <app-player-radar-chart [stats]="player()!.radarAttributes!" />
             </div>
@@ -197,7 +197,7 @@
 
           <!-- PARTIDOS RECIENTES -->
           @if (recentMatches().length > 0) {
-            <div class="info-card">
+            <div class="card">
               <h3 class="section-title">Últimos partidos</h3>
               <div class="matches-list">
                 @for (part of recentMatches(); track part.matchId) {
@@ -209,7 +209,7 @@
 
           <!-- EQUIPO -->
           @if (player()!.team) {
-            <div class="info-card team-card">
+            <div class="card team-card">
               <h3 class="section-title">Equipo</h3>
               <a [routerLink]="['/teams', player()!.team!.id]" class="team-link-card">
                 <app-team-badge [team]="player()!.team!" size="lg" />
@@ -231,7 +231,7 @@
               @if (teamStanding()) {
                 <div class="form-strip">
                   @for (result of teamStanding()!.form; track $index) {
-                    <span class="form-dot" [class]="getFormClass(result)">{{ getFormLabel(result) }}</span>
+                    <span class="form-dot" [class]="result | formClass">{{ result | formLabel }}</span>
                   }
                 </div>
               }

@@ -13,6 +13,7 @@
 
   --color-accent: #00d26a;
   --color-accent-hover: #00b85c;
+  --color-accent-dark: #00a854;
   --color-accent-muted: rgba(0, 210, 106, 0.15);
 
   --color-live: #ff4444;
@@ -20,6 +21,11 @@
 
   --color-warning: #ffb800;
   --color-warning-muted: rgba(255, 184, 0, 0.15);
+
+  --color-purple: #a78bfa;
+  --color-purple-muted: rgba(167, 139, 250, 0.15);
+  --color-gold: #fbbf24;
+  --color-gold-muted: rgba(251, 191, 36, 0.15);
 
   --color-border: #1e2a3a;
   --color-border-light: #253447;

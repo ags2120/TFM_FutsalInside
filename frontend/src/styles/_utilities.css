@@ -99,3 +99,10 @@
 
 .cursor-pointer { cursor: pointer; }
 .select-none { user-select: none; }
+
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}

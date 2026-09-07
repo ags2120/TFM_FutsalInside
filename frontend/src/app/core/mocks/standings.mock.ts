@@ -1,9 +1,10 @@
 import { Standing } from '../models/standings.model';
+import { Competition } from '../models/competition.model';
 import { MOCK_TEAMS } from './teams.mock';
 
-export const COMPETITIONS = [
-  { id: 1, name: 'Liga Nacional de Fútbol Sala', season: '2026/2027' },
-  { id: 2, name: 'Liga Nacional de Fútbol Sala', season: '2025/2026' },
+export const COMPETITIONS: Competition[] = [
+  { id: 1, name: 'Liga Nacional de Fútbol Sala', country: 'España', logoUrl: '', season: '2026/2027' },
+  { id: 2, name: 'Liga Nacional de Fútbol Sala', country: 'España', logoUrl: '', season: '2025/2026' },
 ];
 
 export const MOCK_STANDINGS: Standing[] = [

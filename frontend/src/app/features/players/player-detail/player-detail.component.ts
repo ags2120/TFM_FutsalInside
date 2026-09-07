@@ -21,6 +21,9 @@ import { PlayerMatchRowComponent } from '../../../shared/components/player-match
 import { PlayerCareerTimelineComponent } from '../../../shared/components/player-career-timeline/player-career-timeline.component';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
+import { FormLabelPipe, FormClassPipe } from '../../../shared/pipes/form-result.pipe';
+import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
+import { AgePipe } from '../../../shared/pipes/age.pipe';
 
 @Component({
   selector: 'app-player-detail',
@@ -38,6 +41,10 @@ import { EmptyStateComponent } from '../../../shared/components/empty-state/empt
     PlayerCareerTimelineComponent,
     LoadingSpinnerComponent,
     EmptyStateComponent,
+    FormLabelPipe,
+    FormClassPipe,
+    PlayerPositionPipe,
+    AgePipe,
   ],
   templateUrl: './player-detail.component.html',
   styleUrl: './player-detail.component.css',
@@ -119,16 +126,6 @@ export class PlayerDetailComponent implements OnInit {
     this.favoritesStore.toggleFavorite('player', p.id, name);
   }
 
-  getPositionLabel(position: string): string {
-    switch (position) {
-      case 'portero': return 'Portero';
-      case 'cierre': return 'Cierre';
-      case 'ala': return 'Ala';
-      case 'pivot': return 'Pívot';
-      default: return position;
-    }
-  }
-
   getPositionDescription(position: string): string {
     switch (position) {
       case 'portero': return 'Última defensa del equipo, encargado de proteger la portería con reflejos y buena colocación.';
@@ -149,41 +146,12 @@ export class PlayerDetailComponent implements OnInit {
     }
   }
 
-  getAge(birthDate: string): number {
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-    return age;
-  }
-
   getDominantFootLabel(foot?: string): string {
     switch (foot) {
       case 'right': return 'Derecha';
       case 'left': return 'Izquierda';
       case 'both': return 'Ambidiestro';
       default: return '—';
-    }
-  }
-
-  getFormLabel(result: string): string {
-    switch (result) {
-      case 'W': return 'V';
-      case 'D': return 'E';
-      case 'L': return 'D';
-      default: return result;
-    }
-  }
-
-  getFormClass(result: string): string {
-    switch (result) {
-      case 'W': return 'form-win';
-      case 'D': return 'form-draw';
-      case 'L': return 'form-loss';
-      default: return '';
     }
   }
 }

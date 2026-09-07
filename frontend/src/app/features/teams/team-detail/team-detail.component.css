@@ -63,15 +63,15 @@
 }
 
 .favorite-btn:hover {
-  border-color: #ef4444;
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.1);
+  border-color: var(--color-live);
+  color: var(--color-live);
+  background-color: var(--color-live-muted);
 }
 
 .favorite-btn.active {
-  border-color: #ef4444;
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-live);
+  color: var(--color-live);
+  background-color: var(--color-live-muted);
 }
 
 .team-meta {
@@ -152,13 +152,6 @@
 }
 
 /* === INFO CARDS === */
-.info-card {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-}
-
 .radar-card {
   background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(0, 210, 106, 0.03) 100%);
 }
