@@ -1,9 +1,7 @@
-import { Component, input, computed, inject, signal, OnInit } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
 import { PlayerMatchParticipation } from '../../../core/models/player-match.model';
 import { Match } from '../../../core/models/match.model';
-import { MockDataService } from '../../../core/services/mock-data.service';
 import { TeamBadgeComponent } from '../team-badge/team-badge.component';
 
 @Component({
@@ -141,11 +139,9 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
     .rating-badge.poor { background-color: rgba(255, 68, 68, 0.2); color: var(--color-loss); }
   `],
 })
-export class PlayerMatchRowComponent implements OnInit {
-  private readonly mockData = inject(MockDataService);
+export class PlayerMatchRowComponent {
   readonly participation = input.required<PlayerMatchParticipation>();
-
-  protected readonly match = signal<Match | null>(null);
+  readonly match = input<Match | null>(null);
 
   readonly resultClass = computed(() => {
     const m = this.match();
@@ -169,9 +165,4 @@ export class PlayerMatchRowComponent implements OnInit {
     if (r >= 6.0) return 'average';
     return 'poor';
   });
-
-  async ngOnInit() {
-    const matchData = await firstValueFrom(this.mockData.getMatchById(this.participation().matchId));
-    this.match.set(matchData ?? null);
-  }
 }

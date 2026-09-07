@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-loading-spinner',
   template: `
-    <div class="spinner-container">
-      <div class="spinner"></div>
+    <div class="spinner-container" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <span class="visually-hidden">Cargando...</span>
     </div>
   `,
   styles: `

@@ -41,6 +41,11 @@ export class MockDataService {
     return of(match).pipe(delay(MOCK_DELAY_MS));
   }
 
+  getMatchesByIds(ids: number[]): Observable<Match[]> {
+    const matches = MOCK_ALL_MATCHES.filter((m) => ids.includes(m.id));
+    return of(matches).pipe(delay(MOCK_DELAY_MS));
+  }
+
   getLiveMatches(): Observable<Match[]> {
     return of(MOCK_LIVE_MATCHES).pipe(delay(MOCK_DELAY_MS));
   }

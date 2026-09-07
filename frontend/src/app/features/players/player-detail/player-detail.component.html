@@ -201,7 +201,7 @@
               <h3 class="section-title">Últimos partidos</h3>
               <div class="matches-list">
                 @for (part of recentMatches(); track part.matchId) {
-                  <app-player-match-row [participation]="part" />
+                  <app-player-match-row [participation]="part" [match]="matchForParticipation()(part)" />
                 }
               </div>
             </div>

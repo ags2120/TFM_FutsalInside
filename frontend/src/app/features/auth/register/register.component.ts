@@ -22,7 +22,7 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // TODO: Implementar registro con AuthStore
+      // TODO: Implementar registro con AuthService
       console.log('Register:', this.registerForm.value);
     }
   }

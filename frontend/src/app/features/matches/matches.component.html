@@ -2,8 +2,8 @@
   <!-- DATE PICKER -->
   <div class="date-picker">
     <div class="date-picker-inner container">
-      <button class="week-nav" (click)="prevWeek()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <button class="week-nav" (click)="prevWeek()" aria-label="Semana anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polyline points="15 18 9 12 15 6"/>
         </svg>
       </button>
@@ -22,8 +22,8 @@
         }
       </div>
 
-      <button class="week-nav" (click)="nextWeek()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <button class="week-nav" (click)="nextWeek()" aria-label="Semana siguiente">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polyline points="9 18 15 12 9 6"/>
         </svg>
       </button>

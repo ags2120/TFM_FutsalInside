@@ -8,10 +8,12 @@ export class AuthService {
   private readonly _user = signal<User | null>(null);
   private readonly _token = signal<string | null>(null);
   private readonly _loading = signal(false);
+  private readonly _error = signal<string | null>(null);
 
   readonly user = this._user.asReadonly();
   readonly token = this._token.asReadonly();
   readonly loading = this._loading.asReadonly();
+  readonly error = this._error.asReadonly();
   readonly isAuthenticated = computed(() => !!this._token());
 
   constructor() {
@@ -30,9 +32,12 @@ export class AuthService {
   // TODO: Implementar con llamada HTTP real
   async login(email: string, _password: string): Promise<void> {
     this._loading.set(true);
+    this._error.set(null);
     try {
       // Simulación - reemplazar con HttpClient
       console.log('Login:', email);
+    } catch {
+      this._error.set('Credenciales incorrectas');
     } finally {
       this._loading.set(false);
     }
@@ -41,9 +46,12 @@ export class AuthService {
   // TODO: Implementar con llamada HTTP real
   async register(_username: string, _email: string, _password: string): Promise<void> {
     this._loading.set(true);
+    this._error.set(null);
     try {
       // Simulación - reemplazar con HttpClient
       console.log('Register');
+    } catch {
+      this._error.set('Error al registrar usuario');
     } finally {
       this._loading.set(false);
     }
@@ -52,6 +60,7 @@ export class AuthService {
   logout(): void {
     this._user.set(null);
     this._token.set(null);
+    this._error.set(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }

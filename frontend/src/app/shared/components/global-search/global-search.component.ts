@@ -26,7 +26,7 @@ type SearchResult = {
   template: `
     <div class="search-container" (click)="$event.stopPropagation()">
       <div class="search-input-wrapper" [class.focused]="isFocused()">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
@@ -40,10 +40,11 @@ type SearchResult = {
           (focus)="isFocused.set(true)"
           (blur)="onBlur()"
           (keydown.escape)="close()"
+          aria-label="Buscar equipos, jugadores"
         />
         @if (query()) {
-          <button class="clear-btn" (click)="clear()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="clear-btn" (click)="clear()" aria-label="Limpiar búsqueda">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="18" y1="6" x2="6" y2="18"/>
               <line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
@@ -52,11 +53,12 @@ type SearchResult = {
       </div>
 
       @if (isOpen() && results().length > 0) {
-        <div class="search-dropdown">
+        <div class="search-dropdown" role="listbox" aria-label="Resultados de búsqueda">
           @for (result of results(); track result.type + result.id) {
             <button
               class="search-result"
               (click)="navigateTo(result)"
+              role="option"
             >
               @if (result.imageUrl) {
                 <img [src]="result.imageUrl" [alt]="result.name" class="result-thumb" />
@@ -74,7 +76,7 @@ type SearchResult = {
       }
 
       @if (isOpen() && query() && results().length === 0) {
-        <div class="search-dropdown">
+        <div class="search-dropdown" role="status" aria-live="polite">
           <div class="no-results">
             <span class="no-results-text">No se encontraron resultados para "{{ query() }}"</span>
           </div>

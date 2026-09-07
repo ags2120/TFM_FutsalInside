@@ -20,7 +20,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      // TODO: Implementar login con AuthStore
+      // TODO: Implementar login con AuthService
       console.log('Login:', this.loginForm.value);
     }
   }

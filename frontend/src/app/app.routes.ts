@@ -10,8 +10,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./features/home/home.component').then((m) => m.HomeComponent),
+        loadChildren: () =>
+          import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
       },
       {
         path: 'live',
@@ -57,18 +57,9 @@ export const routes: Routes = [
       ),
     children: [
       {
-        path: 'login',
-        loadComponent: () =>
-          import('./features/auth/login/login.component').then(
-            (m) => m.LoginComponent
-          ),
-      },
-      {
-        path: 'register',
-        loadComponent: () =>
-          import('./features/auth/register/register.component').then(
-            (m) => m.RegisterComponent
-          ),
+        path: '',
+        loadChildren: () =>
+          import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
       },
     ],
   },

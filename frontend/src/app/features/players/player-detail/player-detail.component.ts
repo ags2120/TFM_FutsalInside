@@ -5,6 +5,7 @@ import { PlayerDetail } from '../../../core/models/player.model';
 import { PlayerStatistics } from '../../../core/models/statistics.model';
 import { PlayerMatchParticipation } from '../../../core/models/player-match.model';
 import { Standing } from '../../../core/models/standings.model';
+import { Match } from '../../../core/models/match.model';
 import { MockDataService } from '../../../core/services/mock-data.service';
 import { FavoritesStore } from '../../../stores/favorites.store';
 import { StandingsStore } from '../../../stores/standings.store';
@@ -59,6 +60,7 @@ export class PlayerDetailComponent implements OnInit {
   protected readonly player = signal<PlayerDetail | null>(null);
   protected readonly stats = signal<PlayerStatistics | null>(null);
   protected readonly matchParticipations = signal<PlayerMatchParticipation[]>([]);
+  protected readonly matchesMap = signal<Map<number, Match>>(new Map());
   protected readonly loading = signal(true);
 
   protected readonly breadcrumbs = computed<BreadcrumbItem[]>(() => {
@@ -84,6 +86,12 @@ export class PlayerDetailComponent implements OnInit {
 
   protected readonly recentMatches = computed(() => {
     return this.matchParticipations().slice(0, 3);
+  });
+
+  protected readonly matchForParticipation = computed(() => {
+    const map = this.matchesMap();
+    return (participation: PlayerMatchParticipation): Match | null =>
+      map.get(participation.matchId) ?? null;
   });
 
   protected readonly averageRating = computed(() => {
@@ -115,6 +123,13 @@ export class PlayerDetailComponent implements OnInit {
       this.player.set(playerResult ?? null);
       this.stats.set(statsResult ?? null);
       this.matchParticipations.set(participations);
+
+      const matchIds = participations.map(p => p.matchId);
+      if (matchIds.length > 0) {
+        const matches = await firstValueFrom(this.mockData.getMatchesByIds(matchIds));
+        const map = new Map(matches.map(m => [m.id, m]));
+        this.matchesMap.set(map);
+      }
     }
     this.loading.set(false);
   }

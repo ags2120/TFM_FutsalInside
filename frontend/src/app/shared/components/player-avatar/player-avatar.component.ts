@@ -1,11 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { Player } from '../../../core/models/player.model';
 
 @Component({
   selector: 'app-player-avatar',
   template: `
-    <div class="avatar" [class]="size()">
-      <span class="avatar-initials">{{ player().firstName.charAt(0) }}{{ player().lastName.charAt(0) }}</span>
+    <div class="avatar" [class]="size()" role="img" [attr.aria-label]="ariaLabel()">
+      <span class="avatar-initials" aria-hidden="true">{{ player().firstName.charAt(0) }}{{ player().lastName.charAt(0) }}</span>
     </div>
   `,
   styles: `
@@ -45,4 +45,9 @@ import { Player } from '../../../core/models/player.model';
 export class PlayerAvatarComponent {
   player = input.required<Player>();
   size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
+
+  protected readonly ariaLabel = computed(() => {
+    const p = this.player();
+    return `Foto de ${p.firstName} ${p.lastName}`;
+  });
 }
