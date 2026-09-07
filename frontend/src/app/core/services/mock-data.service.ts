@@ -6,6 +6,7 @@ import { Team } from '../models/team.model';
 import { Player, PlayerDetail } from '../models/player.model';
 import { PlayerMatchParticipation } from '../models/player-match.model';
 import { Standing } from '../models/standings.model';
+import { Competition } from '../models/competition.model';
 import { PlayerStatistics, TeamStatistics } from '../models/statistics.model';
 import {
   MOCK_ALL_MATCHES,
@@ -15,7 +16,7 @@ import {
 } from '../mocks/matches.mock';
 import { MOCK_TEAMS } from '../mocks/teams.mock';
 import { MOCK_PLAYERS } from '../mocks/players.mock';
-import { MOCK_STANDINGS } from '../mocks/standings.mock';
+import { MOCK_STANDINGS, COMPETITIONS } from '../mocks/standings.mock';
 import { MOCK_PLAYER_STATISTICS } from '../mocks/player-statistics.mock';
 import { MOCK_PLAYER_CAREER } from '../mocks/player-career.mock';
 import { MOCK_PLAYER_MATCH_PARTICIPATION } from '../mocks/player-match-participation.mock';
@@ -91,6 +92,10 @@ export class MockDataService {
     return of(stats).pipe(delay(MOCK_DELAY_MS));
   }
 
+  getAllPlayerStats(): Observable<PlayerStatistics[]> {
+    return of(MOCK_PLAYER_STATISTICS).pipe(delay(MOCK_DELAY_MS));
+  }
+
   getPlayerMatchParticipation(playerId: number): Observable<PlayerMatchParticipation[]> {
     const participations = MOCK_PLAYER_MATCH_PARTICIPATION.filter((p) => p.playerId === playerId);
     return of(participations).pipe(delay(MOCK_DELAY_MS));
@@ -98,6 +103,10 @@ export class MockDataService {
 
   getStandings(): Observable<Standing[]> {
     return of(MOCK_STANDINGS).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  getCompetitions(): Observable<Competition[]> {
+    return of(COMPETITIONS).pipe(delay(MOCK_DELAY_MS));
   }
 
   getMatchesByTeam(teamId: number): Observable<Match[]> {

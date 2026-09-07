@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, OnDestroy, inject } from '@angular/core';
+import { Injectable, signal, computed, inject, DestroyRef } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Match } from '../core/models/match.model';
 import { MockDataService } from '../core/services/mock-data.service';
@@ -6,8 +6,9 @@ import { MockDataService } from '../core/services/mock-data.service';
 const POLLING_INTERVAL_MS = 30000;
 
 @Injectable({ providedIn: 'root' })
-export class MatchesStore implements OnDestroy {
+export class MatchesStore {
   private readonly mockData = inject(MockDataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly _selectedDate = signal<string>(
     new Date().toISOString().split('T')[0]
@@ -33,8 +34,8 @@ export class MatchesStore implements OnDestroy {
   readonly hasLiveMatches = computed(() => this._liveMatches().length > 0);
   readonly matchCount = computed(() => this._matches().length);
 
-  ngOnDestroy(): void {
-    this.stopPolling();
+  constructor() {
+    this.destroyRef.onDestroy(() => this.stopPolling());
   }
 
   async loadMatches(date?: string): Promise<void> {

@@ -1,6 +1,5 @@
-import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, DestroyRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 import { Team } from '../../../core/models/team.model';
 import { Player } from '../../../core/models/player.model';
@@ -47,11 +46,11 @@ import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
   templateUrl: './team-detail.component.html',
   styleUrl: './team-detail.component.css',
 })
-export class TeamDetailComponent implements OnInit, OnDestroy {
+export class TeamDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly mockData = inject(MockDataService);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly favoritesStore = inject(FavoritesStore);
-  private routeSub?: Subscription;
 
   protected readonly team = signal<Team | null>(null);
   protected readonly players = signal<Player[]>([]);
@@ -79,14 +78,11 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   );
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe(params => {
+    const sub = this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
       if (id) this.loadTeam(id);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSub?.unsubscribe();
+    this.destroyRef.onDestroy(() => sub.unsubscribe());
   }
 
   private async loadTeam(id: number): Promise<void> {

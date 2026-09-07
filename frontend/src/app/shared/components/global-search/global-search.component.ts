@@ -5,6 +5,7 @@ import {
   computed,
   ElementRef,
   viewChild,
+  afterNextRender,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TeamsStore } from '../../../stores/teams.store';
@@ -304,8 +305,10 @@ export class GlobalSearchComponent {
   };
 
   constructor() {
-    this.teamsStore.loadTeams();
-    this.playersStore.loadPlayers();
+    afterNextRender(() => {
+      this.teamsStore.loadTeams();
+      this.playersStore.loadPlayers();
+    });
   }
 
   results = computed<SearchResult[]>(() => {

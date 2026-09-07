@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { MatchesStore } from '../../stores/matches.store';
 
 @Component({
@@ -6,15 +6,13 @@ import { MatchesStore } from '../../stores/matches.store';
   templateUrl: './live.component.html',
   styleUrl: './live.component.css',
 })
-export class LiveComponent implements OnInit, OnDestroy {
+export class LiveComponent implements OnInit {
   protected readonly store = inject(MatchesStore);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.store.loadMatches();
     this.store.startPolling();
-  }
-
-  ngOnDestroy(): void {
-    this.store.stopPolling();
+    this.destroyRef.onDestroy(() => this.store.stopPolling());
   }
 }

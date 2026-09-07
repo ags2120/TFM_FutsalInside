@@ -1,33 +1,42 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Standing, Competition } from '../core/models';
-import { MOCK_STANDINGS, COMPETITIONS } from '../core/mocks';
+import { MockDataService } from '../core/services/mock-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class StandingsStore {
+  private readonly mockData = inject(MockDataService);
+
   private readonly _standings = signal<Standing[]>([]);
+  private readonly _competitions = signal<Competition[]>([]);
   private readonly _loading = signal(false);
   private readonly _error = signal<string | null>(null);
 
   readonly standings = this._standings.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly error = this._error.asReadonly();
-  readonly competitions: Competition[] = COMPETITIONS;
+  readonly competitions = this._competitions.asReadonly();
 
   readonly leagueNames = computed(() =>
-    [...new Set(this.competitions.map((c) => c.name))].sort()
+    [...new Set(this._competitions().map((c) => c.name))].sort()
   );
 
   seasonsForLeague = (leagueName: string): string[] =>
-    [...new Set(this.competitions.filter((c) => c.name === leagueName).map((c) => c.season))].sort().reverse();
+    [...new Set(this._competitions().filter((c) => c.name === leagueName).map((c) => c.season))].sort().reverse();
 
   competitionFor = (leagueName: string, season: string): Competition | undefined =>
-    this.competitions.find((c) => c.name === leagueName && c.season === season);
+    this._competitions().find((c) => c.name === leagueName && c.season === season);
 
   async loadStandings(): Promise<void> {
     this._loading.set(true);
     this._error.set(null);
     try {
-      this._standings.set(MOCK_STANDINGS);
+      const [standings, competitions] = await Promise.all([
+        firstValueFrom(this.mockData.getStandings()),
+        firstValueFrom(this.mockData.getCompetitions()),
+      ]);
+      this._standings.set(standings);
+      this._competitions.set(competitions);
     } catch {
       this._error.set('Error al cargar clasificación');
     } finally {

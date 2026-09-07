@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { MatchesStore } from '../../stores/matches.store';
 import { MatchCardComponent } from '../../shared/components/match-card/match-card.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
@@ -26,7 +26,20 @@ interface DayItem {
 })
 export class MatchesComponent implements OnInit {
   protected readonly store = inject(MatchesStore);
-  protected readonly weekDays: DayItem[] = [];
+  protected readonly weekDays = signal<DayItem[]>([]);
+
+  protected readonly groupedByCompetition = computed(() => {
+    const matches = this.store.matches();
+    const map = new Map<string, Match[]>();
+    for (const match of matches) {
+      const key = match.competition.name;
+      if (!map.has(key)) {
+        map.set(key, []);
+      }
+      map.get(key)!.push(match);
+    }
+    return map;
+  });
 
   constructor() {
     this.buildWeek();
@@ -45,13 +58,14 @@ export class MatchesComponent implements OnInit {
     const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const fullDayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
+    const days: DayItem[] = [];
     for (let i = 0; i < 7; i++) {
       const d = new Date(monday);
       d.setDate(monday.getDate() + i);
       const dateStr = d.toISOString().split('T')[0];
       const isToday = dateStr === today.toISOString().split('T')[0];
 
-      this.weekDays.push({
+      days.push({
         label: fullDayNames[i],
         shortLabel: dayNames[i],
         dayNumber: d.getDate(),
@@ -60,21 +74,24 @@ export class MatchesComponent implements OnInit {
         isSelected: isToday,
       });
     }
+    this.weekDays.set(days);
   }
 
   selectDay(date: string): void {
-    this.weekDays.forEach((d) => (d.isSelected = d.date === date));
+    this.weekDays.update(days =>
+      days.map(d => ({ ...d, isSelected: d.date === date }))
+    );
     this.store.loadMatches(date);
   }
 
   prevWeek(): void {
-    const current = new Date(this.weekDays[0].date);
+    const current = new Date(this.weekDays()[0].date);
     current.setDate(current.getDate() - 7);
     this.rebuildWeekFrom(current);
   }
 
   nextWeek(): void {
-    const current = new Date(this.weekDays[0].date);
+    const current = new Date(this.weekDays()[0].date);
     current.setDate(current.getDate() + 7);
     this.rebuildWeekFrom(current);
   }
@@ -84,14 +101,14 @@ export class MatchesComponent implements OnInit {
     const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const fullDayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
-    this.weekDays.length = 0;
+    const days: DayItem[] = [];
     for (let i = 0; i < 7; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
       const dateStr = d.toISOString().split('T')[0];
       const todayStr = today.toISOString().split('T')[0];
 
-      this.weekDays.push({
+      days.push({
         label: fullDayNames[i],
         shortLabel: dayNames[i],
         dayNumber: d.getDate(),
@@ -100,17 +117,6 @@ export class MatchesComponent implements OnInit {
         isSelected: false,
       });
     }
-  }
-
-  groupedByCompetition(matches: Match[]): Map<string, Match[]> {
-    const map = new Map<string, Match[]>();
-    for (const match of matches) {
-      const key = match.competition.name;
-      if (!map.has(key)) {
-        map.set(key, []);
-      }
-      map.get(key)!.push(match);
-    }
-    return map;
+    this.weekDays.set(days);
   }
 }

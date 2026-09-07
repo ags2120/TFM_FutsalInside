@@ -9,7 +9,7 @@
       </button>
 
       <div class="days-row">
-        @for (day of weekDays; track day.date) {
+        @for (day of weekDays(); track day.date) {
           <button
             class="day-btn"
             [class.today]="day.isToday"
@@ -37,7 +37,7 @@
     }
 
     @if (store.matches().length > 0) {
-      @for (entry of groupedByCompetition(store.matches()); track entry[0]) {
+      @for (entry of groupedByCompetition(); track entry[0]) {
         <div class="competition-group">
           <div class="competition-header">
             <span class="competition-name">{{ entry[0] }}</span>

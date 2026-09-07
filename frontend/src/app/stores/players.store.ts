@@ -1,10 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Player } from '../core/models/player.model';
 import { PlayerStatistics } from '../core/models/statistics.model';
-import { MOCK_PLAYERS, MOCK_PLAYER_STATISTICS } from '../core/mocks';
+import { MockDataService } from '../core/services/mock-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class PlayersStore {
+  private readonly mockData = inject(MockDataService);
+
   private readonly _players = signal<Player[]>([]);
   private readonly _playerStats = signal<PlayerStatistics[]>([]);
   private readonly _loading = signal(false);
@@ -19,8 +22,12 @@ export class PlayersStore {
     this._loading.set(true);
     this._error.set(null);
     try {
-      this._players.set(MOCK_PLAYERS);
-      this._playerStats.set(MOCK_PLAYER_STATISTICS);
+      const [players, stats] = await Promise.all([
+        firstValueFrom(this.mockData.getPlayers()),
+        firstValueFrom(this.mockData.getAllPlayerStats()),
+      ]);
+      this._players.set(players);
+      this._playerStats.set(stats);
     } catch {
       this._error.set('Error al cargar jugadores');
     } finally {
