@@ -6,7 +6,7 @@ import { GlobalSearchComponent } from '../global-search/global-search.component'
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive, GlobalSearchComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
   protected readonly mobileMenuOpen = signal(false);

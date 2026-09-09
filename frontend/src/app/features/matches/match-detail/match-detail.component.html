@@ -1,214 +1,314 @@
-<div class="match-detail-page">
-  @if (loading()) {
-    <app-loading-spinner />
-  } @else if (!match()) {
-    <div class="container">
-      <app-empty-state message="Partido no encontrado" icon="⚽" />
+@if (store.detailLoading()) {
+  <div class="match-detail container">
+    <div class="loading-state">
+      <app-loading-spinner />
     </div>
-  } @else {
-    <!-- BREADCRUMB -->
-    <nav class="breadcrumb container" aria-label="Breadcrumb">
-      <ol>
-        <li><a routerLink="/">Inicio</a></li>
-        <li><a routerLink="/matches">Partidos</a></li>
-        <li aria-current="page">{{ match()!.homeTeam.shortName }} vs {{ match()!.awayTeam.shortName }}</li>
-      </ol>
+  </div>
+} @else if (store.detailError()) {
+  <div class="match-detail container">
+    <div class="error-banner" role="alert">
+      <svg class="error-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span>{{ store.detailError() }}</span>
+      <button class="retry-btn" (click)="retryLoad()">Reintentar</button>
+    </div>
+  </div>
+} @else if (match(); as m) {
+  <div class="match-detail container">
+    <nav class="nav-bar">
+      <a routerLink="/matches" class="back-link" aria-label="Volver a partidos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        <span class="back-text">Partidos</span>
+      </a>
     </nav>
 
-    <!-- HEADER DEL PARTIDO -->
-    <div class="match-header" [class.live]="isLive()">
-      <div class="header-bg"></div>
-      <div class="header-content container">
-        <div class="match-meta">
-          <span class="competition">{{ match()!.competition.name }}</span>
-          <span class="separator">•</span>
-          <span class="venue">{{ match()!.venue }}</span>
-          <span class="separator">•</span>
-          <span class="date">{{ match()!.date }}</span>
+    <section class="hero" [class.live]="isLive()" [class.finished]="isFinished()" aria-label="Resultado del partido">
+      <div class="hero-bg"></div>
+      <div class="hero-meta">
+        <span class="competition-badge">{{ m.competition.name }}</span>
+        @if (isLive()) {
+          <span class="live-indicator">
+            <span class="live-dot"></span>
+            EN VIVO {{ m.minute }}'
+          </span>
+        } @else if (isFinished()) {
+          <span class="status-badge finished">Final</span>
+        } @else {
+          <span class="status-badge scheduled">{{ m.date }}</span>
+        }
+      </div>
+
+      <div class="hero-score">
+        <div class="hero-team">
+          <a [routerLink]="['/teams', m.homeTeam.id]" class="team-link" [attr.aria-label]="'Ver equipo: ' + m.homeTeam.name">
+            <app-team-badge [team]="m.homeTeam" size="lg" />
+          </a>
+          <span class="team-name-full">{{ m.homeTeam.name }}</span>
+          <span class="team-name-short">{{ m.homeTeam.shortName }}</span>
         </div>
 
-        <div class="scoreboard">
-          <div class="team-side home">
-            <a [routerLink]="['/teams', match()!.homeTeam.id]" class="team-link">
-              <app-team-badge [team]="match()!.homeTeam" size="lg" />
-              <span class="team-name">{{ match()!.homeTeam.name }}</span>
-              <span class="team-short">{{ match()!.homeTeam.shortName }}</span>
-            </a>
-          </div>
+        <div class="score-display-hero">
+          <app-score-display
+            [homeScore]="m.homeScore"
+            [awayScore]="m.awayScore"
+            [isLive]="isLive()"
+            size="lg"
+          />
+        </div>
 
-          <div class="score-center">
-            <app-score-display
-              [homeScore]="match()!.homeScore"
-              [awayScore]="match()!.awayScore"
-              [isLive]="isLive()"
-            />
-            @if (match()!.minute) {
-              <span class="minute-badge" [class.pulsing]="isLive()">
-                {{ match()!.minute }}'
-              </span>
-            }
-            <span class="status-badge" [class]="match()!.status">
-              {{ match()!.status | matchStatus | uppercase }}
-            </span>
-          </div>
-
-          <div class="team-side away">
-            <a [routerLink]="['/teams', match()!.awayTeam.id]" class="team-link">
-              <app-team-badge [team]="match()!.awayTeam" size="lg" />
-              <span class="team-name">{{ match()!.awayTeam.name }}</span>
-              <span class="team-short">{{ match()!.awayTeam.shortName }}</span>
-            </a>
-          </div>
+        <div class="hero-team">
+          <a [routerLink]="['/teams', m.awayTeam.id]" class="team-link" [attr.aria-label]="'Ver equipo: ' + m.awayTeam.name">
+            <app-team-badge [team]="m.awayTeam" size="lg" />
+          </a>
+          <span class="team-name-full">{{ m.awayTeam.name }}</span>
+          <span class="team-name-short">{{ m.awayTeam.shortName }}</span>
         </div>
       </div>
+
+      @if (homeGoals().length > 0 || awayGoals().length > 0) {
+        <div class="hero-scorers">
+          <div class="scorers-col">
+            @for (goal of homeGoals(); track goal.minute) {
+              <span class="scorer">
+                <a class="scorer-name player-link" [routerLink]="['/players', goal.player.id]">{{ goal.player.name }}</a>
+                <span class="scorer-minute">{{ goal.minute }}'</span>
+              </span>
+            }
+          </div>
+          <div class="scorers-col away">
+            @for (goal of awayGoals(); track goal.minute) {
+              <span class="scorer">
+                <span class="scorer-minute">{{ goal.minute }}'</span>
+                <a class="scorer-name player-link" [routerLink]="['/players', goal.player.id]">{{ goal.player.name }}</a>
+              </span>
+            }
+          </div>
+        </div>
+      }
+
+      @if (matchSummary()) {
+        <p class="hero-summary">{{ matchSummary() }}</p>
+      }
+    </section>
+
+    @if (mvpPlayer(); as mvp) {
+      <div class="mvp-card" aria-label="Jugador más valioso">
+        <div class="mvp-icon">⭐</div>
+        <div class="mvp-info">
+          <span class="mvp-label">Jugador del Partido</span>
+          <a class="mvp-name player-link" [routerLink]="['/players', mvp.id]">{{ mvp.name }}</a>
+          @if (topScorer(); as ts) {
+            <span class="mvp-stat">{{ ts.count }} {{ ts.count === 1 ? 'gol' : 'goles' }}</span>
+          }
+        </div>
+      </div>
+    }
+
+    @if (insights().length > 0) {
+      <div class="insights-strip" role="region" aria-label="Datos clave del partido">
+        @for (insight of insights(); track insight.label) {
+          <div class="insight-chip" [class.home]="insight.highlight === 'home'" [class.away]="insight.highlight === 'away'">
+            <span class="insight-icon">{{ insight.icon }}</span>
+            <span class="insight-value">{{ insight.value }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="tabs-container">
+      <app-tabs [tabs]="tabs" [activeTab]="activeTab()" (tabChange)="onTabChange($event)" />
     </div>
 
-    <!-- TABS -->
-    <div class="tabs-wrapper container">
-      <app-tabs
-        [tabs]="tabs"
-        [activeTab]="activeTab()"
-        (tabChange)="onTabChange($event)"
-      />
-    </div>
-
-    <!-- CONTENIDO -->
-    <div class="match-content container">
-      <!-- TAB: INFORMACIÓN -->
-      @if (activeTab() === 'info') {
-        <div class="info-section animate-fade-in">
-            <div class="card">
-            <h3 class="section-title">Detalles del partido</h3>
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="info-label">Competición</span>
-                <span class="info-value">{{ match()!.competition.name }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Temporada</span>
-                <span class="info-value">{{ match()!.competition.season }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Sede</span>
-                <span class="info-value">{{ match()!.venue }}</span>
-              </div>
-              <div class="info-item">
+    @if (activeTab() === 'info') {
+      <div class="tab-panel" role="tabpanel" id="panel-info" aria-labelledby="tab-info">
+        <div class="info-grid">
+          <div class="info-row">
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <div class="info-text">
                 <span class="info-label">Fecha</span>
-                <span class="info-value">{{ match()!.date }}</span>
+                <span class="info-value">{{ m.date }}</span>
               </div>
-              <div class="info-item">
-                <span class="info-label">Estado</span>
-                <span class="info-value status" [class]="match()!.status">{{ match()!.status | matchStatus | uppercase }}</span>
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <div class="info-text">
+                <span class="info-label">Hora</span>
+                <span class="info-value">20:00</span>
               </div>
             </div>
           </div>
-
-          @if (match()!.events && match()!.events!.length > 0) {
-          <div class="card">
-              <h3 class="section-title">Resumen de goles</h3>
-              <div class="goals-summary">
-                <div class="goals-column">
-                  <span class="goals-label">{{ match()!.homeTeam.shortName }}</span>
-                  <div class="goals-list">
-                    @for (event of homeEvents(); track event.minute) {
-                      @if (event.type === 'goal') {
-                        <div class="goal-item">
-                          <span class="goal-icon">⚽</span>
-                          <span class="goal-minute">{{ event.minute }}'</span>
-                          <div class="goal-info">
-                            <span class="goal-player">{{ event.player.firstName }}</span>
-                            @if (event.assistPlayer) {
-                              <span class="goal-assist">{{ event.assistPlayer.firstName }}</span>
-                            }
-                          </div>
-                        </div>
-                      }
-                    }
-                  </div>
-                </div>
-                <div class="goals-divider"></div>
-                <div class="goals-column">
-                  <span class="goals-label">{{ match()!.awayTeam.shortName }}</span>
-                  <div class="goals-list">
-                    @for (event of awayEvents(); track event.minute) {
-                      @if (event.type === 'goal') {
-                        <div class="goal-item">
-                          <span class="goal-icon">⚽</span>
-                          <span class="goal-minute">{{ event.minute }}'</span>
-                          <div class="goal-info">
-                            <span class="goal-player">{{ event.player.firstName }}</span>
-                            @if (event.assistPlayer) {
-                              <span class="goal-assist">{{ event.assistPlayer.firstName }}</span>
-                            }
-                          </div>
-                        </div>
-                      }
-                    }
-                  </div>
+          <div class="info-row">
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+              </svg>
+              <div class="info-text">
+                <span class="info-label">Estadio</span>
+                <span class="info-value">{{ m.venue || 'No disponible' }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <div class="info-text">
+                <span class="info-label">Árbitro</span>
+                <span class="info-value">{{ m.referee || 'No disponible' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+              <div class="info-text">
+                <span class="info-label">Competición</span>
+                <span class="info-value">{{ m.competition.name }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              <div class="info-text">
+                <span class="info-label">Estado</span>
+                <span class="info-value">{{ statusLabel() }}</span>
+              </div>
+            </div>
+          </div>
+          @if (m.attendance) {
+            <div class="info-row single">
+              <div class="info-item">
+                <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                </svg>
+                <div class="info-text">
+                  <span class="info-label">Asistencia</span>
+                  <span class="info-value">{{ formatAttendance(m.attendance) }}</span>
                 </div>
               </div>
             </div>
           }
         </div>
-      }
+      </div>
+    }
 
-      <!-- TAB: EVENTOS -->
-      @if (activeTab() === 'events') {
-        <div class="events-section animate-fade-in">
-          @if (match()!.events && match()!.events!.length > 0) {
+    @if (activeTab() === 'events') {
+      <div class="tab-panel" role="tabpanel" id="panel-events" aria-labelledby="tab-events">
+        @if (sortedEvents().length > 0) {
+          <div class="timeline-wrapper">
+            <div class="timeline-header">
+              <span class="timeline-team-label home">{{ m.homeTeam.shortName }}</span>
+              <span class="timeline-team-label away">{{ m.awayTeam.shortName }}</span>
+            </div>
             <div class="timeline">
+              <div class="timeline-line"></div>
               @for (event of sortedEvents(); track event.minute) {
-                <div class="timeline-item" [class.home]="event.team.id === match()!.homeTeam.id" [class.away]="event.team.id === match()!.awayTeam.id">
-                  <div class="timeline-minute">{{ event.minute }}'</div>
-                  <div class="timeline-icon">{{ getEventIcon(event.type) }}</div>
-                  <div class="timeline-content">
-                    <span class="event-label">{{ getEventLabel(event.type) }}</span>
-                    <a [routerLink]="['/players', event.player.id]" class="event-player">
-                      {{ event.player.firstName }} {{ event.player.lastName }}
-                    </a>
-                    @if (event.assistPlayer) {
-                      <span class="event-assist">
-                        (asistencia de {{ event.assistPlayer.firstName }})
-                      </span>
-                    }
-                    <span class="event-team">
-                      {{ event.team.shortName }}
-                    </span>
-                  </div>
+                <div class="timeline-event" [class.home]="isHomeEvent(event)" [class.away]="!isHomeEvent(event)">
+                  @if (isHomeEvent(event)) {
+                    <div class="event-content">
+                      <div class="event-card goal-event" [class.goal]="event.type === 'goal'" [class.card-event]="event.type === 'yellowcard'" [class.red-card]="event.type === 'redcard'" [class.sub-event]="event.type === 'substitution'" [class.timeout-event]="event.type === 'timeout'">
+                        <span class="event-icon">{{ getEventIcon(event.type) }}</span>
+                        <div class="event-info">
+                          <a class="event-player player-link" [routerLink]="['/players', event.player.id]">{{ event.player.name }}</a>
+                          <span class="event-label">{{ getEventLabel(event.type) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="event-minute">{{ event.minute }}'</div>
+                    <div class="event-spacer"></div>
+                  } @else {
+                    <div class="event-spacer"></div>
+                    <div class="event-minute">{{ event.minute }}'</div>
+                    <div class="event-content">
+                      <div class="event-card goal-event" [class.goal]="event.type === 'goal'" [class.card-event]="event.type === 'yellowcard'" [class.red-card]="event.type === 'redcard'" [class.sub-event]="event.type === 'substitution'" [class.timeout-event]="event.type === 'timeout'">
+                        <span class="event-icon">{{ getEventIcon(event.type) }}</span>
+                        <div class="event-info">
+                          <a class="event-player player-link" [routerLink]="['/players', event.player.id]">{{ event.player.name }}</a>
+                          <span class="event-label">{{ getEventLabel(event.type) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  <div class="timeline-dot"></div>
                 </div>
               }
             </div>
-          } @else {
-            <app-empty-state message="No hay eventos registrados para este partido" icon="📋" />
-          }
-        </div>
-      }
+          </div>
+        } @else {
+          <div class="empty-state-inline">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            <p>No hay eventos registrados</p>
+          </div>
+        }
+      </div>
+    }
 
-      <!-- TAB: ESTADÍSTICAS -->
-      @if (activeTab() === 'stats') {
-        <div class="stats-section animate-fade-in">
-          @if (match()!.statistics && match()!.statistics!.length > 0) {
-            <div class="card">
-              <div class="stats-header">
-                <span class="stats-team home">{{ match()!.homeTeam.shortName }}</span>
-                <span class="stats-title">Estadísticas</span>
-                <span class="stats-team away">{{ match()!.awayTeam.shortName }}</span>
+    @if (activeTab() === 'stats') {
+      <div class="tab-panel" role="tabpanel" id="panel-stats" aria-labelledby="tab-stats">
+        <div class="stats-header">
+          <span class="stats-team-label home">{{ m.homeTeam.shortName }}</span>
+          <span class="stats-team-label away">{{ m.awayTeam.shortName }}</span>
+        </div>
+
+        @if (summaryStats().length > 0) {
+          <div class="summary-cards">
+            @for (stat of summaryStats(); track stat.type) {
+              <div class="summary-card">
+                <span class="summary-label">{{ stat.label }}</span>
+                <div class="summary-values">
+                  <span class="summary-home" [class.winner]="stat.isHomeWinner">{{ stat.homeValue }}</span>
+                  <span class="summary-sep">-</span>
+                  <span class="summary-away" [class.winner]="stat.isAwayWinner">{{ stat.awayValue }}</span>
+                </div>
+                <div class="summary-bar-visual">
+                  <div class="summary-bar home" [style.width.%]="stat.homePercent" [class.winner]="stat.isHomeWinner"></div>
+                  <div class="summary-bar away" [style.width.%]="stat.awayPercent" [class.winner]="stat.isAwayWinner"></div>
+                </div>
               </div>
-              <div class="stats-list">
-                @for (stat of match()!.statistics; track stat.type) {
-                  <app-stat-bar
-                    [label]="stat.type"
-                    [homeValue]="stat.homeValue"
-                    [awayValue]="stat.awayValue"
-                  />
-                }
+            }
+          </div>
+        }
+
+        <div class="stats-list">
+          @for (stat of stats(); track stat.type) {
+            <div class="stat-row">
+              <span class="stat-home-value" [class.winner]="stat.isHomeWinner">{{ stat.homeValue }}</span>
+              <div class="stat-bar-container">
+                <span class="stat-label">{{ stat.label }}</span>
+                <div class="stat-bar-visual">
+                  <div class="stat-bar-fill home" [style.width.%]="stat.homePercent" [class.winner]="stat.isHomeWinner"></div>
+                  <div class="stat-bar-fill away" [style.width.%]="stat.awayPercent" [class.winner]="stat.isAwayWinner"></div>
+                </div>
               </div>
+              <span class="stat-away-value" [class.winner]="stat.isAwayWinner">{{ stat.awayValue }}</span>
             </div>
-          } @else {
-            <app-empty-state message="No hay estadísticas disponibles" icon="📊" />
           }
         </div>
-      }
+      </div>
+    }
+  </div>
+} @else {
+  <div class="match-detail container">
+    <div class="empty-state">
+      <svg class="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+      <p>Partido no encontrado</p>
+      <a routerLink="/matches" class="back-btn">Volver a partidos</a>
     </div>
-  }
-</div>
+  </div>
+}

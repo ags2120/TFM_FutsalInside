@@ -7,13 +7,14 @@ import { Team } from '../../../core/models/team.model';
   imports: [RouterLink],
   template: `
     @if (link()) {
-      <a [routerLink]="['/teams', team().id]" class="badge-link" [attr.tabindex]="0">
+      <a [routerLink]="['/teams', team().id]" class="badge-link">
         <div class="badge" [class]="size()">
           @if (team().badgeUrl && !imageError) {
             <img
               [src]="team().badgeUrl"
               [alt]="team().name"
               class="badge-image"
+              loading="lazy"
               (error)="imageError = true"
             />
           } @else {
@@ -30,6 +31,7 @@ import { Team } from '../../../core/models/team.model';
             [src]="team().badgeUrl"
             [alt]="team().name"
             class="badge-image"
+            loading="lazy"
             (error)="imageError = true"
           />
         } @else {

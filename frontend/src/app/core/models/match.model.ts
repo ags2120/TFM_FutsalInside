@@ -28,6 +28,9 @@ export interface Match {
   date: string;
   competition: Competition;
   venue?: string;
+  referee?: string;
+  attendance?: number;
+  mvpPlayer?: Player;
   events?: MatchEvent[];
   statistics?: MatchStatistics[];
 }

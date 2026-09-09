@@ -7,7 +7,7 @@
       [attr.aria-selected]="activeTab() === tab.key"
       [attr.aria-controls]="'panel-' + tab.key"
       [id]="'tab-' + tab.key"
-      (click)="tabChange.emit(tab.key)"
+      (click)="onTabInteraction($event, tab.key)"
       (keydown)="onKeydown($event, tab.key)"
     >
       {{ tab.label }}

@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   protected readonly loginForm: FormGroup;

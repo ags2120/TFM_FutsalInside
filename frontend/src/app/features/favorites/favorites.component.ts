@@ -10,7 +10,7 @@ import { PlayerAvatarComponent } from '../../shared/components/player-avatar/pla
   selector: 'app-favorites',
   imports: [RouterLink, TeamBadgeComponent, PlayerAvatarComponent],
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.css',
+  styleUrls: ['./favorites.component.css'],
 })
 export class FavoritesComponent implements OnInit {
   protected readonly favoritesStore = inject(FavoritesStore);

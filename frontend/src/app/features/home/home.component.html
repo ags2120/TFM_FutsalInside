@@ -3,6 +3,18 @@
     <app-loading-spinner />
   }
 
+  @if (matchesStore.error()) {
+    <div class="error-banner" role="alert">
+      <svg class="error-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span>{{ matchesStore.error() }}</span>
+      <button class="retry-btn" (click)="retryLoad()">Reintentar</button>
+    </div>
+  }
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">
@@ -15,17 +27,18 @@
           <span class="hero-title-accent">Futsal</span>Inside
         </h1>
         <p class="hero-subtitle">Plataforma especializada en futsal. Resultados, clasificaciones y estadísticas en tiempo real.</p>
+        <a routerLink="/matches" class="hero-cta">Ver todos los partidos →</a>
       </div>
       <div class="hero-stats">
-        <a routerLink="/matches" class="stat-card stat-live">
+        <a routerLink="/matches?tab=live" class="stat-card stat-live">
           <span class="stat-number">{{ liveCount() }}</span>
           <span class="stat-label">En Vivo</span>
         </a>
-        <a routerLink="/matches" class="stat-card stat-upcoming">
+        <a routerLink="/matches?tab=upcoming" class="stat-card stat-upcoming">
           <span class="stat-number">{{ upcomingCount() }}</span>
           <span class="stat-label">Próximos</span>
         </a>
-        <a routerLink="/matches" class="stat-card stat-recent">
+        <a routerLink="/matches?tab=recent" class="stat-card stat-recent">
           <span class="stat-number">{{ recentCount() }}</span>
           <span class="stat-label">Recientes</span>
         </a>
@@ -33,11 +46,30 @@
     </div>
   </section>
 
+  <!-- DATE PICKER -->
+  <div class="date-strip container">
+    <div class="date-scroll">
+      @for (option of dateOptions(); track option.value) {
+        <button
+          class="date-chip"
+          [class.active]="selectedDate() === option.value"
+          (click)="selectDate(option.value)"
+        >
+          {{ option.label }}
+        </button>
+      }
+    </div>
+  </div>
+
   <div class="dashboard container">
     <!-- COLUMNA PRINCIPAL -->
     <div class="main-column">
       <!-- EN VIVO -->
-      @if (featuredLive().length > 0) {
+      @if (matchesStore.liveError()) {
+        <div class="section-error" role="alert">
+          <span>{{ matchesStore.liveError() }}</span>
+        </div>
+      } @else if (featuredLive().length > 0) {
         <section class="section">
           <div class="section-header">
             <h2>
@@ -47,7 +79,7 @@
               </span>
               En Vivo
             </h2>
-            <a routerLink="/matches" class="see-all">Ver todos →</a>
+            <a routerLink="/matches?tab=live" class="see-all">Ver todos →</a>
           </div>
           <div class="live-grid">
             @for (match of featuredLive(); track match.id) {
@@ -58,36 +90,84 @@
       }
 
       <!-- PRÓXIMOS PARTIDOS -->
-      @if (matchesStore.upcomingMatches().length > 0) {
+      @if (matchesStore.upcomingError()) {
+        <div class="section-error" role="alert">
+          <span>{{ matchesStore.upcomingError() }}</span>
+        </div>
+      } @else if (upcomingByCompetition().length > 0) {
         <section class="section">
           <div class="section-header">
             <h2>Próximos Partidos</h2>
-            <a routerLink="/matches" class="see-all">Ver todos →</a>
+            <a routerLink="/matches?tab=upcoming" class="see-all">Ver todos →</a>
           </div>
-          @for (entry of upcomingByCompetition() | keyvalue; track entry.key) {
-            <div class="competition-group">
-              <h3 class="competition-title">{{ entry.key }}</h3>
-              <div class="matches-grid">
-                @for (match of entry.value; track match.id) {
-                  <app-match-card [match]="match" />
-                }
-              </div>
+          @for (entry of upcomingByCompetition(); track entry[0]) {
+            <div class="competition-group" [class.collapsed]="isCompetitionCollapsed(entry[0])">
+              <button
+                class="competition-header"
+                (click)="toggleCompetition(entry[0])"
+                [attr.aria-expanded]="!isCompetitionCollapsed(entry[0])"
+                [attr.aria-controls]="'comp-' + entry[0]"
+              >
+                <h3 class="competition-title">{{ entry[0] }}</h3>
+                <svg class="chevron" [class.rotated]="isCompetitionCollapsed(entry[0])" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              @if (!isCompetitionCollapsed(entry[0])) {
+                <div class="matches-grid" [id]="'comp-' + entry[0]" role="region">
+                  @for (match of entry[1]; track match.id) {
+                    <app-match-card [match]="match" />
+                  }
+                </div>
+              }
             </div>
           }
+        </section>
+      } @else if (!matchesStore.loading()) {
+        <section class="section">
+          <div class="section-header">
+            <h2>Próximos Partidos</h2>
+          </div>
+          <div class="empty-state">
+            <svg class="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <p>No hay partidos programados</p>
+          </div>
         </section>
       }
 
       <!-- RESULTADOS RECIENTES -->
-      @if (matchesStore.recentMatches().length > 0) {
+      @if (matchesStore.recentError()) {
+        <div class="section-error" role="alert">
+          <span>{{ matchesStore.recentError() }}</span>
+        </div>
+      } @else if (matchesStore.recentMatches().length > 0) {
         <section class="section">
           <div class="section-header">
             <h2>Resultados Recientes</h2>
-            <a routerLink="/matches" class="see-all">Ver todos →</a>
+            <a routerLink="/matches?tab=recent" class="see-all">Ver todos →</a>
           </div>
           <div class="matches-grid">
             @for (match of matchesStore.recentMatches().slice(0, 6); track match.id) {
               <app-match-card [match]="match" />
             }
+          </div>
+        </section>
+      } @else if (!matchesStore.loading()) {
+        <section class="section">
+          <div class="section-header">
+            <h2>Resultados Recientes</h2>
+          </div>
+          <div class="empty-state">
+            <svg class="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <p>No hay resultados recientes</p>
           </div>
         </section>
       }
@@ -99,11 +179,7 @@
         <app-standings-mini [standings]="standingsStore.standings()" [maxItems]="5" />
       }
       @if (playersStore.players().length > 0) {
-        <app-top-scorers
-          [players]="playersStore.players()"
-          [playerStats]="playersStore.playerStats()"
-          [maxItems]="5"
-        />
+        <app-top-scorers [maxItems]="5" />
       }
     </aside>
   </div>

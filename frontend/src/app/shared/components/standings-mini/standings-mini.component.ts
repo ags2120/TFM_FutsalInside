@@ -9,7 +9,7 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
   template: `
     <div class="standings-mini">
       <div class="mini-header">
-        <h3 class="mini-title">Clasificación</h3>
+        <h3 class="mini-title">{{ label() }}</h3>
         <a routerLink="/standings" class="mini-link">Ver toda →</a>
       </div>
       <div class="mini-table">
@@ -163,4 +163,5 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
 export class StandingsMiniComponent {
   standings = input.required<Standing[]>();
   maxItems = input(5);
+  label = input<string>('Clasificación');
 }

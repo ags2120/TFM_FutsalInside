@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="54" fill="#000000" stroke="#FFFFFF" stroke-width="3"/>
+  <circle cx="60" cy="60" r="47" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <path d="M35 45 L60 30 L85 45 L85 75 L60 90 L35 75 Z" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="60" y="62" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="28" fill="#FFFFFF" letter-spacing="2">COR</text>
+  <text x="60" y="82" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="8" fill="#FFFFFF" letter-spacing="1">CORINTHIANS</text>
+</svg>

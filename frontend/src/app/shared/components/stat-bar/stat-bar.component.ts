@@ -3,7 +3,7 @@ import { Component, computed, input } from '@angular/core';
 @Component({
   selector: 'app-stat-bar',
   templateUrl: './stat-bar.component.html',
-  styleUrl: './stat-bar.component.css',
+  styleUrls: ['./stat-bar.component.css'],
 })
 export class StatBarComponent {
   label = input.required<string>();

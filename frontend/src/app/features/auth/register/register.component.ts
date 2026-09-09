@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractContro
   selector: 'app-register',
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   protected readonly registerForm: FormGroup;

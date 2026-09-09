@@ -1,15 +1,26 @@
-<a [routerLink]="['/matches', match().id]" class="match-card" [class.live]="match().status === 'live' || match().status === 'halftime'">
-  <div class="match-competition">
-    <span class="competition-name">{{ match().competition.name }}</span>
+<a [routerLink]="['/matches', match().id]" class="match-card" [class.live]="match().status === 'live' || match().status === 'halftime'" [class.list]="variant() === 'list'" [attr.aria-label]="'Partido: ' + match().homeTeam.shortName + ' vs ' + match().awayTeam.shortName">
+  @if (showCompetition()) {
+    <div class="match-competition">
+      <span class="competition-name">{{ match().competition.name }}</span>
+      @if (match().status === 'live' || match().status === 'halftime') {
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          EN VIVO
+        </span>
+      } @else {
+        <span class="match-date">{{ match().date }}</span>
+      }
+    </div>
+  } @else {
     @if (match().status === 'live' || match().status === 'halftime') {
-      <span class="live-badge">
-        <span class="live-dot"></span>
-        EN VIVO
-      </span>
-    } @else {
-      <span class="match-date">{{ match().date }}</span>
+      <div class="match-competition">
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          EN VIVO
+        </span>
+      </div>
     }
-  </div>
+  }
 
   <div class="match-teams">
     <div class="team home">

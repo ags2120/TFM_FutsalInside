@@ -8,12 +8,14 @@
         </svg>
       </button>
 
-      <div class="days-row">
+      <div class="days-row" role="radiogroup" aria-label="Seleccionar día">
         @for (day of weekDays(); track day.date) {
           <button
             class="day-btn"
             [class.today]="day.isToday"
             [class.selected]="day.isSelected"
+            [attr.aria-pressed]="day.isSelected"
+            [attr.aria-label]="day.label + ' ' + day.dayNumber"
             (click)="selectDay(day.date)"
           >
             <span class="day-label">{{ day.shortLabel }}</span>
@@ -30,27 +32,76 @@
     </div>
   </div>
 
+  <!-- COMPETITION FILTERS -->
+  @if (competitionNames().length > 1) {
+    <div class="filter-strip">
+      <div class="filter-scroll container">
+        <button
+          class="filter-chip"
+          [class.active]="selectedFilter() === 'all'"
+          (click)="selectFilter('all')"
+        >
+          Todas
+        </button>
+        @for (name of competitionNames(); track name) {
+          <button
+            class="filter-chip"
+            [class.active]="selectedFilter() === name"
+            (click)="selectFilter(name)"
+          >
+            {{ name }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+
   <!-- MATCHES LIST -->
   <div class="matches-content container">
     @if (store.loading()) {
       <app-loading-spinner />
     }
 
-    @if (store.matches().length > 0) {
-      @for (entry of groupedByCompetition(); track entry[0]) {
-        <div class="competition-group">
-          <div class="competition-header">
-            <span class="competition-name">{{ entry[0] }}</span>
+    @if (store.error()) {
+      <div class="error-banner" role="alert">
+        <svg class="error-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>{{ store.error() }}</span>
+        <button class="retry-btn" (click)="retryLoad()">Reintentar</button>
+      </div>
+    }
+
+    @if (!store.loading() && !store.error()) {
+      @if (groupedByCompetition().length > 0) {
+        @for (entry of groupedByCompetition(); track entry[0]) {
+          <div class="competition-group">
+            <div class="competition-header">
+              <span class="competition-name">{{ entry[0] }}</span>
+            </div>
+            <div class="matches-list">
+              @for (match of entry[1]; track match.id) {
+                <app-match-card [match]="match" [showCompetition]="false" variant="list" />
+              }
+            </div>
           </div>
-          <div class="matches-list">
-            @for (match of entry[1]; track match.id) {
-              <app-match-card [match]="match" />
-            }
-          </div>
+        }
+      } @else {
+        <div class="empty-state">
+          <svg class="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <p>No hay partidos para esta fecha</p>
+          @if (!isTodaySelected()) {
+            <button class="today-btn" (click)="goToToday()">Ir a hoy</button>
+          }
         </div>
       }
-    } @else {
-      <app-empty-state message="No hay partidos para esta fecha" icon="⚽" />
     }
   </div>
 </div>

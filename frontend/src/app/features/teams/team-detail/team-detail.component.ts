@@ -44,7 +44,7 @@ import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
     PlayerPositionPipe,
   ],
   templateUrl: './team-detail.component.html',
-  styleUrl: './team-detail.component.css',
+  styleUrls: ['./team-detail.component.css'],
 })
 export class TeamDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

@@ -1,8 +1,7 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Player } from '../../../core/models/player.model';
-import { PlayerStatistics } from '../../../core/models/statistics.model';
 import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component';
+import { PlayersStore } from '../../../stores/players.store';
 
 @Component({
   selector: 'app-top-scorers',
@@ -14,7 +13,7 @@ import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component'
         <a routerLink="/players" class="mini-link">Ver todos →</a>
       </div>
       <div class="scorers-list">
-        @for (entry of topScorers(); track entry.player.id) {
+        @for (entry of displayScorers(); track entry.player.id) {
           <div class="scorer-row">
             <span class="scorer-rank">{{ $index + 1 }}</span>
             <app-player-avatar [player]="entry.player" size="sm" />
@@ -27,7 +26,7 @@ import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component'
             <span class="scorer-goals">{{ entry.goals }}</span>
           </div>
         }
-        @if (topScorers().length === 0) {
+        @if (displayScorers().length === 0) {
           <div class="empty-scorers">
             <span class="empty-text">No hay datos disponibles</span>
           </div>
@@ -149,28 +148,11 @@ import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component'
   `,
 })
 export class TopScorersComponent {
-  players = input.required<Player[]>();
-  playerStats = input.required<PlayerStatistics[]>();
+  private readonly playersStore = inject(PlayersStore);
+
   maxItems = input(5);
 
-  topScorers = computed(() => {
-    const stats = this.playerStats();
-    const allPlayers = this.players();
-    const max = this.maxItems();
-
-    const playerGoals = new Map<number, number>();
-    stats.forEach(s => {
-      const current = playerGoals.get(s.playerId) || 0;
-      playerGoals.set(s.playerId, current + s.goals);
-    });
-
-    const sorted = Array.from(playerGoals.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, max);
-
-    return sorted.map(([playerId, goals]) => {
-      const player = allPlayers.find(p => p.id === playerId);
-      return player ? { player, goals } : null;
-    }).filter((entry): entry is { player: Player; goals: number } => entry !== null);
+  protected readonly displayScorers = computed(() => {
+    return this.playersStore.topScorers().slice(0, this.maxItems());
   });
 }

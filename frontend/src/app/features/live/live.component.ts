@@ -8,7 +8,7 @@ import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner
   selector: 'app-live',
   imports: [RouterLink, MatchCardComponent, LoadingSpinnerComponent],
   templateUrl: './live.component.html',
-  styleUrl: './live.component.css',
+  styleUrls: ['./live.component.css'],
 })
 export class LiveComponent implements OnInit {
   protected readonly store = inject(MatchesStore);

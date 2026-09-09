@@ -4,7 +4,7 @@ import { MOCK_PLAYERS } from './players.mock';
 
 const COMPETITION = {
   id: 1,
-  name: 'Liga Nacional de Fútbol Sala',
+  name: 'Liga Nacional de Fútbol Sala (ESP)',
   country: 'España',
   logoUrl: '',
   season: '2025/2026',
@@ -31,6 +31,9 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     date: toISODate(today),
     competition: COMPETITION,
     venue: 'Palau Blaugrana',
+    referee: 'Carlos del Castillo',
+    attendance: 3850,
+    mvpPlayer: MOCK_PLAYERS[2],
     events: [
       { type: 'goal', minute: 5, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
       { type: 'yellowcard', minute: 12, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1] },
@@ -58,6 +61,7 @@ export const MOCK_LIVE_MATCHES: Match[] = [
     date: toISODate(today),
     competition: COMPETITION,
     venue: 'Palacio de Deportes',
+    referee: 'Antonio Maeso',
     events: [
       { type: 'goal', minute: 8, player: MOCK_PLAYERS[11], team: MOCK_TEAMS[2], assistPlayer: MOCK_PLAYERS[12] },
       { type: 'goal', minute: 15, player: MOCK_PLAYERS[16], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[17] },
@@ -293,6 +297,9 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -1)),
     competition: COMPETITION,
     venue: 'Palau Blaugrana',
+    referee: 'Pedro García',
+    attendance: 4120,
+    mvpPlayer: MOCK_PLAYERS[2],
     events: [
       { type: 'goal', minute: 3, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[4] },
       { type: 'goal', minute: 8, player: MOCK_PLAYERS[21], team: MOCK_TEAMS[4], assistPlayer: MOCK_PLAYERS[22] },
@@ -324,6 +331,8 @@ export const MOCK_RECENT_MATCHES: Match[] = [
     date: toISODate(addDays(today, -1)),
     competition: COMPETITION,
     venue: 'Palau Municipal d\'Esports',
+    referee: 'Luis Roldán',
+    attendance: 2980,
     events: [
       { type: 'goal', minute: 5, player: MOCK_PLAYERS[17], team: MOCK_TEAMS[3], assistPlayer: MOCK_PLAYERS[18] },
       { type: 'goal', minute: 10, player: MOCK_PLAYERS[6], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[8] },

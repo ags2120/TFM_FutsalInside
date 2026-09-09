@@ -48,7 +48,7 @@ import { AgePipe } from '../../../shared/pipes/age.pipe';
     AgePipe,
   ],
   templateUrl: './player-detail.component.html',
-  styleUrl: './player-detail.component.css',
+  styleUrls: ['./player-detail.component.css'],
 })
 export class PlayerDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

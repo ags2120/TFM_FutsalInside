@@ -1,0 +1,141 @@
+Estoy desarrollando un Trabajo Fin de Máster llamado FutsalInside.
+
+FutsalInside es una aplicación web especializada en fútbol sala.
+
+El frontend será desarrollado con Angular, TypeScript y CSS.
+
+IMPORTANTE:
+Quiero centrarme únicamente en la arquitectura frontend. No tengas en cuenta todavía el backend ni la implementación de APIs.
+
+La aplicación permitirá visualizar:
+
+- Partidos en directo.
+- Resultados históricos.
+- Clasificaciones.
+- Equipos.
+- Jugadores.
+- Estadísticas de jugadores.
+- Estadísticas de equipos.
+
+Además existirán usuarios registrados con funcionalidades adicionales como:
+
+- Iniciar sesión.
+- Cerrar sesión.
+- Gestionar favoritos.
+- Consultar favoritos.
+
+La aplicación estará inspirada visualmente en plataformas como SofaScore y FlashScore.
+
+Quiero seguir buenas prácticas modernas de Angular
+
+Analiza el proyecto y genera:
+
+1. Arquitectura frontend recomendada.
+2. Estructura de carpetas.
+3. Organización por features.
+4. Layouts necesarios.
+5. Componentes reutilizables.
+6. Modelos TypeScript.
+7. Estrategia de routing.
+8. Estrategia de gestión de estado.
+9. Plan de implementación por fases.
+
+No generes código todavía.
+
+Actúa como un arquitecto Angular senior y propone la mejor estructura posible para un proyecto real que crecerá durante el desarrollo del TFM.
+
+
+
+
+************************************Prompt Pagina principal mejorada*************************************
+
+Actúa como Senior Product Designer y Senior Frontend Developer especializado en aplicaciones deportivas como SofaScore, FlashScore, FotMob y OneFootball.
+
+Analiza la Home actual de FutsalInside y propón las modificaciones necesarias para mejorar la jerarquía visual, la experiencia de usuario y la organización de la información.
+
+Objetivos:
+
+1. Eliminar el apartado "En Vivo" del navbar, ya que se considera redundante respecto a la sección de partidos.
+2. Reorganizar el menú principal para que quede orientado a las funcionalidades principales:
+   - Partidos
+   - Clasificación
+   - Equipos
+   - Jugadores
+   - Favoritos (preparado para futuras implementaciones)
+3. Reducir el protagonismo visual del botón de inicio de sesión para que no compita con el contenido principal.
+4. Convertir la Home en un dashboard deportivo en lugar de una simple lista de partidos en directo.
+5. Añadir una sección Hero o bienvenida que aporte identidad a la aplicación.
+6. Mostrar únicamente los partidos en directo más relevantes en la Home (máximo 3 o 4).
+7. Añadir secciones diferenciadas para:
+   - Partidos en directo
+   - Próximos partidos
+   - Clasificación rápida
+   - Máximos goleadores (o estadísticas destacadas)
+8. Reducir la repetición visual de las competiciones agrupando los partidos por competición.
+9. Mejorar la jerarquía visual de los marcadores para que sean el elemento principal de cada partido.
+10. Reducir el uso excesivo de efectos visuales rojos, glows y elementos brillantes repetidos.
+11. Mantener la identidad visual oscura actual inspirada en SofaScore.
+12. Aprovechar mejor el espacio disponible en escritorio mediante una distribución más equilibrada del contenido.
+
+Limitaciones:
+
+- Mantener la arquitectura Angular actual.
+- Mantener el sistema de componentes existente.
+- No modificar stores ni lógica de negocio.
+- Centrar todos los cambios en UX, UI y organización visual.
+- Mantener compatibilidad responsive.
+
+Muestra una propuesta detallada de estructura de Home y navegación antes de generar código.
+
+
+
+---------------------------------------------------------------------------------------------
+
+Act as a Senior Angular Developer and Sports Product Designer.
+
+I want to implement the Teams page.
+
+Requirements:
+
+1. The page must display all available teams registered in the application.
+2. Data should be obtained dynamically from the existing source of truth:
+   - If teams are stored in MOCK_TEAMS, use MOCK_TEAMS.
+   - If teams are already managed through a TeamStore, use the TeamStore.
+   - Do not duplicate team data.
+
+3. Create a responsive grid of team cards.
+
+Each card must display:
+- Team crest/logo
+- Team name
+- League/competition name
+
+4. Clicking anywhere on the card should navigate to the Team Detail page.
+
+5. Add a search input to filter teams by name.
+
+6. Add a competition filter.
+   The system must be prepared for multiple leagues:
+   - Liga Nacional de Fútbol Sala
+   - Serie A Futsal
+   - Liga Portuguesa
+   - Future competitions
+
+7. Display the number of teams currently shown after filters are applied.
+
+8. Keep the current FutsalInside design system:
+   - Dark theme
+   - Existing card styles
+   - Existing typography
+   - Existing spacing system
+
+9. Responsive behavior:
+   - Desktop: multiple cards per row
+   - Tablet: reduced columns
+   - Mobile: single column
+
+10. Maintain the current Angular architecture:
+   - Feature-based structure
+   - Signals
+   - Existing TeamStore if available
+   - Existing routing

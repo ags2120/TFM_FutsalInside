@@ -10,7 +10,7 @@ import { PlayerPositionPipe } from '../../shared/pipes/player-position.pipe';
   selector: 'app-players',
   imports: [RouterLink, PlayerAvatarComponent, LoadingSpinnerComponent, EmptyStateComponent, PlayerPositionPipe],
   templateUrl: './players.component.html',
-  styleUrl: './players.component.css',
+  styleUrls: ['./players.component.css'],
 })
 export class PlayersComponent implements OnInit {
   protected readonly store = inject(PlayersStore);

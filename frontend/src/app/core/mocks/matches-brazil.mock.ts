@@ -1,0 +1,230 @@
+import { Match } from '../models/match.model';
+import { MOCK_TEAMS_BRAZIL } from './teams-brazil.mock';
+import { MOCK_PLAYERS_BRAZIL } from './players-brazil.mock';
+import { COMPETITION_BRAZIL } from './competitions-brazil.mock';
+
+const today = new Date();
+const toISODate = (d: Date) => d.toISOString().split('T')[0];
+const addDays = (d: Date, n: number) => {
+  const result = new Date(d);
+  result.setDate(result.getDate() + n);
+  return result;
+};
+
+export const MOCK_LIVE_MATCHES_BRAZIL: Match[] = [
+  {
+    id: 401,
+    homeTeam: MOCK_TEAMS_BRAZIL[0],
+    awayTeam: MOCK_TEAMS_BRAZIL[1],
+    homeScore: 3,
+    awayScore: 2,
+    status: 'live',
+    minute: 35,
+    date: toISODate(today),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Sorocaba',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS_BRAZIL[2], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[1] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS_BRAZIL[6], team: MOCK_TEAMS_BRAZIL[1], assistPlayer: MOCK_PLAYERS_BRAZIL[7] },
+      { type: 'yellowcard', minute: 18, player: MOCK_PLAYERS_BRAZIL[0], team: MOCK_TEAMS_BRAZIL[0] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS_BRAZIL[3], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[2] },
+      { type: 'goal', minute: 32, player: MOCK_PLAYERS_BRAZIL[7], team: MOCK_TEAMS_BRAZIL[1], assistPlayer: MOCK_PLAYERS_BRAZIL[6] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS_BRAZIL[2], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[3] },
+    ],
+    statistics: [
+      { type: 'Posesión', homeValue: 55, awayValue: 45 },
+      { type: 'Tiros', homeValue: 14, awayValue: 10 },
+      { type: 'Tiros a puerta', homeValue: 7, awayValue: 5 },
+      { type: 'Córneres', homeValue: 3, awayValue: 2 },
+      { type: 'Faltas', homeValue: 4, awayValue: 6 },
+    ],
+  },
+  {
+    id: 402,
+    homeTeam: MOCK_TEAMS_BRAZIL[2],
+    awayTeam: MOCK_TEAMS_BRAZIL[3],
+    homeScore: 1,
+    awayScore: 1,
+    status: 'halftime',
+    minute: 20,
+    date: toISODate(today),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Pato',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS_BRAZIL[12], team: MOCK_TEAMS_BRAZIL[2], assistPlayer: MOCK_PLAYERS_BRAZIL[11] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS_BRAZIL[17], team: MOCK_TEAMS_BRAZIL[3], assistPlayer: MOCK_PLAYERS_BRAZIL[16] },
+    ],
+    statistics: [
+      { type: 'Posesión', homeValue: 48, awayValue: 52 },
+      { type: 'Tiros', homeValue: 8, awayValue: 10 },
+      { type: 'Tiros a puerta', homeValue: 4, awayValue: 5 },
+    ],
+  },
+  {
+    id: 403,
+    homeTeam: MOCK_TEAMS_BRAZIL[4],
+    awayTeam: MOCK_TEAMS_BRAZIL[5],
+    homeScore: 2,
+    awayScore: 0,
+    status: 'live',
+    minute: 30,
+    date: toISODate(today),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Corinthians',
+  },
+  {
+    id: 404,
+    homeTeam: MOCK_TEAMS_BRAZIL[6],
+    awayTeam: MOCK_TEAMS_BRAZIL[7],
+    homeScore: 0,
+    awayScore: 1,
+    status: 'live',
+    minute: 12,
+    date: toISODate(today),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio da Neva',
+  },
+  {
+    id: 405,
+    homeTeam: MOCK_TEAMS_BRAZIL[8],
+    awayTeam: MOCK_TEAMS_BRAZIL[9],
+    homeScore: 3,
+    awayScore: 1,
+    status: 'live',
+    minute: 38,
+    date: toISODate(today),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio do Assoeva',
+  },
+];
+
+export const MOCK_UPCOMING_MATCHES_BRAZIL: Match[] = [
+  {
+    id: 421,
+    homeTeam: MOCK_TEAMS_BRAZIL[0],
+    awayTeam: MOCK_TEAMS_BRAZIL[4],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 1)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Sorocaba',
+  },
+  {
+    id: 422,
+    homeTeam: MOCK_TEAMS_BRAZIL[1],
+    awayTeam: MOCK_TEAMS_BRAZIL[5],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 2)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio do Cruzeiro',
+  },
+  {
+    id: 423,
+    homeTeam: MOCK_TEAMS_BRAZIL[2],
+    awayTeam: MOCK_TEAMS_BRAZIL[6],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 3)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Pato',
+  },
+  {
+    id: 424,
+    homeTeam: MOCK_TEAMS_BRAZIL[3],
+    awayTeam: MOCK_TEAMS_BRAZIL[7],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 3)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio de São Lourenço',
+  },
+  {
+    id: 425,
+    homeTeam: MOCK_TEAMS_BRAZIL[8],
+    awayTeam: MOCK_TEAMS_BRAZIL[0],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 4)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio do Assoeva',
+  },
+  {
+    id: 426,
+    homeTeam: MOCK_TEAMS_BRAZIL[9],
+    awayTeam: MOCK_TEAMS_BRAZIL[1],
+    homeScore: 0, awayScore: 0,
+    status: 'scheduled',
+    date: toISODate(addDays(today, 5)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena São Paulo',
+  },
+];
+
+export const MOCK_RECENT_MATCHES_BRAZIL: Match[] = [
+  {
+    id: 431,
+    homeTeam: MOCK_TEAMS_BRAZIL[0],
+    awayTeam: MOCK_TEAMS_BRAZIL[2],
+    homeScore: 4,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -1)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Sorocaba',
+    events: [
+      { type: 'goal', minute: 5, player: MOCK_PLAYERS_BRAZIL[2], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[3] },
+      { type: 'goal', minute: 12, player: MOCK_PLAYERS_BRAZIL[12], team: MOCK_TEAMS_BRAZIL[2], assistPlayer: MOCK_PLAYERS_BRAZIL[11] },
+      { type: 'goal', minute: 22, player: MOCK_PLAYERS_BRAZIL[3], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[2] },
+      { type: 'yellowcard', minute: 28, player: MOCK_PLAYERS_BRAZIL[11], team: MOCK_TEAMS_BRAZIL[2] },
+      { type: 'goal', minute: 35, player: MOCK_PLAYERS_BRAZIL[2], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[4] },
+      { type: 'goal', minute: 40, player: MOCK_PLAYERS_BRAZIL[3], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[2] },
+    ],
+  },
+  {
+    id: 432,
+    homeTeam: MOCK_TEAMS_BRAZIL[1],
+    awayTeam: MOCK_TEAMS_BRAZIL[3],
+    homeScore: 2,
+    awayScore: 3,
+    status: 'finished',
+    date: toISODate(addDays(today, -2)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio do Cruzeiro',
+    events: [
+      { type: 'goal', minute: 8, player: MOCK_PLAYERS_BRAZIL[6], team: MOCK_TEAMS_BRAZIL[1], assistPlayer: MOCK_PLAYERS_BRAZIL[7] },
+      { type: 'goal', minute: 15, player: MOCK_PLAYERS_BRAZIL[16], team: MOCK_TEAMS_BRAZIL[3], assistPlayer: MOCK_PLAYERS_BRAZIL[17] },
+      { type: 'goal', minute: 25, player: MOCK_PLAYERS_BRAZIL[7], team: MOCK_TEAMS_BRAZIL[1], assistPlayer: MOCK_PLAYERS_BRAZIL[6] },
+      { type: 'goal', minute: 30, player: MOCK_PLAYERS_BRAZIL[17], team: MOCK_TEAMS_BRAZIL[3], assistPlayer: MOCK_PLAYERS_BRAZIL[18] },
+      { type: 'goal', minute: 38, player: MOCK_PLAYERS_BRAZIL[18], team: MOCK_TEAMS_BRAZIL[3], assistPlayer: MOCK_PLAYERS_BRAZIL[16] },
+    ],
+  },
+  {
+    id: 433,
+    homeTeam: MOCK_TEAMS_BRAZIL[4],
+    awayTeam: MOCK_TEAMS_BRAZIL[6],
+    homeScore: 3,
+    awayScore: 0,
+    status: 'finished',
+    date: toISODate(addDays(today, -3)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Arena Corinthians',
+  },
+  {
+    id: 434,
+    homeTeam: MOCK_TEAMS_BRAZIL[5],
+    awayTeam: MOCK_TEAMS_BRAZIL[8],
+    homeScore: 1,
+    awayScore: 1,
+    status: 'finished',
+    date: toISODate(addDays(today, -4)),
+    competition: COMPETITION_BRAZIL,
+    venue: 'Ginásio Krona',
+  },
+];
+
+export const MOCK_ALL_MATCHES_BRAZIL: Match[] = [
+  ...MOCK_LIVE_MATCHES_BRAZIL,
+  ...MOCK_UPCOMING_MATCHES_BRAZIL,
+  ...MOCK_RECENT_MATCHES_BRAZIL,
+];

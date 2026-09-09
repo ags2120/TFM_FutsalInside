@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="54" fill="#CC0000" stroke="#000000" stroke-width="3"/>
+  <circle cx="60" cy="60" r="47" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+  <text x="60" y="56" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="16" fill="#CC0000">SÃO</text>
+  <text x="60" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="16" fill="#CC0000">PAULO</text>
+  <text x="60" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="8" fill="#000000" letter-spacing="1">FUTSAL</text>
+</svg>

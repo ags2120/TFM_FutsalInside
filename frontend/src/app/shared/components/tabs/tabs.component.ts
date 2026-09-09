@@ -1,4 +1,4 @@
-import { Component, input, output, ElementRef, inject, effect } from '@angular/core';
+import { Component, input, output, ElementRef, inject, effect, untracked } from '@angular/core';
 
 export interface Tab {
   key: string;
@@ -8,7 +8,7 @@ export interface Tab {
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrl: './tabs.component.css',
+  styleUrls: ['./tabs.component.css'],
 })
 export class TabsComponent {
   tabs = input.required<Tab[]>();
@@ -16,22 +16,37 @@ export class TabsComponent {
   tabChange = output<string>();
 
   private readonly el = inject(ElementRef);
+  private interactionDetected = false;
 
   constructor() {
     effect(() => {
       const activeKey = this.activeTab();
-      const tabs = this.tabs();
-      const index = tabs.findIndex(t => t.key === activeKey);
-      if (index >= 0) {
-        requestAnimationFrame(() => {
-          const buttons = this.el.nativeElement.querySelectorAll('[role="tab"]');
-          buttons[index]?.focus();
-        });
-      }
+      untracked(() => {
+        if (!this.interactionDetected) return;
+        const tabs = this.tabs();
+        const index = tabs.findIndex(t => t.key === activeKey);
+        if (index >= 0) {
+          requestAnimationFrame(() => {
+            const buttons = this.el.nativeElement.querySelectorAll('[role="tab"]');
+            buttons[index]?.focus();
+          });
+        }
+      });
+    });
+
+    effect(() => {
+      this.activeTab();
+      this.tabs();
     });
   }
 
+  onTabInteraction(event: Event, key: string): void {
+    this.interactionDetected = true;
+    this.tabChange.emit(key);
+  }
+
   onKeydown(event: KeyboardEvent, currentKey: string): void {
+    this.interactionDetected = true;
     const tabs = this.tabs();
     const currentIndex = tabs.findIndex(t => t.key === currentKey);
     let nextIndex: number;

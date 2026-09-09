@@ -9,7 +9,7 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
   selector: 'app-teams',
   imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, EmptyStateComponent],
   templateUrl: './teams.component.html',
-  styleUrl: './teams.component.css',
+  styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent implements OnInit {
   protected readonly store = inject(TeamsStore);

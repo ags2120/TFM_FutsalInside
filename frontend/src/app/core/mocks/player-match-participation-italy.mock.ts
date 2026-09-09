@@ -1,0 +1,48 @@
+import { PlayerMatchParticipation } from '../models/player-match.model';
+
+export const MOCK_PLAYER_MATCH_PARTICIPATION_ITALY: PlayerMatchParticipation[] = [
+  // === ITALSERVICE PESARO ===
+  { matchId: 441, playerId: 101, goals: 0, assists: 1, isMvp: false, rating: 7.2, minutesPlayed: 40 },
+  { matchId: 471, playerId: 101, goals: 1, assists: 0, isMvp: false, rating: 7.5, minutesPlayed: 38 },
+  { matchId: 441, playerId: 102, goals: 1, assists: 1, isMvp: false, rating: 8.1, minutesPlayed: 40 },
+  { matchId: 471, playerId: 102, goals: 0, assists: 2, isMvp: false, rating: 8.4, minutesPlayed: 40 },
+  { matchId: 441, playerId: 103, goals: 1, assists: 1, isMvp: true, rating: 9.1, minutesPlayed: 40 },
+  { matchId: 471, playerId: 103, goals: 1, assists: 0, isMvp: false, rating: 7.8, minutesPlayed: 38 },
+  { matchId: 441, playerId: 104, goals: 1, assists: 1, isMvp: false, rating: 8.5, minutesPlayed: 40 },
+  { matchId: 471, playerId: 104, goals: 2, assists: 0, isMvp: true, rating: 9.0, minutesPlayed: 40 },
+  { matchId: 441, playerId: 105, goals: 0, assists: 0, isMvp: false, rating: 7.0, minutesPlayed: 40 },
+  { matchId: 471, playerId: 105, goals: 0, assists: 1, isMvp: false, rating: 7.3, minutesPlayed: 40 },
+  // === NAPOLI FUTSAL ===
+  { matchId: 441, playerId: 106, goals: 1, assists: 0, isMvp: false, rating: 7.6, minutesPlayed: 40 },
+  { matchId: 472, playerId: 106, goals: 0, assists: 1, isMvp: false, rating: 7.8, minutesPlayed: 40 },
+  { matchId: 441, playerId: 107, goals: 0, assists: 2, isMvp: false, rating: 8.4, minutesPlayed: 40 },
+  { matchId: 472, playerId: 107, goals: 1, assists: 1, isMvp: false, rating: 8.0, minutesPlayed: 40 },
+  { matchId: 441, playerId: 108, goals: 1, assists: 0, isMvp: false, rating: 7.2, minutesPlayed: 40 },
+  { matchId: 472, playerId: 108, goals: 2, assists: 1, isMvp: true, rating: 8.8, minutesPlayed: 40 },
+  { matchId: 441, playerId: 109, goals: 0, assists: 1, isMvp: false, rating: 7.8, minutesPlayed: 40 },
+  { matchId: 472, playerId: 109, goals: 1, assists: 0, isMvp: false, rating: 7.6, minutesPlayed: 38 },
+  { matchId: 441, playerId: 110, goals: 0, assists: 0, isMvp: false, rating: 6.8, minutesPlayed: 40 },
+  { matchId: 472, playerId: 110, goals: 0, assists: 0, isMvp: false, rating: 7.0, minutesPlayed: 40 },
+  // === PESCARA ===
+  { matchId: 442, playerId: 111, goals: 0, assists: 0, isMvp: false, rating: 6.8, minutesPlayed: 40 },
+  { matchId: 473, playerId: 111, goals: 1, assists: 0, isMvp: false, rating: 7.2, minutesPlayed: 40 },
+  { matchId: 442, playerId: 112, goals: 0, assists: 1, isMvp: false, rating: 7.4, minutesPlayed: 40 },
+  { matchId: 473, playerId: 112, goals: 1, assists: 0, isMvp: false, rating: 7.6, minutesPlayed: 38 },
+  { matchId: 442, playerId: 113, goals: 1, assists: 0, isMvp: false, rating: 7.6, minutesPlayed: 40 },
+  { matchId: 473, playerId: 113, goals: 2, assists: 0, isMvp: true, rating: 8.9, minutesPlayed: 40 },
+  { matchId: 442, playerId: 114, goals: 1, assists: 0, isMvp: false, rating: 7.4, minutesPlayed: 40 },
+  { matchId: 473, playerId: 114, goals: 0, assists: 1, isMvp: false, rating: 7.2, minutesPlayed: 38 },
+  { matchId: 442, playerId: 115, goals: 0, assists: 0, isMvp: false, rating: 7.4, minutesPlayed: 40 },
+  { matchId: 473, playerId: 115, goals: 0, assists: 0, isMvp: false, rating: 7.6, minutesPlayed: 40 },
+  // === REAL RIETI ===
+  { matchId: 442, playerId: 116, goals: 0, assists: 1, isMvp: false, rating: 7.0, minutesPlayed: 40 },
+  { matchId: 474, playerId: 116, goals: 1, assists: 0, isMvp: false, rating: 7.3, minutesPlayed: 40 },
+  { matchId: 442, playerId: 117, goals: 0, assists: 1, isMvp: false, rating: 7.8, minutesPlayed: 40 },
+  { matchId: 474, playerId: 117, goals: 1, assists: 0, isMvp: false, rating: 7.5, minutesPlayed: 40 },
+  { matchId: 442, playerId: 118, goals: 1, assists: 1, isMvp: false, rating: 8.3, minutesPlayed: 40 },
+  { matchId: 474, playerId: 118, goals: 0, assists: 2, isMvp: false, rating: 8.0, minutesPlayed: 40 },
+  { matchId: 442, playerId: 119, goals: 1, assists: 1, isMvp: false, rating: 8.2, minutesPlayed: 40 },
+  { matchId: 474, playerId: 119, goals: 0, assists: 1, isMvp: false, rating: 7.8, minutesPlayed: 40 },
+  { matchId: 442, playerId: 120, goals: 0, assists: 0, isMvp: false, rating: 6.6, minutesPlayed: 40 },
+  { matchId: 474, playerId: 120, goals: 0, assists: 1, isMvp: false, rating: 7.0, minutesPlayed: 40 },
+];

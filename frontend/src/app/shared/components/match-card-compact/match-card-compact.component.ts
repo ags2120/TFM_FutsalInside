@@ -2,12 +2,13 @@ import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Match } from '../../../core/models/match.model';
 import { TeamBadgeComponent } from '../team-badge/team-badge.component';
+import { ScoreDisplayComponent } from '../score-display/score-display.component';
 
 @Component({
   selector: 'app-match-card-compact',
-  imports: [RouterLink, TeamBadgeComponent],
+  imports: [RouterLink, TeamBadgeComponent, ScoreDisplayComponent],
   template: `
-    <a [routerLink]="['/matches', match().id]" class="match-compact">
+    <a [routerLink]="['/matches', match().id]" class="match-compact" [attr.aria-label]="'Partido: ' + match().homeTeam.shortName + ' vs ' + match().awayTeam.shortName">
       <div class="compact-left">
         <span class="team-info">
           <app-team-badge [team]="match().homeTeam" size="sm" />
@@ -15,7 +16,11 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
         </span>
       </div>
       <div class="compact-score">
-        <span class="score">{{ match().homeScore }} - {{ match().awayScore }}</span>
+        <app-score-display
+          [homeScore]="match().homeScore"
+          [awayScore]="match().awayScore"
+          [isLive]="true"
+        />
         @if (match().minute) {
           <span class="minute">{{ match().minute }}'</span>
         }
@@ -68,7 +73,7 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
       display: flex;
       align-items: center;
       gap: var(--space-2);
-      padding: 2px 4px;
+      padding: var(--space-1) var(--space-1);
       border-radius: var(--radius-sm);
       min-width: 0;
     }
@@ -86,19 +91,12 @@ import { TeamBadgeComponent } from '../team-badge/team-badge.component';
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: var(--space-1);
       flex-shrink: 0;
     }
 
-    .score {
-      font-family: var(--font-family-mono);
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-primary);
-    }
-
     .minute {
-      font-size: 0.625rem;
+      font-size: var(--font-size-xs);
       color: var(--color-live);
       font-weight: var(--font-weight-bold);
     }

@@ -22,8 +22,8 @@ import { Component, input } from '@angular/core';
     .score-display {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
       background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 100%);
       border-radius: var(--radius-lg);
       border: 1px solid var(--color-border-light);
@@ -42,7 +42,7 @@ import { Component, input } from '@angular/core';
       align-items: center;
       justify-content: center;
       min-width: 48px;
-      padding: 6px 10px;
+      padding: var(--space-2) var(--space-3);
       background: var(--color-bg-primary);
       border-radius: var(--radius-md);
     }
@@ -58,8 +58,8 @@ import { Component, input } from '@angular/core';
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      padding: 0 4px;
+      gap: var(--space-1);
+      padding: 0 var(--space-1);
     }
 
     .separator {
