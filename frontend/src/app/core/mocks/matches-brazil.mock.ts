@@ -32,11 +32,11 @@ export const MOCK_LIVE_MATCHES_BRAZIL: Match[] = [
       { type: 'goal', minute: 38, player: MOCK_PLAYERS_BRAZIL[2], team: MOCK_TEAMS_BRAZIL[0], assistPlayer: MOCK_PLAYERS_BRAZIL[3] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 55, awayValue: 45 },
-      { type: 'Tiros', homeValue: 14, awayValue: 10 },
-      { type: 'Tiros a puerta', homeValue: 7, awayValue: 5 },
-      { type: 'Córneres', homeValue: 3, awayValue: 2 },
-      { type: 'Faltas', homeValue: 4, awayValue: 6 },
+      { type: 'possession', homeValue: 55, awayValue: 45 },
+      { type: 'shots', homeValue: 14, awayValue: 10 },
+      { type: 'shots_on_target', homeValue: 7, awayValue: 5 },
+      { type: 'corners', homeValue: 3, awayValue: 2 },
+      { type: 'fouls', homeValue: 4, awayValue: 6 },
     ],
   },
   {
@@ -55,9 +55,9 @@ export const MOCK_LIVE_MATCHES_BRAZIL: Match[] = [
       { type: 'goal', minute: 15, player: MOCK_PLAYERS_BRAZIL[17], team: MOCK_TEAMS_BRAZIL[3], assistPlayer: MOCK_PLAYERS_BRAZIL[16] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 48, awayValue: 52 },
-      { type: 'Tiros', homeValue: 8, awayValue: 10 },
-      { type: 'Tiros a puerta', homeValue: 4, awayValue: 5 },
+      { type: 'possession', homeValue: 48, awayValue: 52 },
+      { type: 'shots', homeValue: 8, awayValue: 10 },
+      { type: 'shots_on_target', homeValue: 4, awayValue: 5 },
     ],
   },
   {

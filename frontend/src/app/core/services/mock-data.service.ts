@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { DataService } from './data.service';
 import { Match } from '../models/match.model';
 import { Team } from '../models/team.model';
 import { Player, PlayerDetail } from '../models/player.model';
@@ -51,7 +52,7 @@ const MOCK_DELAY_MS = 300;
 @Injectable({
   providedIn: 'root',
 })
-export class MockDataService {
+export class MockDataService extends DataService {
   getMatches(date?: string): Observable<Match[]> {
     const allMatches = [...MOCK_ALL_MATCHES, ...MOCK_ALL_MATCHES_BRAZIL, ...MOCK_ALL_MATCHES_ITALY, ...MOCK_ALL_MATCHES_UEFA];
     let matches = allMatches;

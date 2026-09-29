@@ -17,6 +17,22 @@ export type MatchEventType =
   | 'substitution'
   | 'timeout';
 
+/**
+ * Canonical metric keys exposed by the API.
+ *
+ * Mirrors the `MatchStatisticType` enum in the backend. These are identifiers,
+ * not display text: the label map in the match detail component owns every
+ * user-facing string, so a single client can render any language.
+ */
+export type MatchStatisticType =
+  | 'possession'
+  | 'shots'
+  | 'shots_on_target'
+  | 'corners'
+  | 'fouls'
+  | 'yellow_cards'
+  | 'red_cards';
+
 export interface Match {
   id: number;
   homeTeam: Team;
@@ -44,7 +60,7 @@ export interface MatchEvent {
 }
 
 export interface MatchStatistics {
-  type: string;
+  type: MatchStatisticType;
   homeValue: number;
   awayValue: number;
 }

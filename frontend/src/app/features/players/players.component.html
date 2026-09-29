@@ -80,6 +80,9 @@
             </div>
             <div class="card-meta">
               <span class="card-number">#{{ player.shirtNumber }}</span>
+              @if (playerScrollStats().get(player.id); as stats) {
+                <span class="card-stats">⚽ {{ stats.goals }} · 🎯 {{ stats.assists }}</span>
+              }
               @if (player.averageRating) {
                 <span class="card-rating">{{ player.averageRating.toFixed(1) }}</span>
               }

@@ -1,11 +1,11 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Team } from '../core/models/team.model';
-import { MockDataService } from '../core/services/mock-data.service';
+import { DataService } from '../core/services/data.service';
 
 @Injectable({ providedIn: 'root' })
 export class TeamsStore {
-  private readonly mockData = inject(MockDataService);
+  protected readonly data = inject(DataService);
 
   private readonly _teams = signal<Team[]>([]);
   private readonly _loading = signal(false);
@@ -26,7 +26,7 @@ export class TeamsStore {
     this._loading.set(true);
     this._error.set(null);
     try {
-      const teams = await firstValueFrom(this.mockData.getTeams());
+      const teams = await firstValueFrom(this.data.getTeams());
       this._teams.set(teams);
     } catch {
       this._error.set('Error al cargar equipos');

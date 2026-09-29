@@ -204,6 +204,14 @@
   border-radius: var(--radius-sm);
 }
 
+.card-stats {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .players-grid {

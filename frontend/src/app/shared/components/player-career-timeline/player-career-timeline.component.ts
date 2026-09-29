@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CareerEntry } from '../../../core/models/player.model';
 
@@ -9,11 +9,11 @@ import { CareerEntry } from '../../../core/models/player.model';
     <div class="career-card">
       <h3 class="career-title">Trayectoria</h3>
       <div class="timeline">
-        @for (entry of career(); track entry.startDate; let i = $index) {
+        @for (entry of sortedCareer(); track entry.startDate; let i = $index) {
           <div class="timeline-item" [class.current]="!entry.endDate">
             <div class="timeline-marker">
               <div class="marker-dot" [class.current]="!entry.endDate"></div>
-              @if (i < career().length - 1) {
+              @if (i < sortedCareer().length - 1) {
                 <div class="marker-line"></div>
               }
             </div>
@@ -141,6 +141,14 @@ import { CareerEntry } from '../../../core/models/player.model';
 })
 export class PlayerCareerTimelineComponent {
   readonly career = input.required<CareerEntry[]>();
+
+  /**
+   * The API serves history oldest-first with the open (current) stint last;
+   * the timeline shows it most-recent-first so "Actual" sits on top.
+   */
+  protected readonly sortedCareer = computed(() =>
+    [...this.career()].sort((a, b) => b.startDate.localeCompare(a.startDate)),
+  );
 
   protected formatYear(dateStr: string): string {
     const date = new Date(dateStr);

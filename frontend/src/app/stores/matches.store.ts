@@ -1,13 +1,13 @@
 import { Injectable, signal, computed, inject, DestroyRef } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Match } from '../core/models/match.model';
-import { MockDataService } from '../core/services/mock-data.service';
+import { DataService } from '../core/services/data.service';
 
 const POLLING_INTERVAL_MS = 30000;
 
 @Injectable({ providedIn: 'root' })
 export class MatchesStore {
-  private readonly mockData = inject(MockDataService);
+  private readonly data = inject(DataService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly _selectedDate = signal<string>(
@@ -60,7 +60,7 @@ export class MatchesStore {
     this._error.set(null);
     try {
       const matches = await firstValueFrom(
-        this.mockData.getMatches(this._selectedDate())
+        this.data.getMatches(this._selectedDate())
       );
       this._matches.set(matches);
     } catch {
@@ -75,7 +75,7 @@ export class MatchesStore {
     this._detailLoading.set(true);
     this._detailError.set(null);
     try {
-      const match = await firstValueFrom(this.mockData.getMatchById(id));
+      const match = await firstValueFrom(this.data.getMatchById(id));
       this._currentMatch.set(match ?? null);
       if (!match) {
         this._detailError.set('Partido no encontrado');
@@ -89,7 +89,7 @@ export class MatchesStore {
 
   async loadLiveMatches(): Promise<void> {
     try {
-      const live = await firstValueFrom(this.mockData.getLiveMatches());
+      const live = await firstValueFrom(this.data.getLiveMatches());
       this._liveMatches.set(live);
       this._liveError.set(null);
     } catch {
@@ -99,7 +99,7 @@ export class MatchesStore {
 
   async loadUpcomingMatches(): Promise<void> {
     try {
-      const upcoming = await firstValueFrom(this.mockData.getUpcomingMatches());
+      const upcoming = await firstValueFrom(this.data.getUpcomingMatches());
       this._upcomingMatches.set(upcoming);
       this._upcomingError.set(null);
     } catch {
@@ -109,7 +109,7 @@ export class MatchesStore {
 
   async loadRecentMatches(): Promise<void> {
     try {
-      const recent = await firstValueFrom(this.mockData.getRecentMatches());
+      const recent = await firstValueFrom(this.data.getRecentMatches());
       this._recentMatches.set(recent);
       this._recentError.set(null);
     } catch {
@@ -126,9 +126,9 @@ export class MatchesStore {
     this._recentError.set(null);
     try {
       const [live, upcoming, recent] = await Promise.all([
-        firstValueFrom(this.mockData.getLiveMatches()),
-        firstValueFrom(this.mockData.getUpcomingMatches()),
-        firstValueFrom(this.mockData.getRecentMatches()),
+        firstValueFrom(this.data.getLiveMatches()),
+        firstValueFrom(this.data.getUpcomingMatches()),
+        firstValueFrom(this.data.getRecentMatches()),
       ]);
       this._liveMatches.set(live);
       this._upcomingMatches.set(upcoming);

@@ -23,7 +23,10 @@ import { PlayersStore } from '../../../stores/players.store';
                 <a [routerLink]="['/teams', entry.player.team.id]" class="scorer-team-link">{{ entry.player.team.shortName }}</a>
               }
             </div>
-            <span class="scorer-goals">{{ entry.goals }}</span>
+            <div class="scorer-nums">
+              <span class="scorer-goals">{{ entry.goals }}</span>
+              <span class="scorer-assists">{{ entry.assists }} asist.</span>
+            </div>
           </div>
         }
         @if (displayScorers().length === 0) {
@@ -126,12 +129,26 @@ import { PlayersStore } from '../../../stores/players.store';
       color: var(--color-accent);
     }
 
+    .scorer-nums {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
     .scorer-goals {
       font-family: var(--font-family-mono);
       font-size: var(--font-size-lg);
       font-weight: var(--font-weight-bold);
       color: var(--color-accent);
-      flex-shrink: 0;
+    }
+
+    .scorer-assists {
+      font-family: var(--font-family-mono);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-muted);
     }
 
     .empty-scorers {

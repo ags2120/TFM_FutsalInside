@@ -1,0 +1,202 @@
+[
+  {
+    "team_id": 1,
+    "competition_id": 1
+  },
+  {
+    "team_id": 2,
+    "competition_id": 1
+  },
+  {
+    "team_id": 3,
+    "competition_id": 1
+  },
+  {
+    "team_id": 4,
+    "competition_id": 1
+  },
+  {
+    "team_id": 5,
+    "competition_id": 1
+  },
+  {
+    "team_id": 6,
+    "competition_id": 1
+  },
+  {
+    "team_id": 7,
+    "competition_id": 1
+  },
+  {
+    "team_id": 8,
+    "competition_id": 1
+  },
+  {
+    "team_id": 9,
+    "competition_id": 1
+  },
+  {
+    "team_id": 10,
+    "competition_id": 1
+  },
+  {
+    "team_id": 1,
+    "competition_id": 2
+  },
+  {
+    "team_id": 2,
+    "competition_id": 2
+  },
+  {
+    "team_id": 3,
+    "competition_id": 2
+  },
+  {
+    "team_id": 4,
+    "competition_id": 2
+  },
+  {
+    "team_id": 5,
+    "competition_id": 2
+  },
+  {
+    "team_id": 6,
+    "competition_id": 2
+  },
+  {
+    "team_id": 7,
+    "competition_id": 2
+  },
+  {
+    "team_id": 8,
+    "competition_id": 2
+  },
+  {
+    "team_id": 9,
+    "competition_id": 2
+  },
+  {
+    "team_id": 10,
+    "competition_id": 2
+  },
+  {
+    "team_id": 11,
+    "competition_id": 3
+  },
+  {
+    "team_id": 12,
+    "competition_id": 3
+  },
+  {
+    "team_id": 13,
+    "competition_id": 3
+  },
+  {
+    "team_id": 14,
+    "competition_id": 3
+  },
+  {
+    "team_id": 15,
+    "competition_id": 3
+  },
+  {
+    "team_id": 16,
+    "competition_id": 3
+  },
+  {
+    "team_id": 17,
+    "competition_id": 3
+  },
+  {
+    "team_id": 18,
+    "competition_id": 3
+  },
+  {
+    "team_id": 19,
+    "competition_id": 3
+  },
+  {
+    "team_id": 20,
+    "competition_id": 3
+  },
+  {
+    "team_id": 21,
+    "competition_id": 4
+  },
+  {
+    "team_id": 22,
+    "competition_id": 4
+  },
+  {
+    "team_id": 23,
+    "competition_id": 4
+  },
+  {
+    "team_id": 24,
+    "competition_id": 4
+  },
+  {
+    "team_id": 25,
+    "competition_id": 4
+  },
+  {
+    "team_id": 26,
+    "competition_id": 4
+  },
+  {
+    "team_id": 27,
+    "competition_id": 4
+  },
+  {
+    "team_id": 28,
+    "competition_id": 4
+  },
+  {
+    "team_id": 29,
+    "competition_id": 4
+  },
+  {
+    "team_id": 30,
+    "competition_id": 4
+  },
+  {
+    "team_id": 1,
+    "competition_id": 5
+  },
+  {
+    "team_id": 2,
+    "competition_id": 5
+  },
+  {
+    "team_id": 11,
+    "competition_id": 5
+  },
+  {
+    "team_id": 12,
+    "competition_id": 5
+  },
+  {
+    "team_id": 21,
+    "competition_id": 5
+  },
+  {
+    "team_id": 22,
+    "competition_id": 5
+  },
+  {
+    "team_id": 31,
+    "competition_id": 5
+  },
+  {
+    "team_id": 32,
+    "competition_id": 5
+  },
+  {
+    "team_id": 33,
+    "competition_id": 5
+  },
+  {
+    "team_id": 34,
+    "competition_id": 5
+  }
+]

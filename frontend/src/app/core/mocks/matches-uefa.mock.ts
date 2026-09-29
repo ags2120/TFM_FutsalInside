@@ -33,9 +33,9 @@ export const MOCK_LIVE_MATCHES_UEFA: Match[] = [
       { type: 'goal', minute: 28, player: findPlayer(4), team: MOCK_TEAMS_UEFA[0], assistPlayer: findPlayer(3) },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 58, awayValue: 42 },
-      { type: 'Tiros', homeValue: 15, awayValue: 8 },
-      { type: 'Tiros a puerta', homeValue: 8, awayValue: 3 },
+      { type: 'possession', homeValue: 58, awayValue: 42 },
+      { type: 'shots', homeValue: 15, awayValue: 8 },
+      { type: 'shots_on_target', homeValue: 8, awayValue: 3 },
     ],
   },
   {

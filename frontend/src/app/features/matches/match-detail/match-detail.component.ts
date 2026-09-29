@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatchesStore } from '../../../stores/matches.store';
-import { Match, MatchEvent } from '../../../core/models/match.model';
+import { Match, MatchEvent, MatchStatisticType } from '../../../core/models/match.model';
 import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
 import { ScoreDisplayComponent } from '../../../shared/components/score-display/score-display.component';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
@@ -13,6 +13,32 @@ interface MatchInsight {
   value: string;
   highlight: 'home' | 'away' | 'neutral';
 }
+
+/**
+ * Display labels for the canonical statistic keys.
+ *
+ * The API stays language neutral, so every user-facing string for a metric
+ * lives here. Typing the record as `MatchStatisticType` makes the compiler
+ * fail if a new backend key is added without a label.
+ */
+const STATISTIC_LABELS: Record<MatchStatisticType, string> = {
+  possession: 'Posesión',
+  shots: 'Tiros',
+  shots_on_target: 'Tiros a puerta',
+  corners: 'Córneres',
+  fouls: 'Faltas',
+  yellow_cards: 'Tarjetas amarillas',
+  red_cards: 'Tarjetas rojas',
+};
+
+/** Metrics promoted to the at-a-glance summary strip, in display order. */
+const SUMMARY_STATISTIC_KEYS: MatchStatisticType[] = [
+  'possession',
+  'shots',
+  'shots_on_target',
+  'corners',
+  'fouls',
+];
 
 interface EnrichedStat {
   type: string;
@@ -161,18 +187,9 @@ export class MatchDetailComponent implements OnInit {
   protected readonly stats = computed(() => {
     const m = this.match();
     if (!m?.statistics) return [];
-    const labels: Record<string, string> = {
-      'Posesión': 'Posesión',
-      'Tiros': 'Tiros',
-      'Tiros a puerta': 'Tiros a puerta',
-      'Córneres': 'Córneres',
-      'Faltas': 'Faltas',
-      'Tarjetas amarillas': 'Tarjetas amarillas',
-      'Tarjetas rojas': 'Tarjetas rojas',
-    };
     return m.statistics.map(s => ({
       type: s.type,
-      label: labels[s.type] || s.type,
+      label: STATISTIC_LABELS[s.type] ?? s.type,
       homeValue: s.homeValue,
       awayValue: s.awayValue,
       homePercent: Math.round((s.homeValue / (s.homeValue + s.awayValue || 1)) * 100),
@@ -184,8 +201,7 @@ export class MatchDetailComponent implements OnInit {
 
   protected readonly summaryStats = computed(() => {
     const all = this.stats();
-    const keys = ['Posesión', 'Tiros', 'Tiros a puerta', 'Córneres', 'Faltas'];
-    return all.filter(s => keys.includes(s.type));
+    return all.filter(s => SUMMARY_STATISTIC_KEYS.includes(s.type));
   });
 
   protected readonly insights = computed<MatchInsight[]>(() => {
@@ -195,9 +211,9 @@ export class MatchDetailComponent implements OnInit {
     const hName = m.homeTeam.shortName;
     const aName = m.awayTeam.shortName;
 
-    const find = (type: string) => m.statistics!.find(s => s.type === type);
+    const find = (type: MatchStatisticType) => m.statistics!.find(s => s.type === type);
 
-    const possession = find('Posesión');
+    const possession = find('possession');
     if (possession) {
       if (possession.homeValue > possession.awayValue) {
         result.push({ icon: '⚽', label: 'Posesión', value: `${hName} domina con ${possession.homeValue}%`, highlight: 'home' });
@@ -208,8 +224,8 @@ export class MatchDetailComponent implements OnInit {
       }
     }
 
-    const shots = find('Tiros');
-    const shotsOnTarget = find('Tiros a puerta');
+    const shots = find('shots');
+    const shotsOnTarget = find('shots_on_target');
     if (shots && shotsOnTarget) {
       const homeEff = shots.homeValue > 0 ? Math.round((shotsOnTarget.homeValue / shots.homeValue) * 100) : 0;
       const awayEff = shots.awayValue > 0 ? Math.round((shotsOnTarget.awayValue / shots.awayValue) * 100) : 0;
@@ -227,7 +243,7 @@ export class MatchDetailComponent implements OnInit {
       }
     }
 
-    const corners = find('Córneres');
+    const corners = find('corners');
     if (corners) {
       if (corners.homeValue > corners.awayValue) {
         result.push({ icon: '📐', label: 'Córneres', value: `${hName} presiona con ${corners.homeValue} córneres`, highlight: 'home' });

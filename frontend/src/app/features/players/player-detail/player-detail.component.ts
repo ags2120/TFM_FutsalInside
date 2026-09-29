@@ -6,7 +6,7 @@ import { PlayerStatistics } from '../../../core/models/statistics.model';
 import { PlayerMatchParticipation } from '../../../core/models/player-match.model';
 import { Standing } from '../../../core/models/standings.model';
 import { Match } from '../../../core/models/match.model';
-import { MockDataService } from '../../../core/services/mock-data.service';
+import { DataService } from '../../../core/services/data.service';
 import { FavoritesStore } from '../../../stores/favorites.store';
 import { StandingsStore } from '../../../stores/standings.store';
 import { PlayersStore } from '../../../stores/players.store';
@@ -52,7 +52,7 @@ import { AgePipe } from '../../../shared/pipes/age.pipe';
 })
 export class PlayerDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly mockData = inject(MockDataService);
+  protected readonly data = inject(DataService);
   protected readonly favoritesStore = inject(FavoritesStore);
   private readonly standingsStore = inject(StandingsStore);
   private readonly playersStore = inject(PlayersStore);
@@ -125,9 +125,9 @@ export class PlayerDetailComponent implements OnInit {
         this.playersStore.loadPlayers(),
       ]);
       const [playerResult, statsResult, participations] = await Promise.all([
-        firstValueFrom(this.mockData.getPlayerDetailById(id)),
-        firstValueFrom(this.mockData.getPlayerStats(id)),
-        firstValueFrom(this.mockData.getPlayerMatchParticipation(id)),
+        firstValueFrom(this.data.getPlayerDetailById(id)),
+        firstValueFrom(this.data.getPlayerStats(id)),
+        firstValueFrom(this.data.getPlayerMatchParticipation(id)),
       ]);
       this.player.set(playerResult ?? null);
       this.stats.set(statsResult ?? null);
@@ -135,7 +135,7 @@ export class PlayerDetailComponent implements OnInit {
 
       const matchIds = participations.map(p => p.matchId);
       if (matchIds.length > 0) {
-        const matches = await firstValueFrom(this.mockData.getMatchesByIds(matchIds));
+        const matches = await firstValueFrom(this.data.getMatchesByIds(matchIds));
         const map = new Map(matches.map(m => [m.id, m]));
         this.matchesMap.set(map);
       }

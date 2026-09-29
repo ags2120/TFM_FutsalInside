@@ -1,11 +1,11 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Standing, Competition } from '../core/models';
-import { MockDataService } from '../core/services/mock-data.service';
+import { DataService } from '../core/services/data.service';
 
 @Injectable({ providedIn: 'root' })
 export class StandingsStore {
-  private readonly mockData = inject(MockDataService);
+  protected readonly data = inject(DataService);
 
   private readonly _standings = signal<Standing[]>([]);
   private readonly _competitions = signal<Competition[]>([]);
@@ -77,8 +77,8 @@ export class StandingsStore {
     this._error.set(null);
     try {
       const [standings, competitions] = await Promise.all([
-        firstValueFrom(this.mockData.getStandings()),
-        firstValueFrom(this.mockData.getCompetitions()),
+        firstValueFrom(this.data.getStandings()),
+        firstValueFrom(this.data.getCompetitions()),
       ]);
       this._standings.set(standings);
       this._competitions.set(competitions);

@@ -6,7 +6,7 @@ import { Player } from '../../../core/models/player.model';
 import { Standing } from '../../../core/models/standings.model';
 import { Match } from '../../../core/models/match.model';
 import { TeamStatistics, PlayerStatistics } from '../../../core/models/statistics.model';
-import { MockDataService } from '../../../core/services/mock-data.service';
+import { DataService } from '../../../core/services/data.service';
 import { FavoritesStore } from '../../../stores/favorites.store';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
@@ -48,7 +48,7 @@ import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
 })
 export class TeamDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly mockData = inject(MockDataService);
+  protected readonly data = inject(DataService);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly favoritesStore = inject(FavoritesStore);
 
@@ -81,15 +81,43 @@ export class TeamDetailComponent implements OnInit {
 
   protected readonly radarValues = computed(() => {
     const s = this.teamStats();
+    const st = this.standing();
+    const standings = this.allStandings();
     if (!s) return [0, 0, 0, 0, 0];
-    const maxGoals = 68;
-    const attack = Math.min(100, (s.goalsScored / maxGoals) * 100);
-    const defense = Math.min(100, ((maxGoals - s.goalsConceded) / maxGoals) * 100);
+
+    const clamp = (v: number) => Math.min(100, Math.max(0, v));
+
+    // Every axis is normalised against the club's own competition, so the
+    // radar reads "how you compare in your league", not a hard-coded ceiling.
+    // A team that scores the most gets near 100 in Ataque, whatever the
+    // absolute figure happens to be.
+    const comp = st
+      ? standings.filter((row) => row.competitionId === st.competitionId)
+      : standings;
+
+    const maxOf = (pick: (row: Standing) => number) =>
+      comp.reduce((max, row) => Math.max(max, pick(row)), 0);
+
+    let attack = 0;
+    let defense = 0;
+    let pressing = 0;
+    let efficiency = 0;
+
+    if (st && st.played > 0) {
+      const maxGoalsFor = maxOf((row) => row.goalsFor);
+      const maxGoalsAgainst = maxOf((row) => row.goalsAgainst);
+      attack = clamp((st.goalsFor / (maxGoalsFor || 1)) * 100);
+      defense =
+        maxGoalsAgainst > 0
+          ? clamp(100 - (st.goalsAgainst / maxGoalsAgainst) * 100)
+          : 100;
+      pressing = (st.won / st.played) * 100;
+      efficiency = (st.points / (st.played * 3)) * 100;
+    }
+
     const possession = s.avgBallPossession || 50;
-    const pressing = Math.min(100, ((s.cleanSheets / 8) * 100));
-    const winRate = s.matchesPlayed > 0 ? (s.wins / s.matchesPlayed) * 100 : 0;
-    const efficiency = (winRate + possession) / 2;
-    return [attack, defense, possession, pressing, efficiency];
+
+    return [attack, defense, clamp(possession), pressing, efficiency];
   });
 
   ngOnInit(): void {
@@ -104,11 +132,11 @@ export class TeamDetailComponent implements OnInit {
     this.loading.set(true);
 
     const [teamResult, playersResult, standingsResult, statsResult, matchesResult] = await Promise.all([
-      firstValueFrom(this.mockData.getTeamById(id)),
-      firstValueFrom(this.mockData.getPlayersByTeam(id)),
-      firstValueFrom(this.mockData.getStandings()),
-      firstValueFrom(this.mockData.getTeamStatistics(id)),
-      firstValueFrom(this.mockData.getMatchesByTeam(id)),
+      firstValueFrom(this.data.getTeamById(id)),
+      firstValueFrom(this.data.getPlayersByTeam(id)),
+      firstValueFrom(this.data.getStandings()),
+      firstValueFrom(this.data.getTeamStatistics(id)),
+      firstValueFrom(this.data.getMatchesByTeam(id)),
     ]);
 
     this.team.set(teamResult ?? null);
@@ -121,10 +149,10 @@ export class TeamDetailComponent implements OnInit {
       .sort((a, b) => b.date.localeCompare(a.date));
     this.recentMatches.set(recentFinished.slice(0, 5));
 
-    const allTeamsResult = await firstValueFrom(this.mockData.getTeams());
+    const allTeamsResult = await firstValueFrom(this.data.getTeams());
     this.allTeams.set(allTeamsResult);
 
-    const statsPromises = playersResult.map(p => firstValueFrom(this.mockData.getPlayerStats(p.id)));
+    const statsPromises = playersResult.map(p => firstValueFrom(this.data.getPlayerStats(p.id)));
     const allStats = await Promise.all(statsPromises);
     this.playerStats.set(allStats.filter((s): s is PlayerStatistics => s !== undefined));
 

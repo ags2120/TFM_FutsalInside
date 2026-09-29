@@ -1,0 +1,1274 @@
+[
+  {
+    "player_id": 1,
+    "team_id": 3,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 80,
+    "goals": 15
+  },
+  {
+    "player_id": 1,
+    "team_id": 1,
+    "start_date": "2017-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 25
+  },
+  {
+    "player_id": 2,
+    "team_id": 6,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 80,
+    "goals": 20
+  },
+  {
+    "player_id": 2,
+    "team_id": 1,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 30
+  },
+  {
+    "player_id": 3,
+    "team_id": 10,
+    "start_date": "2014-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 80,
+    "goals": 37
+  },
+  {
+    "player_id": 3,
+    "team_id": 31,
+    "start_date": "2016-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 115,
+    "goals": 39
+  },
+  {
+    "player_id": 3,
+    "team_id": 3,
+    "start_date": "2017-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 50
+  },
+  {
+    "player_id": 3,
+    "team_id": 1,
+    "start_date": "2019-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 3,
+    "team_id": 1,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 55
+  },
+  {
+    "player_id": 4,
+    "team_id": 32,
+    "start_date": "2016-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 105,
+    "goals": 42
+  },
+  {
+    "player_id": 4,
+    "team_id": 8,
+    "start_date": "2017-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 4,
+    "team_id": 1,
+    "start_date": "2019-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 115,
+    "goals": 48
+  },
+  {
+    "player_id": 4,
+    "team_id": 1,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 28
+  },
+  {
+    "player_id": 5,
+    "team_id": 9,
+    "start_date": "2018-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 85,
+    "goals": 22
+  },
+  {
+    "player_id": 5,
+    "team_id": 1,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 35
+  },
+  {
+    "player_id": 6,
+    "team_id": 1,
+    "start_date": "2012-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 100,
+    "goals": 30
+  },
+  {
+    "player_id": 6,
+    "team_id": 2,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 120,
+    "goals": 40
+  },
+  {
+    "player_id": 6,
+    "team_id": 2,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 7,
+    "team_id": 3,
+    "start_date": "2012-07-01",
+    "end_date": "2015-07-01",
+    "matches_played": 75,
+    "goals": 17
+  },
+  {
+    "player_id": 7,
+    "team_id": 4,
+    "start_date": "2015-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 95,
+    "goals": 22
+  },
+  {
+    "player_id": 7,
+    "team_id": 34,
+    "start_date": "2016-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 105,
+    "goals": 42
+  },
+  {
+    "player_id": 7,
+    "team_id": 2,
+    "start_date": "2018-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 28
+  },
+  {
+    "player_id": 7,
+    "team_id": 2,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 48
+  },
+  {
+    "player_id": 8,
+    "team_id": 9,
+    "start_date": "2013-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 75,
+    "goals": 28
+  },
+  {
+    "player_id": 8,
+    "team_id": 7,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 105,
+    "goals": 42
+  },
+  {
+    "player_id": 8,
+    "team_id": 2,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 48
+  },
+  {
+    "player_id": 9,
+    "team_id": 4,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 80,
+    "goals": 18
+  },
+  {
+    "player_id": 9,
+    "team_id": 2,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 30
+  },
+  {
+    "player_id": 10,
+    "team_id": 5,
+    "start_date": "2018-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 85,
+    "goals": 15
+  },
+  {
+    "player_id": 10,
+    "team_id": 2,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 22
+  },
+  {
+    "player_id": 11,
+    "team_id": 7,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 80,
+    "goals": 12
+  },
+  {
+    "player_id": 11,
+    "team_id": 3,
+    "start_date": "2017-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 20
+  },
+  {
+    "player_id": 12,
+    "team_id": 5,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 100,
+    "goals": 17
+  },
+  {
+    "player_id": 12,
+    "team_id": 3,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 24
+  },
+  {
+    "player_id": 13,
+    "team_id": 5,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 120,
+    "goals": 39
+  },
+  {
+    "player_id": 13,
+    "team_id": 3,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 150,
+    "goals": 58
+  },
+  {
+    "player_id": 14,
+    "team_id": 10,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 85,
+    "goals": 20
+  },
+  {
+    "player_id": 14,
+    "team_id": 3,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 32
+  },
+  {
+    "player_id": 15,
+    "team_id": 6,
+    "start_date": "2018-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 80,
+    "goals": 18
+  },
+  {
+    "player_id": 15,
+    "team_id": 3,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 28
+  },
+  {
+    "player_id": 16,
+    "team_id": 2,
+    "start_date": "2013-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 80,
+    "goals": 10
+  },
+  {
+    "player_id": 16,
+    "team_id": 4,
+    "start_date": "2016-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 22
+  },
+  {
+    "player_id": 17,
+    "team_id": 1,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 105,
+    "goals": 23
+  },
+  {
+    "player_id": 17,
+    "team_id": 4,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 135,
+    "goals": 32
+  },
+  {
+    "player_id": 18,
+    "team_id": 8,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 115,
+    "goals": 39
+  },
+  {
+    "player_id": 18,
+    "team_id": 4,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 19,
+    "team_id": 7,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 19,
+    "team_id": 4,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 30
+  },
+  {
+    "player_id": 20,
+    "team_id": 9,
+    "start_date": "2018-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 80,
+    "goals": 15
+  },
+  {
+    "player_id": 20,
+    "team_id": 4,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 25
+  },
+  {
+    "player_id": 21,
+    "team_id": 8,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 80,
+    "goals": 20
+  },
+  {
+    "player_id": 21,
+    "team_id": 5,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 35
+  },
+  {
+    "player_id": 22,
+    "team_id": 10,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 80,
+    "goals": 15
+  },
+  {
+    "player_id": 22,
+    "team_id": 5,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 105,
+    "goals": 22
+  },
+  {
+    "player_id": 23,
+    "team_id": 10,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 23,
+    "team_id": 5,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 24,
+    "team_id": 3,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 24,
+    "team_id": 5,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 30
+  },
+  {
+    "player_id": 25,
+    "team_id": 7,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 25,
+    "team_id": 5,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 28
+  },
+  {
+    "player_id": 26,
+    "team_id": 9,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 85,
+    "goals": 15
+  },
+  {
+    "player_id": 26,
+    "team_id": 6,
+    "start_date": "2017-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 25
+  },
+  {
+    "player_id": 27,
+    "team_id": 4,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 27,
+    "team_id": 6,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 22
+  },
+  {
+    "player_id": 28,
+    "team_id": 7,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 105,
+    "goals": 22
+  },
+  {
+    "player_id": 28,
+    "team_id": 6,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 30
+  },
+  {
+    "player_id": 29,
+    "team_id": 1,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 80,
+    "goals": 20
+  },
+  {
+    "player_id": 29,
+    "team_id": 6,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 105,
+    "goals": 30
+  },
+  {
+    "player_id": 30,
+    "team_id": 2,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 30,
+    "team_id": 6,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 25
+  },
+  {
+    "player_id": 31,
+    "team_id": 3,
+    "start_date": "2013-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 80,
+    "goals": 18
+  },
+  {
+    "player_id": 31,
+    "team_id": 7,
+    "start_date": "2016-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 35
+  },
+  {
+    "player_id": 32,
+    "team_id": 5,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 85,
+    "goals": 15
+  },
+  {
+    "player_id": 32,
+    "team_id": 7,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 28
+  },
+  {
+    "player_id": 33,
+    "team_id": 9,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 60,
+    "goals": 16
+  },
+  {
+    "player_id": 33,
+    "team_id": 6,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 85,
+    "goals": 26
+  },
+  {
+    "player_id": 33,
+    "team_id": 7,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 34
+  },
+  {
+    "player_id": 34,
+    "team_id": 8,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 80,
+    "goals": 18
+  },
+  {
+    "player_id": 34,
+    "team_id": 7,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 105,
+    "goals": 30
+  },
+  {
+    "player_id": 35,
+    "team_id": 4,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 35,
+    "team_id": 7,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 22
+  },
+  {
+    "player_id": 36,
+    "team_id": 1,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 36,
+    "team_id": 8,
+    "start_date": "2017-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 32
+  },
+  {
+    "player_id": 37,
+    "team_id": 10,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 18
+  },
+  {
+    "player_id": 37,
+    "team_id": 8,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 27
+  },
+  {
+    "player_id": 38,
+    "team_id": 5,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 38,
+    "team_id": 8,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  },
+  {
+    "player_id": 39,
+    "team_id": 6,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 80,
+    "goals": 15
+  },
+  {
+    "player_id": 39,
+    "team_id": 8,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 105,
+    "goals": 28
+  },
+  {
+    "player_id": 40,
+    "team_id": 3,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 40,
+    "team_id": 8,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 25
+  },
+  {
+    "player_id": 41,
+    "team_id": 2,
+    "start_date": "2013-07-01",
+    "end_date": "2016-07-01",
+    "matches_played": 80,
+    "goals": 15
+  },
+  {
+    "player_id": 41,
+    "team_id": 9,
+    "start_date": "2016-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 30
+  },
+  {
+    "player_id": 42,
+    "team_id": 3,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 95,
+    "goals": 19
+  },
+  {
+    "player_id": 42,
+    "team_id": 9,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 125,
+    "goals": 29
+  },
+  {
+    "player_id": 43,
+    "team_id": 8,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 100,
+    "goals": 28
+  },
+  {
+    "player_id": 43,
+    "team_id": 9,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 43
+  },
+  {
+    "player_id": 44,
+    "team_id": 5,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 44,
+    "team_id": 9,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 32
+  },
+  {
+    "player_id": 45,
+    "team_id": 8,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 45,
+    "team_id": 9,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 22
+  },
+  {
+    "player_id": 46,
+    "team_id": 4,
+    "start_date": "2014-07-01",
+    "end_date": "2017-07-01",
+    "matches_played": 80,
+    "goals": 18
+  },
+  {
+    "player_id": 46,
+    "team_id": 10,
+    "start_date": "2017-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 35
+  },
+  {
+    "player_id": 47,
+    "team_id": 1,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 85,
+    "goals": 15
+  },
+  {
+    "player_id": 47,
+    "team_id": 10,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 105,
+    "goals": 25
+  },
+  {
+    "player_id": 48,
+    "team_id": 6,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 48,
+    "team_id": 10,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 34
+  },
+  {
+    "player_id": 49,
+    "team_id": 2,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 85,
+    "goals": 18
+  },
+  {
+    "player_id": 49,
+    "team_id": 10,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 110,
+    "goals": 30
+  },
+  {
+    "player_id": 50,
+    "team_id": 7,
+    "start_date": "2019-07-01",
+    "end_date": "2021-07-01",
+    "matches_played": 65,
+    "goals": 12
+  },
+  {
+    "player_id": 50,
+    "team_id": 10,
+    "start_date": "2021-07-01",
+    "end_date": null,
+    "matches_played": 100,
+    "goals": 25
+  },
+  {
+    "player_id": 53,
+    "team_id": 15,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 115,
+    "goals": 39
+  },
+  {
+    "player_id": 53,
+    "team_id": 11,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 58,
+    "team_id": 16,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 105,
+    "goals": 42
+  },
+  {
+    "player_id": 58,
+    "team_id": 12,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 48
+  },
+  {
+    "player_id": 63,
+    "team_id": 18,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 120,
+    "goals": 39
+  },
+  {
+    "player_id": 63,
+    "team_id": 13,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 150,
+    "goals": 58
+  },
+  {
+    "player_id": 68,
+    "team_id": 19,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 68,
+    "team_id": 14,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 73,
+    "team_id": 20,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 73,
+    "team_id": 15,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 78,
+    "team_id": 11,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 78,
+    "team_id": 16,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  },
+  {
+    "player_id": 83,
+    "team_id": 12,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 18
+  },
+  {
+    "player_id": 83,
+    "team_id": 17,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 27
+  },
+  {
+    "player_id": 88,
+    "team_id": 13,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 88,
+    "team_id": 18,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  },
+  {
+    "player_id": 93,
+    "team_id": 14,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 19
+  },
+  {
+    "player_id": 93,
+    "team_id": 19,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 125,
+    "goals": 29
+  },
+  {
+    "player_id": 98,
+    "team_id": 15,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 18
+  },
+  {
+    "player_id": 98,
+    "team_id": 20,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 27
+  },
+  {
+    "player_id": 103,
+    "team_id": 23,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 115,
+    "goals": 39
+  },
+  {
+    "player_id": 103,
+    "team_id": 21,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 108,
+    "team_id": 26,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 105,
+    "goals": 42
+  },
+  {
+    "player_id": 108,
+    "team_id": 22,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 115,
+    "goals": 48
+  },
+  {
+    "player_id": 113,
+    "team_id": 28,
+    "start_date": "2015-07-01",
+    "end_date": "2018-07-01",
+    "matches_played": 120,
+    "goals": 39
+  },
+  {
+    "player_id": 113,
+    "team_id": 23,
+    "start_date": "2018-07-01",
+    "end_date": null,
+    "matches_played": 150,
+    "goals": 58
+  },
+  {
+    "player_id": 118,
+    "team_id": 29,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 118,
+    "team_id": 24,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 123,
+    "team_id": 30,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 123,
+    "team_id": 25,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 128,
+    "team_id": 21,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 128,
+    "team_id": 26,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  },
+  {
+    "player_id": 133,
+    "team_id": 22,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 18
+  },
+  {
+    "player_id": 133,
+    "team_id": 27,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 27
+  },
+  {
+    "player_id": 138,
+    "team_id": 23,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 138,
+    "team_id": 28,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  },
+  {
+    "player_id": 143,
+    "team_id": 24,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 19
+  },
+  {
+    "player_id": 143,
+    "team_id": 29,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 125,
+    "goals": 29
+  },
+  {
+    "player_id": 148,
+    "team_id": 25,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 18
+  },
+  {
+    "player_id": 148,
+    "team_id": 30,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 27
+  },
+  {
+    "player_id": 153,
+    "team_id": 2,
+    "start_date": "2017-07-01",
+    "end_date": "2020-07-01",
+    "matches_played": 110,
+    "goals": 50
+  },
+  {
+    "player_id": 153,
+    "team_id": 31,
+    "start_date": "2020-07-01",
+    "end_date": null,
+    "matches_played": 120,
+    "goals": 55
+  },
+  {
+    "player_id": 157,
+    "team_id": 22,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 115,
+    "goals": 39
+  },
+  {
+    "player_id": 157,
+    "team_id": 32,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 161,
+    "team_id": 34,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 110,
+    "goals": 33
+  },
+  {
+    "player_id": 161,
+    "team_id": 33,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 145,
+    "goals": 50
+  },
+  {
+    "player_id": 165,
+    "team_id": 33,
+    "start_date": "2016-07-01",
+    "end_date": "2019-07-01",
+    "matches_played": 95,
+    "goals": 24
+  },
+  {
+    "player_id": 165,
+    "team_id": 34,
+    "start_date": "2019-07-01",
+    "end_date": null,
+    "matches_played": 130,
+    "goals": 38
+  }
+]

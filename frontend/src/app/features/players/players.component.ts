@@ -43,6 +43,18 @@ export class PlayersComponent implements OnInit {
 
   protected readonly playerCount = computed(() => this.filteredPlayers().length);
 
+  protected readonly playerScrollStats = computed(() => {
+    const map = new Map<number, { goals: number; assists: number }>();
+    for (const s of this.store.playerStats()) {
+      const current = map.get(s.playerId) ?? { goals: 0, assists: 0 };
+      map.set(s.playerId, {
+        goals: current.goals + s.goals,
+        assists: current.assists + s.assists,
+      });
+    }
+    return map;
+  });
+
   protected readonly hasActiveFilters = computed(
     () => !!this.searchTerm() || !!this.selectedPosition()
   );

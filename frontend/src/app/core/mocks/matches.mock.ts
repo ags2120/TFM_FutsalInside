@@ -7,7 +7,7 @@ const COMPETITION = {
   name: 'Liga Nacional de Fútbol Sala (ESP)',
   country: 'España',
   logoUrl: '',
-  season: '2025/2026',
+  season: '2026/2027',
 };
 
 const today = new Date();
@@ -42,12 +42,12 @@ export const MOCK_LIVE_MATCHES: Match[] = [
       { type: 'timeout', minute: 31, player: MOCK_PLAYERS[0], team: MOCK_TEAMS[0] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 58, awayValue: 42 },
-      { type: 'Tiros', homeValue: 12, awayValue: 8 },
-      { type: 'Tiros a puerta', homeValue: 6, awayValue: 4 },
-      { type: 'Córneres', homeValue: 3, awayValue: 2 },
-      { type: 'Faltas', homeValue: 5, awayValue: 7 },
-      { type: 'Tarjetas amarillas', homeValue: 0, awayValue: 1 },
+      { type: 'possession', homeValue: 58, awayValue: 42 },
+      { type: 'shots', homeValue: 12, awayValue: 8 },
+      { type: 'shots_on_target', homeValue: 6, awayValue: 4 },
+      { type: 'corners', homeValue: 3, awayValue: 2 },
+      { type: 'fouls', homeValue: 5, awayValue: 7 },
+      { type: 'yellow_cards', homeValue: 0, awayValue: 1 },
     ],
   },
   {
@@ -68,11 +68,11 @@ export const MOCK_LIVE_MATCHES: Match[] = [
       { type: 'yellowcard', minute: 19, player: MOCK_PLAYERS[12], team: MOCK_TEAMS[2] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 45, awayValue: 55 },
-      { type: 'Tiros', homeValue: 6, awayValue: 9 },
-      { type: 'Tiros a puerta', homeValue: 3, awayValue: 5 },
-      { type: 'Córneres', homeValue: 1, awayValue: 4 },
-      { type: 'Faltas', homeValue: 4, awayValue: 3 },
+      { type: 'possession', homeValue: 45, awayValue: 55 },
+      { type: 'shots', homeValue: 6, awayValue: 9 },
+      { type: 'shots_on_target', homeValue: 3, awayValue: 5 },
+      { type: 'corners', homeValue: 1, awayValue: 4 },
+      { type: 'fouls', homeValue: 4, awayValue: 3 },
     ],
   },
   {
@@ -312,13 +312,13 @@ export const MOCK_RECENT_MATCHES: Match[] = [
       { type: 'goal', minute: 39, player: MOCK_PLAYERS[2], team: MOCK_TEAMS[0], assistPlayer: MOCK_PLAYERS[1] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 62, awayValue: 38 },
-      { type: 'Tiros', homeValue: 18, awayValue: 7 },
-      { type: 'Tiros a puerta', homeValue: 10, awayValue: 3 },
-      { type: 'Córneres', homeValue: 5, awayValue: 1 },
-      { type: 'Faltas', homeValue: 3, awayValue: 6 },
-      { type: 'Tarjetas amarillas', homeValue: 0, awayValue: 1 },
-      { type: 'Tarjetas rojas', homeValue: 0, awayValue: 1 },
+      { type: 'possession', homeValue: 62, awayValue: 38 },
+      { type: 'shots', homeValue: 18, awayValue: 7 },
+      { type: 'shots_on_target', homeValue: 10, awayValue: 3 },
+      { type: 'corners', homeValue: 5, awayValue: 1 },
+      { type: 'fouls', homeValue: 3, awayValue: 6 },
+      { type: 'yellow_cards', homeValue: 0, awayValue: 1 },
+      { type: 'red_cards', homeValue: 0, awayValue: 1 },
     ],
   },
   {
@@ -343,11 +343,11 @@ export const MOCK_RECENT_MATCHES: Match[] = [
       { type: 'goal', minute: 38, player: MOCK_PLAYERS[9], team: MOCK_TEAMS[1], assistPlayer: MOCK_PLAYERS[7] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 50, awayValue: 50 },
-      { type: 'Tiros', homeValue: 14, awayValue: 13 },
-      { type: 'Tiros a puerta', homeValue: 7, awayValue: 6 },
-      { type: 'Córneres', homeValue: 3, awayValue: 3 },
-      { type: 'Faltas', homeValue: 5, awayValue: 4 },
+      { type: 'possession', homeValue: 50, awayValue: 50 },
+      { type: 'shots', homeValue: 14, awayValue: 13 },
+      { type: 'shots_on_target', homeValue: 7, awayValue: 6 },
+      { type: 'corners', homeValue: 3, awayValue: 3 },
+      { type: 'fouls', homeValue: 5, awayValue: 4 },
     ],
   },
   {

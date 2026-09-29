@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Liga Nacional de Fútbol Sala (ESP)",
+    "country": "España",
+    "season": "2026/2027",
+    "logo_url": null
+  },
+  {
+    "id": 2,
+    "name": "Liga Nacional de Fútbol Sala (ESP)",
+    "country": "España",
+    "season": "2025/2026",
+    "logo_url": null
+  },
+  {
+    "id": 3,
+    "name": "Liga Nacional de Futsal (BRA)",
+    "country": "Brasil",
+    "season": "2025/2026",
+    "logo_url": null
+  },
+  {
+    "id": 4,
+    "name": "Serie A (ITA)",
+    "country": "Italia",
+    "season": "2025/2026",
+    "logo_url": null
+  },
+  {
+    "id": 5,
+    "name": "UEFA Futsal Champions League (EUR)",
+    "country": "Europa",
+    "season": "2025/2026",
+    "logo_url": null
+  }
+]

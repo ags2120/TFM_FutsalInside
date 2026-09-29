@@ -1,0 +1,224 @@
+[
+  {
+    "match_id": 101,
+    "type": "possession",
+    "home_value": 58,
+    "away_value": 42
+  },
+  {
+    "match_id": 101,
+    "type": "shots",
+    "home_value": 12,
+    "away_value": 8
+  },
+  {
+    "match_id": 101,
+    "type": "shots_on_target",
+    "home_value": 6,
+    "away_value": 4
+  },
+  {
+    "match_id": 101,
+    "type": "corners",
+    "home_value": 3,
+    "away_value": 2
+  },
+  {
+    "match_id": 101,
+    "type": "fouls",
+    "home_value": 5,
+    "away_value": 7
+  },
+  {
+    "match_id": 101,
+    "type": "yellow_cards",
+    "home_value": 0,
+    "away_value": 1
+  },
+  {
+    "match_id": 102,
+    "type": "possession",
+    "home_value": 45,
+    "away_value": 55
+  },
+  {
+    "match_id": 102,
+    "type": "shots",
+    "home_value": 6,
+    "away_value": 9
+  },
+  {
+    "match_id": 102,
+    "type": "shots_on_target",
+    "home_value": 3,
+    "away_value": 5
+  },
+  {
+    "match_id": 102,
+    "type": "corners",
+    "home_value": 1,
+    "away_value": 4
+  },
+  {
+    "match_id": 102,
+    "type": "fouls",
+    "home_value": 4,
+    "away_value": 3
+  },
+  {
+    "match_id": 301,
+    "type": "possession",
+    "home_value": 62,
+    "away_value": 38
+  },
+  {
+    "match_id": 301,
+    "type": "shots",
+    "home_value": 18,
+    "away_value": 7
+  },
+  {
+    "match_id": 301,
+    "type": "shots_on_target",
+    "home_value": 10,
+    "away_value": 3
+  },
+  {
+    "match_id": 301,
+    "type": "corners",
+    "home_value": 5,
+    "away_value": 1
+  },
+  {
+    "match_id": 301,
+    "type": "fouls",
+    "home_value": 3,
+    "away_value": 6
+  },
+  {
+    "match_id": 301,
+    "type": "yellow_cards",
+    "home_value": 0,
+    "away_value": 1
+  },
+  {
+    "match_id": 301,
+    "type": "red_cards",
+    "home_value": 0,
+    "away_value": 1
+  },
+  {
+    "match_id": 302,
+    "type": "possession",
+    "home_value": 50,
+    "away_value": 50
+  },
+  {
+    "match_id": 302,
+    "type": "shots",
+    "home_value": 14,
+    "away_value": 13
+  },
+  {
+    "match_id": 302,
+    "type": "shots_on_target",
+    "home_value": 7,
+    "away_value": 6
+  },
+  {
+    "match_id": 302,
+    "type": "corners",
+    "home_value": 3,
+    "away_value": 3
+  },
+  {
+    "match_id": 302,
+    "type": "fouls",
+    "home_value": 5,
+    "away_value": 4
+  },
+  {
+    "match_id": 401,
+    "type": "possession",
+    "home_value": 55,
+    "away_value": 45
+  },
+  {
+    "match_id": 401,
+    "type": "shots",
+    "home_value": 14,
+    "away_value": 10
+  },
+  {
+    "match_id": 401,
+    "type": "shots_on_target",
+    "home_value": 7,
+    "away_value": 5
+  },
+  {
+    "match_id": 401,
+    "type": "corners",
+    "home_value": 3,
+    "away_value": 2
+  },
+  {
+    "match_id": 401,
+    "type": "fouls",
+    "home_value": 4,
+    "away_value": 6
+  },
+  {
+    "match_id": 402,
+    "type": "possession",
+    "home_value": 48,
+    "away_value": 52
+  },
+  {
+    "match_id": 402,
+    "type": "shots",
+    "home_value": 8,
+    "away_value": 10
+  },
+  {
+    "match_id": 402,
+    "type": "shots_on_target",
+    "home_value": 4,
+    "away_value": 5
+  },
+  {
+    "match_id": 441,
+    "type": "possession",
+    "home_value": 56,
+    "away_value": 44
+  },
+  {
+    "match_id": 441,
+    "type": "shots",
+    "home_value": 12,
+    "away_value": 9
+  },
+  {
+    "match_id": 441,
+    "type": "shots_on_target",
+    "home_value": 6,
+    "away_value": 4
+  },
+  {
+    "match_id": 481,
+    "type": "possession",
+    "home_value": 58,
+    "away_value": 42
+  },
+  {
+    "match_id": 481,
+    "type": "shots",
+    "home_value": 15,
+    "away_value": 8
+  },
+  {
+    "match_id": 481,
+    "type": "shots_on_target",
+    "home_value": 8,
+    "away_value": 3
+  }
+]

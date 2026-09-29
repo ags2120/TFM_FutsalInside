@@ -2,11 +2,11 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Player } from '../core/models/player.model';
 import { PlayerStatistics } from '../core/models/statistics.model';
-import { MockDataService } from '../core/services/mock-data.service';
+import { DataService } from '../core/services/data.service';
 
 @Injectable({ providedIn: 'root' })
 export class PlayersStore {
-  private readonly mockData = inject(MockDataService);
+  protected readonly data = inject(DataService);
 
   private readonly _players = signal<Player[]>([]);
   private readonly _playerStats = signal<PlayerStatistics[]>([]);
@@ -22,19 +22,28 @@ export class PlayersStore {
     const stats = this._playerStats();
     const allPlayers = this._players();
 
-    const playerGoals = new Map<number, number>();
-    stats.forEach(s => {
-      const current = playerGoals.get(s.playerId) || 0;
-      playerGoals.set(s.playerId, current + s.goals);
+    const totals = new Map<number, { goals: number; assists: number }>();
+    stats.forEach((s) => {
+      const current = totals.get(s.playerId) ?? { goals: 0, assists: 0 };
+      totals.set(s.playerId, {
+        goals: current.goals + s.goals,
+        assists: current.assists + s.assists,
+      });
     });
 
-    const sorted = Array.from(playerGoals.entries())
-      .sort((a, b) => b[1] - a[1]);
+    const sorted = Array.from(totals.entries()).sort(
+      (a, b) => b[1].goals - a[1].goals || b[1].assists - a[1].assists,
+    );
 
-    return sorted.map(([playerId, goals]) => {
-      const player = allPlayers.find(p => p.id === playerId);
-      return player ? { player, goals } : null;
-    }).filter((entry): entry is { player: Player; goals: number } => entry !== null);
+    return sorted
+      .map(([playerId, { goals, assists }]) => {
+        const player = allPlayers.find((p) => p.id === playerId);
+        return player ? { player, goals, assists } : null;
+      })
+      .filter(
+        (entry): entry is { player: Player; goals: number; assists: number } =>
+          entry !== null,
+      );
   });
 
   async loadPlayers(): Promise<void> {
@@ -43,8 +52,8 @@ export class PlayersStore {
     this._error.set(null);
     try {
       const [players, stats] = await Promise.all([
-        firstValueFrom(this.mockData.getPlayers()),
-        firstValueFrom(this.mockData.getAllPlayerStats()),
+        firstValueFrom(this.data.getPlayers()),
+        firstValueFrom(this.data.getAllPlayerStats()),
       ]);
       this._players.set(players);
       this._playerStats.set(stats);

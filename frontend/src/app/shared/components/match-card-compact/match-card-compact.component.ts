@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Match } from '../../../core/models/match.model';
 import { TeamBadgeComponent } from '../team-badge/team-badge.component';
@@ -8,7 +8,7 @@ import { ScoreDisplayComponent } from '../score-display/score-display.component'
   selector: 'app-match-card-compact',
   imports: [RouterLink, TeamBadgeComponent, ScoreDisplayComponent],
   template: `
-    <a [routerLink]="['/matches', match().id]" class="match-compact" [attr.aria-label]="'Partido: ' + match().homeTeam.shortName + ' vs ' + match().awayTeam.shortName">
+    <a [routerLink]="['/matches', match().id]" class="match-compact" [class.is-live]="isLive()" [attr.aria-label]="'Partido: ' + match().homeTeam.shortName + ' vs ' + match().awayTeam.shortName">
       <div class="compact-left">
         <span class="team-info">
           <app-team-badge [team]="match().homeTeam" size="sm" />
@@ -19,9 +19,9 @@ import { ScoreDisplayComponent } from '../score-display/score-display.component'
         <app-score-display
           [homeScore]="match().homeScore"
           [awayScore]="match().awayScore"
-          [isLive]="true"
+          [isLive]="isLive()"
         />
-        @if (match().minute) {
+        @if (isLive() && match().minute) {
           <span class="minute">{{ match().minute }}'</span>
         }
       </div>
@@ -41,12 +41,16 @@ import { ScoreDisplayComponent } from '../score-display/score-display.component'
       padding: var(--space-2) var(--space-3);
       background-color: var(--color-bg-card);
       border: 1px solid var(--color-border);
-      border-left: 3px solid var(--color-live);
+      border-left: 3px solid var(--color-border);
       border-radius: var(--radius-md);
       gap: var(--space-3);
       text-decoration: none;
       color: inherit;
       transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .match-compact.is-live {
+      border-left-color: var(--color-live);
     }
 
     .match-compact:hover {
@@ -104,4 +108,8 @@ import { ScoreDisplayComponent } from '../score-display/score-display.component'
 })
 export class MatchCardCompactComponent {
   match = input.required<Match>();
+
+  protected readonly isLive = computed(
+    () => this.match().status === 'live' || this.match().status === 'halftime',
+  );
 }

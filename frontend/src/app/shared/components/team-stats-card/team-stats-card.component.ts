@@ -75,14 +75,18 @@ export class TeamStatsCardComponent {
     const s = this.stats();
     const st = this.standing();
     const goalsPerMatch = s.matchesPlayed > 0 ? (s.goalsScored / s.matchesPlayed).toFixed(1) : '0.0';
-    const winRate = s.matchesPlayed > 0 ? ((s.wins / s.matchesPlayed) * 100).toFixed(0) : '0';
+    const pct = (fixtures: number): string =>
+      s.matchesPlayed > 0 ? Math.round((fixtures / s.matchesPlayed) * 100) + '%' : '0%';
     const streak = this.getStreak(st?.form || []);
 
     return [
       { label: 'Goles marcados', value: s.goalsScored.toString(), colorClass: 'color-accent' },
       { label: 'Goles encajados', value: s.goalsConceded.toString(), colorClass: 'color-muted' },
+      { label: 'Partidos', value: s.matchesPlayed.toString(), colorClass: 'color-muted' },
       { label: 'Goles/partido', value: goalsPerMatch, colorClass: 'color-accent' },
-      { label: '% Victoria', value: winRate + '%', colorClass: 'color-win' },
+      { label: 'Victoria %', value: pct(s.wins), colorClass: 'color-win' },
+      { label: 'Empate %', value: pct(s.draws), colorClass: 'color-muted' },
+      { label: 'Derrota %', value: pct(s.losses), colorClass: 'color-loss' },
       { label: 'Racha', value: streak, colorClass: 'color-win' },
       { label: 'Porterías a cero', value: s.cleanSheets.toString(), colorClass: 'color-muted' },
       { label: 'Posesión media', value: (s.avgBallPossession || 0) + '%', colorClass: 'color-accent' },

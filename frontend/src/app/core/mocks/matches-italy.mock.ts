@@ -30,9 +30,9 @@ export const MOCK_LIVE_MATCHES_ITALY: Match[] = [
       { type: 'goal', minute: 28, player: MOCK_PLAYERS_ITALY[3], team: MOCK_TEAMS_ITALY[0], assistPlayer: MOCK_PLAYERS_ITALY[2] },
     ],
     statistics: [
-      { type: 'Posesión', homeValue: 56, awayValue: 44 },
-      { type: 'Tiros', homeValue: 12, awayValue: 9 },
-      { type: 'Tiros a puerta', homeValue: 6, awayValue: 4 },
+      { type: 'possession', homeValue: 56, awayValue: 44 },
+      { type: 'shots', homeValue: 12, awayValue: 9 },
+      { type: 'shots_on_target', homeValue: 6, awayValue: 4 },
     ],
   },
   {
