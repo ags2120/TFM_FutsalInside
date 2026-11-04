@@ -31,8 +31,10 @@ final class MatchResource extends JsonResource
             'status' => $this->status?->value,
             'minute' => $this->minute,
             // The frontend contract models a match by calendar day only; the
-            // kickoff time is not part of `Match`.
+            // kickoff time is not part of list rows. The detail Info panel
+            // does show it, so the full shape carries the clock.
             'date' => $this->datetime?->format('Y-m-d'),
+            'time' => $this->datetime?->format('H:i'),
             'competition' => new CompetitionResource($this->whenLoaded('competition')),
             'venue' => $this->venue,
             'referee' => $this->referee,

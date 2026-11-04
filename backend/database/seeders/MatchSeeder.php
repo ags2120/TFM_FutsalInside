@@ -75,10 +75,12 @@ class MatchSeeder extends Seeder
                 );
             }
 
-            $datetime = $this->resolveKickoff((int) $match['day_offset'], $match['kickoff']);
+            $datetime = isset($match['date'])
+                ? $this->resolveAbsolute($match['date'], $match['kickoff'])
+                : $this->resolveKickoff((int) $match['day_offset'], $match['kickoff']);
 
-            // day_offset/kickoff are scheduling inputs, not columns.
-            unset($match['day_offset'], $match['kickoff']);
+            // date/day_offset/kickoff are scheduling inputs, not columns.
+            unset($match['date'], $match['day_offset'], $match['kickoff']);
 
             return [
                 ...$match,
@@ -88,6 +90,12 @@ class MatchSeeder extends Seeder
         }, $matches);
 
         $this->upsertChunked('matches', $rows, ['id']);
+
+        // The historical top-up can shrink between runs (the deficit it fills
+        // evolves with the dataset) and an upsert never removes rows, so
+        // reconcile: drop any fixture this run did not produce, or re-seeding
+        // would keep orphans around forever. Children cascade on delete.
+        DB::table('matches')->whereNotIn('id', array_column($rows, 'id'))->delete();
 
         // Plays (events + statistics) are derived from the matches themselves
         // at seed time, so a goal event can never disagree with its scoreline.
@@ -539,6 +547,26 @@ class MatchSeeder extends Seeder
             ->addDays($dayOffset)
             ->setTime($hour, $minute)
             ->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Turn an absolute calendar date (Y-m-d) plus kickoff time into a datetime.
+     *
+     * A fixture that must stay on a fixed day (the day being demoed, for
+     * instance) cannot ride on day_offset, since the offset would drift to a
+     * different date every time the seeds are re-run.
+     */
+    private function resolveAbsolute(string $date, string $time): string
+    {
+        [$hour, $minute] = array_map('intval', explode(':', $time));
+
+        $day = CarbonImmutable::createFromFormat('!Y-m-d', $date);
+
+        if ($day === false || $day->format('Y-m-d') !== $date) {
+            throw new InvalidArgumentException("Invalid fixture date [{$date}].");
+        }
+
+        return $day->setTime($hour, $minute)->format('Y-m-d H:i:s');
     }
 
     /**

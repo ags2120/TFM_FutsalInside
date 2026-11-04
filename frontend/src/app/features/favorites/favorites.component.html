@@ -14,13 +14,52 @@
         </svg>
       </div>
       <h2>No tienes favoritos</h2>
-      <p>Añade equipos y jugadores a tus favoritos para acceder rápidamente.</p>
+      <p>Añade equipos, competiciones y jugadores a tus favoritos para acceder rápidamente.</p>
       <div class="empty-actions">
         <a routerLink="/teams" class="btn-secondary">Explorar equipos</a>
         <a routerLink="/players" class="btn-secondary">Explorar jugadores</a>
       </div>
     </div>
   } @else {
+    <!-- Competiciones favoritas -->
+    @if (favoriteCompetitions().length > 0) {
+      <section class="fav-section">
+        <h2 class="section-title">Competiciones</h2>
+        <div class="fav-grid">
+          @for (item of favoriteCompetitions(); track item.entityId) {
+            <div class="fav-card">
+              <a routerLink="/standings" class="fav-card-link">
+                <span class="comp-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                    <path d="M4 22h16"/>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                  </svg>
+                </span>
+                <div class="fav-card-info">
+                  <h3 class="fav-card-name">{{ item.name }}</h3>
+                  <span class="fav-card-meta">Competición</span>
+                </div>
+              </a>
+              <button
+                class="remove-btn"
+                (click)="removeFavorite('competition', item.entityId)"
+                [attr.aria-label]="'Eliminar ' + item.name + ' de favoritos'"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
     <!-- Equipos favoritos -->
     @if (favoriteTeams().length > 0) {
       <section class="fav-section">
@@ -39,7 +78,7 @@
               </a>
               <button
                 class="remove-btn"
-                (click)="removeFavorite('team', item.entityId, item.name)"
+                (click)="removeFavorite('team', item.entityId)"
                 [attr.aria-label]="'Eliminar ' + item.name + ' de favoritos'"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -72,7 +111,7 @@
               </a>
               <button
                 class="remove-btn"
-                (click)="removeFavorite('player', item.entityId, item.name)"
+                (click)="removeFavorite('player', item.entityId)"
                 [attr.aria-label]="'Eliminar ' + item.name + ' de favoritos'"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

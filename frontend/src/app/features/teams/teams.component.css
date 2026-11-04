@@ -204,9 +204,3 @@
     min-width: unset;
   }
 }
-
-@media (max-width: 480px) {
-  .teams-grid {
-    grid-template-columns: 1fr;
-  }
-}

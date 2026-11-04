@@ -76,6 +76,15 @@
 
 /* === MATCHES CONTENT === */
 .matches-content { padding-top: var(--space-4); padding-bottom: var(--space-8); }
+.favorites-block { margin-bottom: var(--space-6); }
+.favorites-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); }
+.favorites-header h2 {
+  display: flex; align-items: center; gap: var(--space-2);
+  font-size: var(--font-size-base); font-weight: var(--font-weight-semibold);
+  color: var(--color-live); margin: 0;
+}
+.fav-star { color: var(--color-live); flex-shrink: 0; }
+.favorites-list { border-radius: var(--radius-md); }
 .competition-group { margin-bottom: var(--space-6); }
 .competition-header {
   display: flex; align-items: center; gap: var(--space-3);
@@ -87,6 +96,7 @@
   font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold);
   color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px;
 }
+.competition-fav { margin-left: auto; }
 .matches-list {
   display: flex; flex-direction: column;
   border: 1px solid var(--color-border);

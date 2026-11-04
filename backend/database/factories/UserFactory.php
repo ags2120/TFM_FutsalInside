@@ -29,19 +29,8 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => 'password',
             'avatar_url' => null,
-            'refresh_token' => null,
             'remember_token' => Str::random(10),
         ];
-    }
-
-    /**
-     * A user holding a refresh token, i.e. an active session.
-     */
-    public function withRefreshToken(): static
-    {
-        return $this->state(fn (array $attributes): array => [
-            'refresh_token' => Str::random(64),
-        ]);
     }
 
     public function withAvatar(): static

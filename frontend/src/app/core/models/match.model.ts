@@ -42,6 +42,8 @@ export interface Match {
   status: MatchStatus;
   minute?: number;
   date: string;
+  // Kickoff clock (HH:mm), detail shape only: a list row models a calendar day.
+  time?: string;
   competition: Competition;
   venue?: string;
   referee?: string;

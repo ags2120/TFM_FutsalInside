@@ -19,6 +19,10 @@ export class FavoritesComponent implements OnInit {
 
   protected readonly hasFavorites = computed(() => this.favoritesStore.count() > 0);
 
+  protected readonly favoriteCompetitions = computed(() =>
+    this.favoritesStore.byType().competition,
+  );
+
   protected readonly favoriteTeams = computed(() => {
     const teamFavs = this.favoritesStore.byType().team;
     const allTeams = this.teamsStore.teams();
@@ -38,12 +42,11 @@ export class FavoritesComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.favoritesStore.loadFavorites();
     this.teamsStore.loadTeams();
     this.playersStore.loadPlayers();
   }
 
-  removeFavorite(type: 'team' | 'player', entityId: number, name: string): void {
-    this.favoritesStore.toggleFavorite(type, entityId, name);
+  removeFavorite(type: 'team' | 'player' | 'competition', entityId: number): void {
+    void this.favoritesStore.toggleFavorite(type, entityId);
   }
 }

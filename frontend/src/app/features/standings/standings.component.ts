@@ -5,6 +5,7 @@ import { TeamBadgeComponent } from '../../shared/components/team-badge/team-badg
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { SkeletonListComponent } from '../../shared/components/skeleton-list/skeleton-list.component';
 import { FormLabelPipe, FormClassPipe } from '../../shared/pipes/form-result.pipe';
+import { FavoriteButtonComponent } from '../../shared/components/favorite-button/favorite-button.component';
 
 type SortColumn = 'position' | 'played' | 'won' | 'drawn' | 'lost' | 'goalsFor' | 'goalsAgainst' | 'goalDifference' | 'points';
 type SortDirection = 'asc' | 'desc';
@@ -18,7 +19,7 @@ const LEAGUE_SHORT_LABELS: Record<string, string> = {
 
 @Component({
   selector: 'app-standings',
-  imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, SkeletonListComponent, FormLabelPipe, FormClassPipe],
+  imports: [RouterLink, TeamBadgeComponent, LoadingSpinnerComponent, SkeletonListComponent, FormLabelPipe, FormClassPipe, FavoriteButtonComponent],
   templateUrl: './standings.component.html',
   styleUrls: ['./standings.component.css'],
 })

@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed, OnInit, DestroyRef } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Team } from '../../../core/models/team.model';
 import { Player } from '../../../core/models/player.model';
@@ -8,6 +8,7 @@ import { Match } from '../../../core/models/match.model';
 import { TeamStatistics, PlayerStatistics } from '../../../core/models/statistics.model';
 import { DataService } from '../../../core/services/data.service';
 import { FavoritesStore } from '../../../stores/favorites.store';
+import { AuthService } from '../../../core/auth/auth.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { TeamBadgeComponent } from '../../../shared/components/team-badge/team-badge.component';
 import { PlayerAvatarComponent } from '../../../shared/components/player-avatar/player-avatar.component';
@@ -51,6 +52,8 @@ export class TeamDetailComponent implements OnInit {
   protected readonly data = inject(DataService);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly favoritesStore = inject(FavoritesStore);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   protected readonly team = signal<Team | null>(null);
   protected readonly players = signal<Player[]>([]);
@@ -162,6 +165,12 @@ export class TeamDetailComponent implements OnInit {
   toggleFavorite(): void {
     const t = this.team();
     if (!t) return;
-    this.favoritesStore.toggleFavorite('team', t.id, t.name);
+    // Favourites require an account: anonymous visitors are sent to login
+    // and come back to this page (returnUrl) once authenticated.
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      return;
+    }
+    void this.favoritesStore.toggleFavorite('team', t.id);
   }
 }

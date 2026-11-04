@@ -81,24 +81,8 @@
 .stat-recent .stat-number { color: var(--color-purple); }
 .stat-recent:hover { border-color: var(--color-purple); box-shadow: 0 0 20px var(--color-purple-muted); }
 
-.date-strip { margin-bottom: var(--space-6); }
-.date-scroll {
-  display: flex; gap: var(--space-2); overflow-x: auto;
-  padding-bottom: var(--space-2); scrollbar-width: none;
-}
-.date-scroll::-webkit-scrollbar { display: none; }
-.date-chip {
-  flex-shrink: 0; padding: var(--space-2) var(--space-4);
-  background-color: var(--color-bg-card); border: 1px solid var(--color-border);
-  border-radius: var(--radius-full); color: var(--color-text-secondary);
-  font-size: var(--font-size-sm); font-weight: var(--font-weight-medium);
-  cursor: pointer; transition: all var(--transition-fast); white-space: nowrap;
-}
-.date-chip:hover { background-color: var(--color-bg-hover); border-color: var(--color-border-light); }
-.date-chip.active {
-  background-color: var(--color-accent-muted); border-color: var(--color-accent);
-  color: var(--color-accent);
-}
+.favorites-section .section-header h2 { color: var(--color-live); }
+.fav-star { color: var(--color-live); flex-shrink: 0; }
 
 .dashboard {
   display: grid; grid-template-columns: 1fr 320px;
@@ -170,10 +154,13 @@
 
 .competition-group { margin-bottom: var(--space-4); }
 .competition-group:last-child { margin-bottom: 0; }
+.competition-header-row {
+  display: flex; align-items: center; gap: var(--space-2);
+  border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-2);
+}
 .competition-header {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 0; background: none; border: none; cursor: pointer;
-  border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-2);
+  flex: 1; min-width: 0; padding: 0; background: none; border: none; cursor: pointer;
   transition: opacity var(--transition-fast);
 }
 .competition-header:hover { opacity: 0.8; }
@@ -184,7 +171,6 @@
 }
 .chevron { color: var(--color-text-muted); transition: transform 0.2s ease; flex-shrink: 0; }
 .chevron.rotated { transform: rotate(-90deg); }
-.competition-group.collapsed .competition-header { border-bottom: 1px solid var(--color-border); }
 
 .matches-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3);

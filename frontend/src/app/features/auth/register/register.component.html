@@ -62,7 +62,7 @@
           @if (registerForm.get('password')?.errors?.['required']) {
             <span class="error-text">La contraseña es requerida</span>
           } @else if (registerForm.get('password')?.errors?.['minlength']) {
-            <span class="error-text">Mínimo 6 caracteres</span>
+            <span class="error-text">Mínimo 8 caracteres</span>
           }
         </div>
       }
@@ -90,7 +90,15 @@
       }
     </div>
 
-    <button type="submit" class="btn-primary">Crear Cuenta</button>
+    @if (auth.error()) {
+      <div class="error-messages" role="alert">
+        <span class="error-text">{{ auth.error() }}</span>
+      </div>
+    }
+
+    <button type="submit" class="btn-primary" [disabled]="auth.loading()">
+      {{ auth.loading() ? 'Creando cuenta…' : 'Crear Cuenta' }}
+    </button>
   </form>
 
   <p class="auth-link">

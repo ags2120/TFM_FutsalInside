@@ -46,9 +46,9 @@ class DatabaseSeederTest extends TestCase
             'team_competition' => 50,
             'players' => 340,
             'player_statistics' => 400,
-            'matches' => 141,
-            'match_events' => 763,
-            'match_statistics' => 798,
+            'matches' => 140,
+            'match_events' => 723,
+            'match_statistics' => 784,
             'team_statistics' => 50,
             'career_entries' => 533,
         ];
@@ -116,17 +116,19 @@ class DatabaseSeederTest extends TestCase
         $this->assertLessThanOrEqual(5, $largest, 'A matchday exceeds five fixtures');
     }
 
-    public function test_live_fixtures_are_kickoff_today(): void
+    public function test_live_fixtures_share_a_single_matchday(): void
     {
         $live = Game::live()->get();
 
         $this->assertNotEmpty($live, 'Expected a live matchday in the seed data.');
 
+        // The dataset pins every in-progress fixture to one demo matchday, so
+        // a live game drifting onto another date would read as stale on air.
+        $days = $live->map(fn (Game $game): string => $game->datetime->toDateString())->unique();
+
+        $this->assertCount(1, $days, 'Live fixtures are spread over several days: '.$days->implode(', '));
+
         foreach ($live as $game) {
-            $this->assertTrue(
-                $game->datetime->isToday(),
-                "Match {$game->id} is in progress but not scheduled for today.",
-            );
             $this->assertNotNull($game->minute, "Live match {$game->id} has no minute.");
         }
     }
@@ -143,7 +145,9 @@ class DatabaseSeederTest extends TestCase
 
     public function test_kickoff_times_come_from_the_agreed_evening_slots(): void
     {
-        $allowed = ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
+        // 17:00 is the Champions League afternoon slot; the evening slots are
+        // the league rounds.
+        $allowed = ['17:00', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
 
         $used = DB::table('matches')
             ->selectRaw('DISTINCT TIME(datetime) as slot')

@@ -1,4 +1,4 @@
-export type FavoriteType = 'match' | 'team' | 'player';
+export type FavoriteType = 'match' | 'team' | 'player' | 'competition';
 
 export interface Favorite {
   id: number;
@@ -15,5 +15,14 @@ export interface FavoriteToggleRequest {
 
 export interface FavoritesResponse {
   favorites: Favorite[];
+  total: number;
+}
+
+/**
+ * Result of a toggle round-trip: `favorite: null` means the row was removed,
+ * otherwise it is the freshly created row (server-owned `name` snapshot).
+ */
+export interface FavoriteToggleResponse {
+  favorite: Favorite | null;
   total: number;
 }

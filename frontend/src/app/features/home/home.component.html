@@ -46,24 +46,29 @@
     </div>
   </section>
 
-  <!-- DATE PICKER -->
-  <div class="date-strip container">
-    <div class="date-scroll">
-      @for (option of dateOptions(); track option.value) {
-        <button
-          class="date-chip"
-          [class.active]="selectedDate() === option.value"
-          (click)="selectDate(option.value)"
-        >
-          {{ option.label }}
-        </button>
-      }
-    </div>
-  </div>
-
   <div class="dashboard container">
     <!-- COLUMNA PRINCIPAL -->
     <div class="main-column">
+      <!-- TUS FAVORITOS -->
+      @if (favoriteMatches().length > 0) {
+        <section class="section favorites-section">
+          <div class="section-header">
+            <h2>
+              <svg class="fav-star" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Tus Favoritos
+            </h2>
+            <a routerLink="/favorites" class="see-all">Ver todos →</a>
+          </div>
+          <div class="matches-grid">
+            @for (match of favoriteMatches(); track match.id) {
+              <app-match-card [match]="match" />
+            }
+          </div>
+        </section>
+      }
+
       <!-- EN VIVO -->
       @if (matchesStore.liveError()) {
         <div class="section-error" role="alert">
@@ -102,17 +107,25 @@
           </div>
           @for (entry of upcomingByCompetition(); track entry[0]) {
             <div class="competition-group" [class.collapsed]="isCompetitionCollapsed(entry[0])">
-              <button
-                class="competition-header"
-                (click)="toggleCompetition(entry[0])"
-                [attr.aria-expanded]="!isCompetitionCollapsed(entry[0])"
-                [attr.aria-controls]="'comp-' + entry[0]"
-              >
-                <h3 class="competition-title">{{ entry[0] }}</h3>
-                <svg class="chevron" [class.rotated]="isCompetitionCollapsed(entry[0])" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </button>
+              <div class="competition-header-row">
+                <button
+                  class="competition-header"
+                  (click)="toggleCompetition(entry[0])"
+                  [attr.aria-expanded]="!isCompetitionCollapsed(entry[0])"
+                  [attr.aria-controls]="'comp-' + entry[0]"
+                >
+                  <h3 class="competition-title">{{ entry[0] }}</h3>
+                  <svg class="chevron" [class.rotated]="isCompetitionCollapsed(entry[0])" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+                <app-favorite-button
+                  class="competition-fav"
+                  type="competition"
+                  [entityId]="competitionIdOf(entry[1])"
+                  [label]="entry[0]"
+                />
+              </div>
               @if (!isCompetitionCollapsed(entry[0])) {
                 <div class="matches-grid" [id]="'comp-' + entry[0]" role="region">
                   @for (match of entry[1]; track match.id) {

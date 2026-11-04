@@ -18,7 +18,10 @@ export class LiveComponent implements OnInit {
   protected readonly hasLiveMatches = computed(() => this.liveMatches().length > 0);
 
   ngOnInit(): void {
+    // The live rail is its own signal: without this fetch a direct visit (or
+    // a refresh) would render the empty state until another page populated it.
     this.store.loadMatches();
+    this.store.loadLiveMatches();
     this.store.startPolling();
     this.destroyRef.onDestroy(() => this.store.stopPolling());
   }

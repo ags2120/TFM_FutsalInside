@@ -143,7 +143,7 @@
               </svg>
               <div class="info-text">
                 <span class="info-label">Hora</span>
-                <span class="info-value">20:00</span>
+                <span class="info-value">{{ m.time || 'No disponible' }}</span>
               </div>
             </div>
           </div>
@@ -224,6 +224,7 @@
                           <a class="event-player player-link" [routerLink]="['/players', event.player.id]">{{ event.player.name }}</a>
                           <span class="event-label">{{ getEventLabel(event.type) }}</span>
                         </div>
+                        <span class="event-team-flag home">{{ m.homeTeam.shortName }}</span>
                       </div>
                     </div>
                     <div class="event-minute">{{ event.minute }}'</div>
@@ -238,6 +239,7 @@
                           <a class="event-player player-link" [routerLink]="['/players', event.player.id]">{{ event.player.name }}</a>
                           <span class="event-label">{{ getEventLabel(event.type) }}</span>
                         </div>
+                        <span class="event-team-flag away">{{ m.awayTeam.shortName }}</span>
                       </div>
                     </div>
                   }

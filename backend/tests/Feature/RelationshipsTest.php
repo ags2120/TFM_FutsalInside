@@ -364,6 +364,7 @@ class RelationshipsTest extends TestCase
             'match' => [$this->game, 'Barca vs Inter Movistar'],
             'team' => [$this->home, $this->home->name],
             'player' => [$this->scorer, $this->scorer->name],
+            'competition' => [$this->competition, $this->competition->name],
         ];
 
         foreach ($targets as $type => [$entity, $label]) {
@@ -378,7 +379,7 @@ class RelationshipsTest extends TestCase
             $this->assertTrue($favorite->fresh()->user->is($user), "Failed for type: {$type}");
         }
 
-        $this->assertSame(3, $user->favorites()->count());
+        $this->assertSame(4, $user->favorites()->count());
     }
 
     public function test_favorite_rejects_an_unknown_entity_type(): void
@@ -420,7 +421,6 @@ class RelationshipsTest extends TestCase
         $this->assertTrue(password_verify('secret123', $user->password));
 
         $this->assertArrayNotHasKey('password', $user->toArray());
-        $this->assertArrayNotHasKey('refresh_token', $user->toArray());
         $this->assertArrayNotHasKey('remember_token', $user->toArray());
 
         $this->assertSame('nitro', $user->username);
@@ -434,7 +434,6 @@ class RelationshipsTest extends TestCase
             'email' => 'nitro@example.com',
             'password' => 'secret123',
             'avatar_url' => '/avatars/nitro.png',
-            'refresh_token' => 'rt-abc123',
         ]);
     }
 }

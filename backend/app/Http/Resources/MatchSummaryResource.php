@@ -12,9 +12,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Compact row for the `/matches` list.
  *
  * This is deliberately not `MatchResource`: the frontend only needs the two
- * clubs, the scoreboard, the live flag, the calendar day and the competition
- * on a card. The event log, metric table, referee and MVP are detail-only and
- * are never carried into a collection of rows.
+ * clubs, the scoreboard, the live flag and clock, the calendar day and the
+ * competition on a card. The event log, metric table, referee and MVP are
+ * detail-only and are never carried into a collection of rows.
  *
  * @mixin Game
  */
@@ -33,6 +33,10 @@ final class MatchSummaryResource extends JsonResource
             'awayScore' => $this->away_score,
             // Enum backed value, never the Spanish label.
             'status' => $this->status?->value,
+            // The cards render the running clock next to the live flag, so an
+            // in-progress row serves its minute; a scheduled row omits the key
+            // entirely rather than carrying a null.
+            'minute' => $this->when($this->minute !== null, $this->minute),
             'date' => $this->datetime?->format('Y-m-d'),
             'competition' => new CompetitionResource($this->whenLoaded('competition')),
         ];

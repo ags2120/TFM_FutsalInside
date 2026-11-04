@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { PlayerDetail } from '../../../core/models/player.model';
 import { PlayerStatistics } from '../../../core/models/statistics.model';
@@ -8,6 +8,7 @@ import { Standing } from '../../../core/models/standings.model';
 import { Match } from '../../../core/models/match.model';
 import { DataService } from '../../../core/services/data.service';
 import { FavoritesStore } from '../../../stores/favorites.store';
+import { AuthService } from '../../../core/auth/auth.service';
 import { StandingsStore } from '../../../stores/standings.store';
 import { PlayersStore } from '../../../stores/players.store';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
@@ -25,6 +26,7 @@ import { EmptyStateComponent } from '../../../shared/components/empty-state/empt
 import { FormLabelPipe, FormClassPipe } from '../../../shared/pipes/form-result.pipe';
 import { PlayerPositionPipe } from '../../../shared/pipes/player-position.pipe';
 import { AgePipe } from '../../../shared/pipes/age.pipe';
+import { MarketValuePipe } from '../../../shared/pipes/market-value.pipe';
 
 @Component({
   selector: 'app-player-detail',
@@ -46,6 +48,7 @@ import { AgePipe } from '../../../shared/pipes/age.pipe';
     FormClassPipe,
     PlayerPositionPipe,
     AgePipe,
+    MarketValuePipe,
   ],
   templateUrl: './player-detail.component.html',
   styleUrls: ['./player-detail.component.css'],
@@ -56,6 +59,8 @@ export class PlayerDetailComponent implements OnInit {
   protected readonly favoritesStore = inject(FavoritesStore);
   private readonly standingsStore = inject(StandingsStore);
   private readonly playersStore = inject(PlayersStore);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   protected readonly player = signal<PlayerDetail | null>(null);
   protected readonly stats = signal<PlayerStatistics | null>(null);
@@ -146,8 +151,13 @@ export class PlayerDetailComponent implements OnInit {
   toggleFavorite(): void {
     const p = this.player();
     if (!p) return;
-    const name = `${p.firstName} ${p.lastName}`;
-    this.favoritesStore.toggleFavorite('player', p.id, name);
+    // Favourites require an account: anonymous visitors are sent to login
+    // and come back to this page (returnUrl) once authenticated.
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      return;
+    }
+    void this.favoritesStore.toggleFavorite('player', p.id);
   }
 
   getPositionDescription(position: string): string {

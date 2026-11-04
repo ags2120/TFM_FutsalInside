@@ -123,6 +123,41 @@
   background-color: var(--color-bg-hover);
 }
 
+/* Signed-in header: username + logout, styled off the login button */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-light);
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-logout:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+  background-color: var(--color-bg-hover);
+}
+
 /* Hamburger button */
 .hamburger {
   display: none;
@@ -200,7 +235,11 @@
     top: var(--header-height);
     left: 0;
     right: 0;
-    bottom: 0;
+    /* The header's backdrop-filter makes it the containing block for fixed
+       descendants, so bottom/inset would resolve against the 72px header.
+       Size from the viewport instead. */
+    height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-2);
@@ -230,7 +269,11 @@
   .mobile-overlay {
     display: block;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: var(--z-sticky);
   }
@@ -249,6 +292,10 @@
   }
 
   .btn-login {
+    display: none;
+  }
+
+  .user-menu {
     display: none;
   }
 }

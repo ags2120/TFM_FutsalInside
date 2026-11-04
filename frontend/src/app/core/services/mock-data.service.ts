@@ -9,6 +9,7 @@ import { PlayerMatchParticipation } from '../models/player-match.model';
 import { Standing } from '../models/standings.model';
 import { Competition } from '../models/competition.model';
 import { PlayerStatistics, TeamStatistics } from '../models/statistics.model';
+import { Favorite, FavoriteToggleResponse, FavoriteType, FavoritesResponse } from '../models/favorite.model';
 import {
   MOCK_ALL_MATCHES,
   MOCK_LIVE_MATCHES,
@@ -53,6 +54,9 @@ const MOCK_DELAY_MS = 300;
   providedIn: 'root',
 })
 export class MockDataService extends DataService {
+  /** Session-less stand-in for the per-user rows the API keeps. */
+  private mockFavorites: Favorite[] = [];
+
   getMatches(date?: string): Observable<Match[]> {
     const allMatches = [...MOCK_ALL_MATCHES, ...MOCK_ALL_MATCHES_BRAZIL, ...MOCK_ALL_MATCHES_ITALY, ...MOCK_ALL_MATCHES_UEFA];
     let matches = allMatches;
@@ -175,5 +179,64 @@ export class MockDataService extends DataService {
     const allStats = [...MOCK_TEAM_STATISTICS, ...MOCK_TEAM_STATISTICS_BRAZIL, ...MOCK_TEAM_STATISTICS_ITALY, ...MOCK_TEAM_STATISTICS_UEFA];
     const stats = allStats.find((s) => s.teamId === teamId);
     return of(stats).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  /**
+   * In-memory stand-in for the authenticated favourites endpoints: the mock
+   * source has no user, so one implicit user owns the rows. Names are
+   * resolved from the mock catalogues the same way the API snapshots them.
+   */
+  getFavorites(): Observable<FavoritesResponse> {
+    const favorites = [...this.mockFavorites];
+    return of({ favorites, total: favorites.length }).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  toggleFavorite(type: FavoriteType, entityId: number): Observable<FavoriteToggleResponse> {
+    const existing = this.mockFavorites.find(
+      (f) => f.type === type && f.entityId === entityId,
+    );
+
+    if (existing) {
+      this.mockFavorites = this.mockFavorites.filter(
+        (f) => !(f.type === type && f.entityId === entityId),
+      );
+    } else {
+      this.mockFavorites = [
+        {
+          id: Date.now(),
+          type,
+          entityId,
+          name: this.resolveFavoriteName(type, entityId),
+          addedAt: new Date().toISOString(),
+        },
+        ...this.mockFavorites,
+      ];
+    }
+
+    const favorite = this.mockFavorites.find(
+      (f) => f.type === type && f.entityId === entityId,
+    ) ?? null;
+
+    return of({ favorite, total: this.mockFavorites.length }).pipe(delay(MOCK_DELAY_MS));
+  }
+
+  private resolveFavoriteName(type: FavoriteType, entityId: number): string {
+    if (type === 'team') {
+      const team = [...MOCK_TEAMS, ...MOCK_TEAMS_BRAZIL, ...MOCK_TEAMS_ITALY, ...MOCK_TEAMS_UEFA]
+        .find((t) => t.id === entityId);
+      return team?.name ?? `Equipo ${entityId}`;
+    }
+
+    if (type === 'player') {
+      const player = [...MOCK_PLAYERS, ...MOCK_PLAYERS_BRAZIL, ...MOCK_PLAYERS_ITALY, ...MOCK_PLAYERS_UEFA]
+        .find((p) => p.id === entityId);
+      return player ? `${player.firstName} ${player.lastName}` : `Jugador ${entityId}`;
+    }
+
+    const match = [...MOCK_ALL_MATCHES, ...MOCK_ALL_MATCHES_BRAZIL, ...MOCK_ALL_MATCHES_ITALY, ...MOCK_ALL_MATCHES_UEFA]
+      .find((m) => m.id === entityId);
+    return match
+      ? `${match.homeTeam.shortName} vs ${match.awayTeam.shortName}`
+      : `Partido ${entityId}`;
   }
 }

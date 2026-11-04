@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CompetitionController;
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\MatchController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\PlayerMatchesController;
@@ -17,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 | Public read-only API
 |--------------------------------------------------------------------------
 |
-| Every route here is unauthenticated by design: authentication is wired in a
-| later phase. Only GET routes exist, so the surface cannot mutate data.
+| Reading competition data is unauthenticated by design. Everything that
+| mutates state or reads a user's personal data lives behind `auth:sanctum`
+| (bearer tokens); only GET routes exist outside that group, so the public
+| surface still cannot mutate data.
 |
 */
 
@@ -57,3 +61,42 @@ Route::get('/matches', [MatchController::class, 'index'])
 Route::get('/matches/{id}', [MatchController::class, 'show'])
     ->whereNumber('id')
     ->name('matches.show');
+
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+|
+| Session establishment is stateless: both credential endpoints return a
+| Sanctum personal access token (7-day lifetime) rather than a cookie. The
+| throttle limiter is defined in AppServiceProvider.
+|
+*/
+
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [AuthController::class, 'register'])
+        ->middleware('throttle:auth')
+        ->name('auth.register');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:auth')
+        ->name('auth.login');
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->middleware('auth:sanctum')
+        ->name('auth.logout');
+    Route::get('/me', [AuthController::class, 'me'])
+        ->middleware('auth:sanctum')
+        ->name('auth.me');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated user data
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/favorites', [FavoriteController::class, 'index'])
+        ->name('favorites.index');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])
+        ->name('favorites.toggle');
+});

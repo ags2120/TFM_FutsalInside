@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Models\Competition;
 use App\Models\Game;
 use App\Models\Player;
 use App\Models\Team;
@@ -21,6 +22,7 @@ enum FavoriteEntityType: string
     case Match = 'match';
     case Team = 'team';
     case Player = 'player';
+    case Competition = 'competition';
 
     /**
      * Column values for schema definitions, in declaration order.
@@ -38,6 +40,7 @@ enum FavoriteEntityType: string
             self::Match => 'Partido',
             self::Team => 'Equipo',
             self::Player => 'Jugador',
+            self::Competition => 'Competición',
         };
     }
 
@@ -50,6 +53,7 @@ enum FavoriteEntityType: string
             self::Match => Game::class,
             self::Team => Team::class,
             self::Player => Player::class,
+            self::Competition => Competition::class,
         };
     }
 

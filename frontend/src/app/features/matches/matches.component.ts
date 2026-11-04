@@ -1,10 +1,25 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { MatchesStore } from '../../stores/matches.store';
+import { FavoritesStore } from '../../stores/favorites.store';
 import { MatchCardComponent } from '../../shared/components/match-card/match-card.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
+import { FavoriteButtonComponent } from '../../shared/components/favorite-button/favorite-button.component';
 import { Match } from '../../core/models/match.model';
 
 const LEAGUE_PRIORITY = ['(ESP)', '(BRA)', '(ITA)', '(EUR)'];
+
+const matchRank = (m: Match): number => {
+  if (m.status === 'live' || m.status === 'halftime') return 0;
+  return m.status === 'finished' ? 2 : 1;
+};
+
+const byStatusThenDate = (a: Match, b: Match): number => {
+  const ra = matchRank(a);
+  const rb = matchRank(b);
+  if (ra !== rb) return ra - rb;
+  if (ra === 2) return b.date.localeCompare(a.date);
+  return a.date.localeCompare(b.date);
+};
 
 interface DayItem {
   label: string;
@@ -21,12 +36,14 @@ interface DayItem {
   imports: [
     MatchCardComponent,
     LoadingSpinnerComponent,
+    FavoriteButtonComponent,
   ],
   templateUrl: './matches.component.html',
   styleUrls: ['./matches.component.css'],
 })
 export class MatchesComponent implements OnInit {
   protected readonly store = inject(MatchesStore);
+  protected readonly favoritesStore = inject(FavoritesStore);
   protected readonly weekDays = signal<DayItem[]>([]);
   protected readonly selectedFilter = signal<string>('all');
 
@@ -46,17 +63,36 @@ export class MatchesComponent implements OnInit {
       }
     }
 
+    for (const entry of entries) {
+      entry[1] = this.sortWithFavoritesFirst(entry[1]);
+    }
+
     return entries.sort((a, b) => {
+      const favA = this.groupIsFavoriteCompetition(a[1]) ? 0 : 1;
+      const favB = this.groupIsFavoriteCompetition(b[1]) ? 0 : 1;
+      if (favA !== favB) return favA - favB;
       const ai = LEAGUE_PRIORITY.findIndex(p => a[0].includes(p));
       const bi = LEAGUE_PRIORITY.findIndex(p => b[0].includes(p));
       return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
     });
   });
 
+  protected readonly favoriteMatches = computed(() => {
+    const filter = this.selectedFilter();
+    const matches = this.store.matches().filter(
+      m => this.favoritesStore.isFavoriteTeamMatch(m) &&
+        (filter === 'all' || m.competition.name === filter),
+    );
+    return [...matches].sort(byStatusThenDate);
+  });
+
   protected readonly competitionNames = computed(() => {
     const matches = this.store.matches();
     const names = [...new Set(matches.map(m => m.competition.name))];
     return names.sort((a, b) => {
+      const favA = this.isFavoriteCompetitionName(a) ? 0 : 1;
+      const favB = this.isFavoriteCompetitionName(b) ? 0 : 1;
+      if (favA !== favB) return favA - favB;
       const ai = LEAGUE_PRIORITY.findIndex(p => a.includes(p));
       const bi = LEAGUE_PRIORITY.findIndex(p => b.includes(p));
       return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
@@ -111,6 +147,29 @@ export class MatchesComponent implements OnInit {
 
   selectFilter(filter: string): void {
     this.selectedFilter.set(filter);
+  }
+
+  competitionIdOf(matches: Match[]): number {
+    return matches[0]?.competition.id ?? 0;
+  }
+
+  private groupIsFavoriteCompetition(matches: Match[]): boolean {
+    return this.favoritesStore.favoriteCompetitionIds().has(matches[0]?.competition.id ?? -1);
+  }
+
+  private isFavoriteCompetitionName(name: string): boolean {
+    return this.store.matches().some(
+      m => m.competition.name === name &&
+        this.favoritesStore.favoriteCompetitionIds().has(m.competition.id),
+    );
+  }
+
+  private sortWithFavoritesFirst(matches: Match[]): Match[] {
+    return [...matches].sort(
+      (a, b) =>
+        Number(this.favoritesStore.isFavoriteTeamMatch(b)) -
+        Number(this.favoritesStore.isFavoriteTeamMatch(a)),
+    );
   }
 
   goToToday(): void {

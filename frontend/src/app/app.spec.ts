@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      // App injects AuthService, which needs HttpClient for /auth/me.
+      providers: [provideHttpClient()],
     }).compileComponents();
   });
 

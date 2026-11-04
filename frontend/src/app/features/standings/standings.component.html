@@ -2,7 +2,16 @@
   <!-- COMPACT CONTROL BAR: title + league tabs + season -->
   <div class="control-bar">
     <div class="control-bar-top">
-      <h1 id="standings-title" class="page-title">Clasificación</h1>
+      <div class="title-row">
+        <h1 id="standings-title" class="page-title">Clasificación</h1>
+        @if (store.selectedCompetition(); as competition) {
+          <app-favorite-button
+            type="competition"
+            [entityId]="competition.id"
+            [label]="competition.name"
+          />
+        }
+      </div>
       @if (store.availableSeasons().length > 1) {
         <div class="season-inline" role="radiogroup" aria-label="Seleccionar temporada">
           @for (season of store.availableSeasons(); track season) {

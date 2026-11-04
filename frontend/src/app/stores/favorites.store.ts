@@ -1,10 +1,27 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Favorite, FavoriteType } from '../core/models/favorite.model';
+import { Match } from '../core/models/match.model';
+import { AuthService } from '../core/auth/auth.service';
+import { DataService } from '../core/services/data.service';
 
-const STORAGE_KEY = 'futsalinside_favorites';
+// The pre-auth era kept favourites in localStorage under this key. The
+// server is now the single source of truth, so the stale copy is dropped
+// on startup rather than merged — decision: discard, no migration path.
+const LEGACY_STORAGE_KEY = 'futsalinside_favorites';
 
+/**
+ * Authenticated favourites state. Every read and write round-trips to the
+ * API (bearer-authenticated), and the signals mirror the server's row set —
+ * there is no client-side optimism to reconcile. Callers must ensure the
+ * user is signed in before toggling (components redirect to login); an
+ * anonymous load just presents an empty list.
+ */
 @Injectable({ providedIn: 'root' })
 export class FavoritesStore {
+  private readonly data = inject(DataService);
+  private readonly auth = inject(AuthService);
+
   private readonly _favorites = signal<Favorite[]>([]);
   private readonly _loading = signal(false);
   private readonly _error = signal<string | null>(null);
@@ -21,37 +38,55 @@ export class FavoritesStore {
       match: favs.filter((f) => f.type === 'match'),
       team: favs.filter((f) => f.type === 'team'),
       player: favs.filter((f) => f.type === 'player'),
+      competition: favs.filter((f) => f.type === 'competition'),
     };
   });
 
+  readonly favoriteTeamIds = computed(
+    () => new Set(this.byType().team.map((f) => f.entityId)),
+  );
+
+  readonly favoriteCompetitionIds = computed(
+    () => new Set(this.byType().competition.map((f) => f.entityId)),
+  );
+
+  isFavoriteMatch(match: Match): boolean {
+    return (
+      this.favoriteTeamIds().has(match.homeTeam.id) ||
+      this.favoriteTeamIds().has(match.awayTeam.id) ||
+      this.favoriteCompetitionIds().has(match.competition.id)
+    );
+  }
+
+  isFavoriteTeamMatch(match: Match): boolean {
+    return (
+      this.favoriteTeamIds().has(match.homeTeam.id) ||
+      this.favoriteTeamIds().has(match.awayTeam.id)
+    );
+  }
+
   constructor() {
-    this.loadFromStorage();
-  }
-
-  private loadFromStorage(): void {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        this._favorites.set(JSON.parse(raw));
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+    effect(() => {
+      if (this.auth.isAuthenticated()) {
+        void this.loadFavorites();
+      } else {
+        this._favorites.set([]);
       }
-    } catch {
-      this._favorites.set([]);
-    }
-  }
-
-  private saveToStorage(): void {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this._favorites()));
-    } catch {
-      // silently fail
-    }
+    });
   }
 
   async loadFavorites(): Promise<void> {
+    if (!this.auth.isAuthenticated()) {
+      this._favorites.set([]);
+      return;
+    }
+
     this._loading.set(true);
     this._error.set(null);
     try {
-      this.loadFromStorage();
+      const response = await firstValueFrom(this.data.getFavorites());
+      this._favorites.set(response.favorites);
     } catch {
       this._error.set('Error al cargar favoritos');
     } finally {
@@ -59,30 +94,29 @@ export class FavoritesStore {
     }
   }
 
-  toggleFavorite(type: FavoriteType, entityId: number, name: string): void {
-    const existing = this._favorites().find(
-      (f) => f.type === type && f.entityId === entityId,
-    );
-
-    if (existing) {
-      this._favorites.set(
-        this._favorites().filter(
-          (f) => !(f.type === type && f.entityId === entityId),
-        ),
-      );
-    } else {
-      this._favorites.set([
-        ...this._favorites(),
-        {
-          id: Date.now(),
-          type,
-          entityId,
-          name,
-          addedAt: new Date().toISOString(),
-        },
-      ]);
+  /**
+   * Server-authoritative toggle: the response carries the resulting row
+   * (or null when removed), so the list is updated from the round-trip
+   * instead of guessing locally. Failures leave the previous state intact
+   * and surface an error message.
+   */
+  async toggleFavorite(type: FavoriteType, entityId: number): Promise<void> {
+    if (!this.auth.isAuthenticated()) {
+      return;
     }
-    this.saveToStorage();
+
+    try {
+      const response = await firstValueFrom(this.data.toggleFavorite(type, entityId));
+      const others = this._favorites().filter(
+        (f) => !(f.type === type && f.entityId === entityId),
+      );
+      this._favorites.set(
+        response.favorite ? [response.favorite, ...others] : others,
+      );
+      this._error.set(null);
+    } catch {
+      this._error.set('Error al actualizar favoritos');
+    }
   }
 
   isFavorite(type: FavoriteType, entityId: number): boolean {

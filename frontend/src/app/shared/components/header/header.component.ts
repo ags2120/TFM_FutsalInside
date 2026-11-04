@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { GlobalSearchComponent } from '../global-search/global-search.component';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,9 @@ import { GlobalSearchComponent } from '../global-search/global-search.component'
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
   protected readonly mobileMenuOpen = signal(false);
 
   toggleMobileMenu(): void {
@@ -17,5 +21,11 @@ export class HeaderComponent {
 
   closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.closeMobileMenu();
+    this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

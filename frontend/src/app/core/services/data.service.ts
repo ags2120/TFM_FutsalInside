@@ -6,6 +6,7 @@ import { PlayerMatchParticipation } from '../models/player-match.model';
 import { Standing } from '../models/standings.model';
 import { Competition } from '../models/competition.model';
 import { PlayerStatistics, TeamStatistics } from '../models/statistics.model';
+import { FavoriteToggleResponse, FavoriteType, FavoritesResponse } from '../models/favorite.model';
 
 /**
  * Data-access contract every store and page consumes.
@@ -37,4 +38,6 @@ export abstract class DataService {
   abstract getStandings(): Observable<Standing[]>;
   abstract getCompetitions(): Observable<Competition[]>;
   abstract getMatchesByTeam(teamId: number): Observable<Match[]>;
+  abstract getFavorites(): Observable<FavoritesResponse>;
+  abstract toggleFavorite(type: FavoriteType, entityId: number): Observable<FavoriteToggleResponse>;
 }

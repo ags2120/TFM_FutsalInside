@@ -75,11 +75,35 @@
     }
 
     @if (!store.loading() && !store.error()) {
+      @if (favoriteMatches().length > 0) {
+        <section class="favorites-block">
+          <div class="favorites-header">
+            <h2>
+              <svg class="fav-star" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Tus Favoritos
+            </h2>
+          </div>
+          <div class="matches-list favorites-list">
+            @for (match of favoriteMatches(); track match.id) {
+              <app-match-card [match]="match" variant="list" />
+            }
+          </div>
+        </section>
+      }
+
       @if (groupedByCompetition().length > 0) {
         @for (entry of groupedByCompetition(); track entry[0]) {
           <div class="competition-group">
             <div class="competition-header">
               <span class="competition-name">{{ entry[0] }}</span>
+              <app-favorite-button
+                class="competition-fav"
+                type="competition"
+                [entityId]="competitionIdOf(entry[1])"
+                [label]="entry[0]"
+              />
             </div>
             <div class="matches-list">
               @for (match of entry[1]; track match.id) {

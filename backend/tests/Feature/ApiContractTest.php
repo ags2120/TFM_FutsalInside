@@ -62,17 +62,22 @@ class ApiContractTest extends TestCase
         $this->seed();
     }
 
-    public function test_route_contract_is_the_public_get_surface(): void
+    public function test_route_contract_is_the_get_surface(): void
     {
         $uris = collect(Route::getRoutes()->getRoutes())
-            ->reject(static fn ($route) => $route->getName() === null || ! str_starts_with($route->uri(), 'api/'))
+            ->reject(static fn ($route) => $route->getName() === null
+                || ! str_starts_with($route->uri(), 'api/')
+                || ! in_array('GET', $route->methods(), true))
             ->map(static fn ($route) => $route->uri())
             ->sort()
             ->values()
             ->all();
 
         $this->assertSame([
+            // Authenticated GETs; POST-only auth routes are covered by AuthTest.
+            'api/auth/me',
             'api/competitions',
+            'api/favorites',
             'api/matches',
             'api/matches/{id}',
             'api/player-statistics',
@@ -348,7 +353,7 @@ class ApiContractTest extends TestCase
             ->assertOk()
             ->json();
 
-        $this->assertSame(141, $json['total']);
+        $this->assertSame(140, $json['total']);
 
         $matchParts = $this->interfaceParts('Match');
         $required = $matchParts['required'];
@@ -359,9 +364,14 @@ class ApiContractTest extends TestCase
             $this->assertNoNulls($match, 'match');
 
             // Compact shape: a list row is exactly the required Match fields,
-            // nothing more. The event log, metric table and all optional
-            // details are detail-endpoint only.
-            $this->assertKeysMatch($match, $required, 'match list row');
+            // nothing more — except an in-progress row, which also carries the
+            // running clock the live cards render (`minute` is optional in the
+            // TS contract and a scheduled row omits it rather than serving null).
+            $expected = $required;
+            if (in_array($match['status'], [MatchStatus::Live->value, MatchStatus::Halftime->value], true)) {
+                $expected[] = 'minute';
+            }
+            $this->assertKeysMatch($match, $expected, 'match list row');
 
             $this->assertKeysMatch($match['homeTeam'], $teamKeys, 'home team');
             $this->assertKeysMatch($match['awayTeam'], $teamKeys, 'away team');
@@ -510,7 +520,9 @@ class ApiContractTest extends TestCase
         $this->getJson('/api/players/999999')->assertNotFound();
         $this->getJson('/api/matches/999999')->assertNotFound();
         $this->getJson('/api/teams/not-a-number')->assertNotFound();
-        $this->getJson('/api/favorites')->assertNotFound();
+        $this->getJson('/api/unknown')->assertNotFound();
+        // `/api/favorites` exists now: unauthenticated callers get 401, not 404.
+        $this->getJson('/api/favorites')->assertStatus(401);
     }
 
     public function test_public_payloads_never_leak_enum_labels_or_internal_columns(): void

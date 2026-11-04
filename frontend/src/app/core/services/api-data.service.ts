@@ -11,6 +11,7 @@ import { PlayerMatchParticipation } from '../models/player-match.model';
 import { Standing } from '../models/standings.model';
 import { Competition } from '../models/competition.model';
 import { PlayerStatistics, TeamStatistics } from '../models/statistics.model';
+import { FavoriteToggleResponse, FavoriteType, FavoritesResponse } from '../models/favorite.model';
 
 interface Envelope<T> {
   data?: T;
@@ -130,6 +131,25 @@ export class ApiDataService extends DataService {
 
   getMatchesByTeam(teamId: number): Observable<Match[]> {
     return this.fetchAll<Match>(`/matches?team=${teamId}`, 'matches');
+  }
+
+  getFavorites(): Observable<FavoritesResponse> {
+    return this.http.get<FavoritesResponse>(`${this.apiUrl}/favorites`).pipe(
+      catchError(() => of({ favorites: [], total: 0 })),
+    );
+  }
+
+  /**
+   * Deliberately the one method that lets errors propagate: degrading a
+   * failed toggle to a fake success would desynchronise the store from the
+   * server's row set (and a 401 must reach the interceptor so the expired
+   * session is cleared). The store catches and surfaces the failure.
+   */
+  toggleFavorite(type: FavoriteType, entityId: number): Observable<FavoriteToggleResponse> {
+    return this.http.post<FavoriteToggleResponse>(`${this.apiUrl}/favorites/toggle`, {
+      type,
+      entityId,
+    });
   }
 
   private getData<T>(path: string): Observable<T | undefined> {
