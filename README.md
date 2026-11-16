@@ -32,11 +32,11 @@
 
 ---
 
-### 🔴 Partidos en vivo
+### 🔴 Partidos
 
-<!-- Captura Partidos en vivo -->
+<!-- Captura Partidos -->
 
-![En vivo](docs/screenshots/live.png)
+![En vivo](docs/screenshots/partidos.png)
 
 ---
 
@@ -44,15 +44,22 @@
 
 <!-- Captura Detalle de partido -->
 
-![Detalle de partido](docs/screenshots/match.png)
+<p align="center">
+  <img src="docs/screenshots/detalles_partido1.png" width="50%">
+  <img src="docs/screenshots/detalles_partido2.png" width="31%">
+  <img src="docs/screenshots/detalles_partido3.png" width="30%">
+</p>
 
----
+<p align="center">
+  Diferentes vistas del detalle de partido: detalles, eventos y estadísticas.
+</p>
+
 
 ### 📊 Clasificación
 
 <!-- Captura Clasificación -->
 
-![Clasificación](docs/screenshots/standings.png)
+![Clasificación](docs/screenshots/clasificacion.png)
 
 ---
 
@@ -60,7 +67,7 @@
 
 <!-- Captura Detalle de jugador -->
 
-![Detalle de jugador](docs/screenshots/player.png)`
+![Detalle de jugador](docs/screenshots/detalles_jugador.png)`
 
 ---
 
