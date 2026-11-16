@@ -24,13 +24,43 @@
 
 ## 📸 Capturas
 
-> Añade aquí tus capturas de pantalla (Home, Partidos en vivo, Detalle de partido, Clasificación, Detalle de jugador…):
+### 🏠 Página de inicio
 
-```markdown
-| Home | En vivo | Detalle de partido |
-|:---:|:---:|:---:|
-| ![Home](docs/screenshots/home.png) | ![Live](docs/screenshots/live.png) | ![Match](docs/screenshots/match.png) |
-```
+<!-- Captura Home -->
+
+![Home](docs/screenshots/home.png)
+
+---
+
+### 🔴 Partidos en vivo
+
+<!-- Captura Partidos en vivo -->
+
+![En vivo](docs/screenshots/live.png)
+
+---
+
+### ⚽ Detalle de partido
+
+<!-- Captura Detalle de partido -->
+
+![Detalle de partido](docs/screenshots/match.png)
+
+---
+
+### 📊 Clasificación
+
+<!-- Captura Clasificación -->
+
+![Clasificación](docs/screenshots/standings.png)
+
+---
+
+### 👤 Detalle de jugador
+
+<!-- Captura Detalle de jugador -->
+
+![Detalle de jugador](docs/screenshots/player.png)`
 
 ---
 
